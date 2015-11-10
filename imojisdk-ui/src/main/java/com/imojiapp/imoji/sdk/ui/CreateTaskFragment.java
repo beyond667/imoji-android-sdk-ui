@@ -83,7 +83,7 @@ public class CreateTaskFragment extends Fragment implements OutlineAsyncTask.Out
                 task.execute();
             }
         } else {
-            Bitmap outlined = EditorBitmapCache.getInstance().get(EditorBitmapCache.Keys.OUTLINED_BITMAP);
+            Bitmap outlined = EditorBitmapCache.getInstance().get(EditorBitmapCache.Keys.TRIMMED_BITMAP);
             if (outlined == null) {
                 notifyFailure(getActivity());
                 return;
