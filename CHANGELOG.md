@@ -1,4 +1,8 @@
 * Updates
+
+#0.1.8
+- Fixes a bug in which a bordered image was being uploaded to the server
+
 #0.1.7
 - Added new option to allow for an outlined bitmap to be returned immediately while letting the
   Imoji object registration happen in the background
