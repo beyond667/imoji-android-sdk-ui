@@ -1,6 +1,9 @@
 * Updates
 
 #0.1.8
+- Fix dependency issue with Imoji SDK
+
+#0.1.8
 - Fixes a bug in which a bordered image was being uploaded to the server
 
 #0.1.7
