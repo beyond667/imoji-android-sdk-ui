@@ -1,6 +1,9 @@
 * Updates
 
-#0.1.8
+#0.1.10
+- Use smaller JPG assets for Imoji Editor Tips for a smaller footprint
+
+#0.1.9
 - Fix dependency issue with Imoji SDK
 
 #0.1.8
