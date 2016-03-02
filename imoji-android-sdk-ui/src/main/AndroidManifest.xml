@@ -7,10 +7,10 @@
         android:label="@string/app_name">
 
         <activity
-            android:name=".ImojiEditorActivity"
+            android:name="io.imoji.sdk.ui.ImojiEditorActivity"
             android:windowSoftInputMode="adjustNothing"></activity>
 
-        <service android:name=".ImojiCreateService" android:exported="false"></service>
+        <service android:name="io.imoji.sdk.ui.ImojiCreateService" android:exported="false"></service>
 
     </application>
 

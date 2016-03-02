@@ -14,9 +14,9 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.imojiapp.imoji.sdk.ui.ImojiEditorActivity;
-import com.imojiapp.imoji.sdk.ui.ImojiIntents;
-import com.imojiapp.imoji.sdk.ui.utils.EditorBitmapCache;
+import io.imoji.sdk.ui.ImojiEditorActivity;
+import io.imoji.sdk.ui.ImojiIntents;
+import io.imoji.sdk.ui.utils.EditorBitmapCache;
 
 import io.imoji.sdk.objects.Imoji;
 

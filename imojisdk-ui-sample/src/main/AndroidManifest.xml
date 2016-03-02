@@ -21,7 +21,7 @@
 
         <activity
             android:windowSoftInputMode="adjustNothing"
-            android:name="com.imojiapp.imoji.sdk.ui.ImojiEditorActivity"
+            android:name="io.imoji.sdk.ui.ImojiEditorActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
