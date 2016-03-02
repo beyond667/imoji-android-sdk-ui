@@ -2,12 +2,6 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven'
 apply plugin: 'signing'
 
-repositories{
-    maven{
-        url 'https://oss.sonatype.org/content/repositories/snapshots'
-    }
-}
-
 android {
     compileSdkVersion 22
     buildToolsVersion "23.0.1"
@@ -30,7 +24,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile ('com.imojiapp:imoji-sdk:0.7.4@aar'){
+    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile('io.imoji.sdk:imoji-sdk:2.0.0@aar') {
         transitive = true
     }
     compile 'com.android.support:cardview-v7:22.2.1'
@@ -76,7 +71,7 @@ uploadArchives {
         }
 
         pom.project {
-            groupId 'com.imojiapp'
+            groupId 'io.imoji.sdk'
             artifactId 'imoji-sdk-ui'
             version android.defaultConfig.versionName
             name 'com.imojiapp:imoji-sdk-ui'

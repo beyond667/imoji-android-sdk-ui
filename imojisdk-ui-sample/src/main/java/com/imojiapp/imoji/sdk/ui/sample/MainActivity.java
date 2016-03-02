@@ -7,24 +7,18 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.imojiapp.imoji.sdk.Imoji;
-import com.imojiapp.imoji.sdk.ui.CreateTaskFragment;
 import com.imojiapp.imoji.sdk.ui.ImojiEditorActivity;
-import com.imojiapp.imoji.sdk.ui.ImojiEditorFragment;
 import com.imojiapp.imoji.sdk.ui.ImojiIntents;
 import com.imojiapp.imoji.sdk.ui.utils.EditorBitmapCache;
+
+import io.imoji.sdk.objects.Imoji;
 
 public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -59,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         if (ImojiEditorActivity.START_EDITOR_REQUEST_CODE == requestCode && resultCode == Activity.RESULT_OK) {
             Imoji model = data.getParcelableExtra(ImojiEditorActivity.IMOJI_MODEL_BUNDLE_ARG_KEY);
             if (model != null) {
-                Log.d(LOG_TAG, "imoji id: " + model.getImojiId());
+                Log.d(LOG_TAG, "imoji id: " + model.getIdentifier());
                 mOutlinedImoji.setImageBitmap(EditorBitmapCache.getInstance().get(EditorBitmapCache.Keys.OUTLINED_BITMAP));
             } else {
                 String token = data.getStringExtra(ImojiEditorActivity.CREATE_TOKEN_BUNDLE_ARG_KEY);
@@ -83,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             if (status) { //success?
                 Imoji imoji = intent.getParcelableExtra(ImojiIntents.Create.IMOJI_MODEL_BUNDLE_ARG_KEY);
                 String token = intent.getStringExtra(ImojiIntents.Create.CREATE_TOKEN_BUNDLE_ARG_KEY);
-                Toast.makeText(MainActivity.this, "got imoji: " + imoji.getImojiId(), Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "got imoji: " + imoji.getIdentifier(), Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(MainActivity.this, "imoji creation failed", Toast.LENGTH_LONG).show();
             }

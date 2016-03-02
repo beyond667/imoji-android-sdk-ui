@@ -9,10 +9,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
-import com.imojiapp.imoji.sdk.Imoji;
 import com.imojiapp.imoji.sdk.ui.utils.EditorBitmapCache;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

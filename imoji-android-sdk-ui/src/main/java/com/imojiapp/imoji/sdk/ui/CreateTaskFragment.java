@@ -1,21 +1,24 @@
 package com.imojiapp.imoji.sdk.ui;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
-import com.imojiapp.imoji.sdk.Callback;
-import com.imojiapp.imoji.sdk.Imoji;
-import com.imojiapp.imoji.sdk.ImojiApi;
 import com.imojiapp.imoji.sdk.ui.utils.EditorBitmapCache;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.imoji.sdk.ApiTask;
+import io.imoji.sdk.ImojiSDK;
+import io.imoji.sdk.Session;
+import io.imoji.sdk.objects.Imoji;
+import io.imoji.sdk.response.CreateImojiResponse;
 
 /**
  * Created by sajjadtabib on 10/19/15.
@@ -27,8 +30,8 @@ public class CreateTaskFragment extends Fragment implements OutlineAsyncTask.Out
     public static final String CREATE_OUTLINE_BITMAP_BUNDLE_ARG_KEY = "CREATE_OUTLINE_BITMAP_BUNDLE_ARG_KEY";
     private List<String> mTags;
     private boolean mIsDone;
-    private Context mAppContext;
     private Imoji mResultImoji;
+    private Session mImojiSession;
 
     public static CreateTaskFragment newInstance(ArrayList<String> tags) {
         return newInstance(tags, true);
@@ -63,7 +66,7 @@ public class CreateTaskFragment extends Fragment implements OutlineAsyncTask.Out
 
         mTags = getArguments().getStringArrayList(TAGS_BUNDLE_ARG_KEY);
 
-        mAppContext = getActivity().getApplicationContext();
+        mImojiSession = ImojiSDK.getInstance().createSession(getActivity().getApplicationContext());
 
         Bitmap b = EditorBitmapCache.getInstance().get(EditorBitmapCache.Keys.TRIMMED_BITMAP);
         if (b == null) {
@@ -100,26 +103,27 @@ public class CreateTaskFragment extends Fragment implements OutlineAsyncTask.Out
     }
 
     private void createImoji(Bitmap outlinedBitmap) {
-        ImojiApi.with(mAppContext).createImoji(outlinedBitmap, mTags, new Callback<Imoji, String>() {
-            @Override
-            public void onSuccess(Imoji result) {
-                mIsDone = true;
-                mResultImoji = result;
-                if (isAdded()) {
-                    Activity a = getActivity();
-                    notifySuccess(result, a);
-                }
-            }
+        mImojiSession.createImojiWithRawImage(outlinedBitmap, outlinedBitmap, mTags)
+                .executeAsyncTask(new ApiTask.WrappedAsyncTask<CreateImojiResponse>() {
+                    @Override
+                    protected void onPostExecute(CreateImojiResponse createImojiResponse) {
+                        mIsDone = true;
+                        mResultImoji = createImojiResponse.getImoji();
+                        if (isAdded()) {
+                            Activity a = getActivity();
+                            notifySuccess(mResultImoji, a);
+                        }
+                    }
 
-            @Override
-            public void onFailure(String result) {
-                mIsDone = true;
-                if (isAdded()) {
-                    Activity a = getActivity();
-                    notifyFailure(a);
-                }
-            }
-        });
+                    @Override
+                    protected void onError(@NonNull Throwable error) {
+                        mIsDone = true;
+                        if (isAdded()) {
+                            Activity a = getActivity();
+                            notifyFailure(a);
+                        }
+                    }
+                });
     }
 
     private void notifyFailure(Activity a) {

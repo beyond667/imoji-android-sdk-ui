@@ -22,7 +22,7 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
-import com.imojiapp.imoji.sdk.BitmapUtils;
+import com.imojiapp.imoji.sdk.ui.utils.DisplayUtils;
 import com.imojiapp.imoji.sdk.ui.utils.EditorBitmapCache;
 import com.imojiapp.imoji.sdk.ui.utils.ScrimUtil;
 import com.imojiapp.imojigraphics.IG;
@@ -151,7 +151,9 @@ public class ImojiEditorFragment extends Fragment implements ViewTreeObserver.On
             mToolbarScrim.setBackgroundDrawable(scrim);
             mBottomBarScrim.setBackgroundDrawable(bottomBarScrim);
         }
-    }    @Override
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_imoji_editor, container, false);
@@ -210,7 +212,9 @@ public class ImojiEditorFragment extends Fragment implements ViewTreeObserver.On
             mIGEditorView.deserialize(mStateData);
         }
 
-    }    @Override
+    }
+
+    @Override
     public void onViewCreated(View v, Bundle savedInstanceState) {
 
         configureToolbar(v);
@@ -361,7 +365,9 @@ public class ImojiEditorFragment extends Fragment implements ViewTreeObserver.On
 
 
         }
-    }    @Override
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         if (Build.VERSION.SDK_INT < 11) { //init because we won't have the egl context preserved
@@ -382,7 +388,9 @@ public class ImojiEditorFragment extends Fragment implements ViewTreeObserver.On
             super.onCreate(savedInstanceState);
             setRetainInstance(true);
         }
-    }    @Override
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         mIGEditorView.onPause();
@@ -399,7 +407,7 @@ public class ImojiEditorFragment extends Fragment implements ViewTreeObserver.On
         @Override
         final protected Bitmap doInBackground(Params... params) {
             Params p = params[0];
-            int[] sizeInfo = BitmapUtils.getSizeWithinBounds(p.mSource.getWidth(), p.mSource.getHeight(), p.mWidthBound, p.mHeightBound, true);
+            int[] sizeInfo = DisplayUtils.getSizeWithinBounds(p.mSource.getWidth(), p.mSource.getHeight(), p.mWidthBound, p.mHeightBound, true);
             Bitmap outBitmap = Bitmap.createScaledBitmap(p.mSource, sizeInfo[0], sizeInfo[1], false);
             if (outBitmap.getConfig() != Bitmap.Config.ARGB_8888) {
                 Bitmap tmp = outBitmap.copy(Bitmap.Config.ARGB_8888, true);
@@ -434,13 +442,6 @@ public class ImojiEditorFragment extends Fragment implements ViewTreeObserver.On
         }
 
     }
-
-
-
-
-
-
-
 
 
     @Override

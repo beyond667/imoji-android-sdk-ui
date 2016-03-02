@@ -5,12 +5,9 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.imojiapp.imoji.sdk.ImojiApi;
 import com.imojiapp.imoji.sdk.ui.utils.EditorBitmapCache;
 
-import java.util.Collections;
-
-public class ImojiEditorActivity extends AppCompatActivity{
+public class ImojiEditorActivity extends AppCompatActivity {
 
     public static final int START_EDITOR_REQUEST_CODE = 1001;
     public static final String IMOJI_MODEL_BUNDLE_ARG_KEY = "IMOJI_MODEL_BUNDLE_ARG_KEY";

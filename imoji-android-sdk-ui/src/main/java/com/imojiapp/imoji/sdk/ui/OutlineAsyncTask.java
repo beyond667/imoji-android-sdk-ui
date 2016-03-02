@@ -3,7 +3,7 @@ package com.imojiapp.imoji.sdk.ui;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 
-import com.imojiapp.imoji.sdk.BitmapUtils;
+import com.imojiapp.imoji.sdk.ui.utils.DisplayUtils;
 import com.imojiapp.imojigraphics.IG;
 
 import java.lang.ref.WeakReference;
@@ -33,7 +33,7 @@ class OutlineAsyncTask extends AsyncTask<Void, Void, Bitmap> {
         }
 
 
-        int[] size = BitmapUtils.getSizeWithinBounds(mImojiBitmap.getWidth(), mImojiBitmap.getHeight(), mWidth, mHeight, true);
+        int[] size = DisplayUtils.getSizeWithinBounds(mImojiBitmap.getWidth(), mImojiBitmap.getHeight(), mWidth, mHeight, true);
         Bitmap b = Bitmap.createScaledBitmap(mImojiBitmap, size[0], size[1], false);
         int igBorder = IG.BorderCreatePreset(mImojiBitmap.getWidth(), mImojiBitmap.getHeight(), IG.BORDER_CLASSIC);
         int padding = IG.BorderGetPadding(igBorder);

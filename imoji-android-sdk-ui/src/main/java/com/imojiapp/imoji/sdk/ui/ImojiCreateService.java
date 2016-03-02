@@ -3,17 +3,20 @@ package com.imojiapp.imoji.sdk.ui;
 import android.app.IntentService;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
-import com.imojiapp.imoji.sdk.Callback;
-import com.imojiapp.imoji.sdk.Imoji;
-import com.imojiapp.imoji.sdk.ImojiApi;
 import com.imojiapp.imoji.sdk.ui.utils.EditorBitmapCache;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+
+import io.imoji.sdk.ApiTask;
+import io.imoji.sdk.ImojiSDK;
+import io.imoji.sdk.Session;
+import io.imoji.sdk.objects.Imoji;
+import io.imoji.sdk.response.CreateImojiResponse;
 
 /**
  * Created by sajjadtabib on 10/21/15.
@@ -23,11 +26,15 @@ public class ImojiCreateService extends IntentService {
     public static final String CREATE_TOKEN_BUNDLE_ARG_KEY = "CREATE_TOKEN_BUNDLE_ARG_KEY";
     public static final String TAGS_BUNDLE_ARG_KEY = "TAGS_BUNDLE_ARG_KEY";
     private static final String LOG_TAG = ImojiCreateService.class.getSimpleName();
+
+    private final Session imojiSession;
+
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      */
     public ImojiCreateService() {
         super(ImojiCreateService.class.getSimpleName());
+        this.imojiSession = ImojiSDK.getInstance().createSession(getApplicationContext());
     }
 
     @Override
@@ -44,19 +51,21 @@ public class ImojiCreateService extends IntentService {
 
 
         final CountDownLatch latch = new CountDownLatch(1);
-        ImojiApi.with(this).createImoji(b, tags, new Callback<Imoji, String>() {
-            @Override
-            public void onSuccess(Imoji result) {
-                notifySuccess(result, token);
-                latch.countDown();
-            }
+        this.imojiSession
+                .createImojiWithRawImage(b, b, tags)
+                .executeAsyncTask(new ApiTask.WrappedAsyncTask<CreateImojiResponse>() {
+                    @Override
+                    protected void onPostExecute(CreateImojiResponse createImojiResponse) {
+                        notifySuccess(createImojiResponse.getImoji(), token);
+                        latch.countDown();
+                    }
 
-            @Override
-            public void onFailure(String result) {
-                notifyFailure(token);
-                latch.countDown();
-            }
-        });
+                    @Override
+                    protected void onError(@NonNull Throwable error) {
+                        notifyFailure(token);
+                        latch.countDown();
+                    }
+                });
 
         waitForCreateToFinish(latch, token);
 
