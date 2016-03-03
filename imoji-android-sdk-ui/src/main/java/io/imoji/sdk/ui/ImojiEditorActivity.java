@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.imojiapp.imoji.sdk.ui.R;
+import io.imoji.sdk.ui.R;
 
 import io.imoji.sdk.ui.utils.EditorBitmapCache;
 

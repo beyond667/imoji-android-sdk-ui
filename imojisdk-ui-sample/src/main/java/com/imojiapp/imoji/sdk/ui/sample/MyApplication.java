@@ -2,9 +2,9 @@ package com.imojiapp.imoji.sdk.ui.sample;
 
 import android.app.Application;
 
-import com.imoji.sdk.ImojiSDK;
-
 import java.util.UUID;
+
+import io.imoji.sdk.ImojiSDK;
 
 /**
  * Created by sajjadtabib on 9/23/15.

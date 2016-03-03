@@ -33,14 +33,12 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.imojiapp.imoji.sdk.ui.R;
-
-import io.imoji.sdk.ui.utils.EditorBitmapCache;
-import io.imoji.sdk.ui.utils.ScrimUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import io.imoji.sdk.ui.utils.EditorBitmapCache;
+import io.imoji.sdk.ui.utils.ScrimUtil;
 
 
 /**

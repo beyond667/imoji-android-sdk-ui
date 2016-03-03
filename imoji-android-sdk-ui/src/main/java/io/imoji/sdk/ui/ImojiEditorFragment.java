@@ -22,17 +22,15 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
-import com.imojiapp.imoji.sdk.ui.R;
-
-import io.imoji.sdk.ui.utils.DisplayUtils;
-import io.imoji.sdk.ui.utils.EditorBitmapCache;
-import io.imoji.sdk.ui.utils.ScrimUtil;
-import io.imoji.sdk.graphics.IG;
-import io.imoji.sdk.graphics.IGEditorView;
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.UUID;
+
+import io.imoji.sdk.graphics.IG;
+import io.imoji.sdk.graphics.IGEditorView;
+import io.imoji.sdk.ui.utils.DisplayUtils;
+import io.imoji.sdk.ui.utils.EditorBitmapCache;
+import io.imoji.sdk.ui.utils.ScrimUtil;
 
 /**
  * A simple {@link Fragment} subclass.

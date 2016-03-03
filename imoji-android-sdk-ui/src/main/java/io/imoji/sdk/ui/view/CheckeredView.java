@@ -10,7 +10,7 @@ import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.imojiapp.imoji.sdk.ui.R;
+import io.imoji.sdk.ui.R;
 
 /**
  * Creates a checkered background

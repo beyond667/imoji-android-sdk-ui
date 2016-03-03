@@ -13,8 +13,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.imojiapp.imoji.sdk.ui.R;
-
 import io.imoji.sdk.ui.view.DotDotView;
 
 
