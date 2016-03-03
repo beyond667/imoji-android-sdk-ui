@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.imojiapp.imoji.sdk.ui.sample"
+<manifest package="io.imoji.sdk.ui.sample"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <application
-        android:name=".MyApplication"
+        android:name="io.imoji.sdk.ui.sample.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="io.imoji.sdk.ui.sample.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

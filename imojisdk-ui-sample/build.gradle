@@ -13,7 +13,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.imojiapp.imoji.sdk.ui.sample"
+        applicationId "io.imoji.sdk.ui.sample"
         minSdkVersion 10
         targetSdkVersion 23
         versionCode 1

@@ -1,4 +1,4 @@
-package com.imojiapp.imoji.sdk.ui.sample;
+package io.imoji.sdk.ui.sample;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -14,11 +14,10 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import io.imoji.sdk.objects.Imoji;
 import io.imoji.sdk.ui.ImojiEditorActivity;
 import io.imoji.sdk.ui.ImojiIntents;
 import io.imoji.sdk.ui.utils.EditorBitmapCache;
-
-import io.imoji.sdk.objects.Imoji;
 
 public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
