@@ -91,7 +91,7 @@ public class IGEditorView extends GLSurfaceView implements GLSurfaceView.Rendere
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if(igEditor == 0) {
+        if (igEditor == 0) {
             return false;
         }
 
@@ -194,7 +194,7 @@ public class IGEditorView extends GLSurfaceView implements GLSurfaceView.Rendere
     private void resetEditor() {
         destroyEditor();
 
-        if(inputBitmap != null) {
+        if (inputBitmap != null) {
             igContext = IG.ContextCreateHosted();
             igInputImage = IG.ImageFromNative(igContext, inputBitmap, 1);
             igEditor = IG.EditorCreate(igInputImage);
@@ -204,7 +204,7 @@ public class IGEditorView extends GLSurfaceView implements GLSurfaceView.Rendere
     }
 
     public void aspectFit() {
-        if(igEditor != 0 && igInputImage != 0 && surfaceWidth > 0 && surfaceHeight > 0) {
+        if (igEditor != 0 && igInputImage != 0 && surfaceWidth > 0 && surfaceHeight > 0) {
             float imageWidth = IG.ImageGetWidth(igInputImage);
             float imageHeight = IG.ImageGetHeight(igInputImage);
 
@@ -242,7 +242,7 @@ public class IGEditorView extends GLSurfaceView implements GLSurfaceView.Rendere
                 @Override
                 public void run() {
                     IG.EditorUndo(igEditor);
-                    if(undoListener != null) {
+                    if (undoListener != null) {
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {
