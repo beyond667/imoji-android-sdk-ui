@@ -10,11 +10,11 @@ You'll need to grab developer keys prior to integration. Sign up for a free deve
 
 Integrating the libraries can be done in multiple fashions:
 
-* [Download the latest](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22io.imoji.sdk%22%20AND%20a%3A%22imoji-sdk%22) build from Maven Central manually
+* [Download the latest](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22io.imoji.sdk%22%20AND%20a%3A%22imoji-sdk-ui%22) build from Maven Central manually
 * Add the following to your Gradle build file:
 ```
 dependencies {
-        compile ('io.imoji.sdk:imoji-sdk:+@aar') {
+        compile ('io.imoji.sdk:imoji-sdk-ui:+@aar') {
             transitive=true
         }
 }
