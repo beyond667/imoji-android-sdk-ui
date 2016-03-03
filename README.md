@@ -1,4 +1,5 @@
 # Imoji UI SDK Alpha 
+
 The imoji ui sdk for Android is a library project that will provide out of the box ui elements for displaying and creating imojis. Development on the ui sdk recently started, and at this time, an editor that lets you create imojis is available for integration. More components will be added soon.
 
 ## SDK Integration
@@ -6,7 +7,7 @@ The imoji ui sdk for Android is a library project that will provide out of the b
 
 2. Add the Imoji UI SDK as a dependency in your build.gradle file.
     ```
-    compile('com.imojiapp:imoji-sdk-ui:+@aar'){
+    compile('io.imoji.sdk:imoji-sdk-ui:+@aar'){
        transitive=true
     }
     ``` 
@@ -17,7 +18,8 @@ public class MyApplication extends Application {
  @Override
     public void onCreate() {
         super.onCreate();
-        ImojiApi.init(this, "YOUR_CLIENT_ID_HERE", "YOUR_CLIENT_SECRET_HERE");
+        ImojiSDK.getInstance()
+                .setCredentials(UUID.fromString("YOUR_CLIENT_ID_HERE"), "YOUR_CLIENT_SECRET_HERE");
     }
 }
 ```
@@ -25,7 +27,7 @@ public class MyApplication extends Application {
     ```xml
     <activity
         android:windowSoftInputMode="adjustNothing"
-        android:name="com.imojiapp.imoji.sdk.ui.ImojiEditorActivity"
+        android:name="io.imoji.sdk.ui.ImojiEditorActivity"
         android:theme="@style/AppTheme.NoActionBar"></activity>
     ```
 
@@ -92,7 +94,7 @@ Now that you have integrated the SDK, you can use the imoji creator in your app.
             if (status) { //success?
                 Imoji imoji = intent.getParcelableExtra(ImojiIntents.Create.IMOJI_MODEL_BUNDLE_ARG_KEY);
                 String token = intent.getStringExtra(ImojiIntents.Create.CREATE_TOKEN_BUNDLE_ARG_KEY);
-                Toast.makeText(MainActivity.this, "got imoji: " + imoji.getImojiId(), Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "got imoji: " + imoji.getIdentifier(), Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(MainActivity.this, "imoji creation failed", Toast.LENGTH_LONG).show();
             }
@@ -107,7 +109,7 @@ Now that you have integrated the SDK, you can use the imoji creator in your app.
 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (ImojiEditorActivity.START_EDITOR_REQUEST_CODE == requestCode && resultCode == Activity.RESULT_OK) {
-        Log.d(LOG_TAG, "imoji id: " + model.getImojiId());
+        Log.d(LOG_TAG, "imoji id: " + model.getIdentifier());
         mOutlinedImoji.setImageBitmap(EditorBitmapCache.getInstance().get(EditorBitmapCache.Keys.OUTLINED_BITMAP));
     }
 }
