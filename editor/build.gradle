@@ -1,11 +1,8 @@
 apply plugin: 'com.android.application'
 
-repositories{
+repositories {
     jcenter()
-    maven{
-        url 'https://oss.sonatype.org/content/repositories/snapshots'
-    }
-    mavenLocal()
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 }
 
 android {
@@ -28,11 +25,11 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.android.support:design:23.0.1'
-    compile (project(':imoji-android-sdk-ui')) {
-            transitive=true
+    compile(project(':imoji-android-sdk-ui')) {
+        transitive = true
     }
 }
