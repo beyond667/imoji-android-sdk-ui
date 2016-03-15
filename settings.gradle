@@ -1,1 +1,1 @@
-include ':imoji-android-sdk-ui', ':editor'
+include ':imoji-android-sdk-ui', ':samples:editor'

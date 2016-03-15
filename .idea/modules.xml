@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/editor/editor.iml" filepath="$PROJECT_DIR$/editor/editor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/samples/editor/editor.iml" filepath="$PROJECT_DIR$/samples/editor/editor.iml" />
       <module fileurl="file://$PROJECT_DIR$/imoji-android-sdk-ui.iml" filepath="$PROJECT_DIR$/imoji-android-sdk-ui.iml" />
       <module fileurl="file://$PROJECT_DIR$/imoji-android-sdk-ui/imoji-android-sdk-ui-imoji-android-sdk-ui.iml" filepath="$PROJECT_DIR$/imoji-android-sdk-ui/imoji-android-sdk-ui-imoji-android-sdk-ui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/samples/samples.iml" filepath="$PROJECT_DIR$/samples/samples.iml" />
     </modules>
   </component>
 </project>
