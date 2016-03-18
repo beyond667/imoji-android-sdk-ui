@@ -34,7 +34,7 @@ public class ImojiCreateService extends IntentService {
      */
     public ImojiCreateService() {
         super(ImojiCreateService.class.getSimpleName());
-        this.imojiSession = ImojiSDK.getInstance().createSession(getApplicationContext());
+        this.imojiSession = ImojiSDK.getInstance().createSession(this);
     }
 
     @Override
