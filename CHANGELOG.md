@@ -1,5 +1,18 @@
 * Updates
 
+## 2.0.3
+* Updated to use version 2.0.3 of imoji-android-sdk 
+
+## 2.0.2
+* Fix reference to the old pacakge in fragment_tag_imoji
+* Use the IntentService reference for context instance in ImojiCreateService 
+
+## 2.0.1
+* Move to io.imoji namespace
+
+##2.0.0
+* Updated build to match version 2.0.0 of imoji-android-sdk
+
 #0.1.10
 - Use smaller JPG assets for Imoji Editor Tips for a smaller footprint
 
