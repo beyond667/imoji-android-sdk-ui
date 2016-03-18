@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?android:windowBackground"
-    tools:context="com.imoji.fragments.imoji.TagImojiFragment">
+    tools:context="io.imoji.sdk.ui.TagImojiFragment">
 
     <io.imoji.sdk.ui.view.CheckeredView
         app:imoji__firstCheckerColor="?colorPrimary"
