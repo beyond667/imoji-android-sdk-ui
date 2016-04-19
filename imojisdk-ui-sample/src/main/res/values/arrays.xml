@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="example_labels">
+        <item>@string/example_label_trace</item>
+        <item>@string/example_label_quarter_screen_widget</item>
+        <item>@string/example_label_half_screen_widget</item>
+        <item>@string/example_label_full_screen_widget</item>
+    </string-array>
+
+</resources>
