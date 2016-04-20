@@ -47,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
                     case 1:
                     case 2:
                     case 3:
-
+                        Intent intent = new Intent(MainActivity.this,WidgetActivity.class);
+                        intent.putExtra("title",String.valueOf(id));
+                        startActivity(intent);
                         break;
                 }
             }
@@ -61,10 +63,10 @@ public class MainActivity extends AppCompatActivity {
             Imoji model = data.getParcelableExtra(ImojiEditorActivity.IMOJI_MODEL_BUNDLE_ARG_KEY);
             if (model != null) {
                 Log.d(LOG_TAG, "imoji id: " + model.getIdentifier());
-                showCreatedImoji(EditorBitmapCache.getInstance().get(EditorBitmapCache.Keys.OUTLINED_BITMAP));
             } else {
                 Log.d(LOG_TAG, "we got a token: " +data.getStringExtra(ImojiEditorActivity.CREATE_TOKEN_BUNDLE_ARG_KEY));
             }
+            showCreatedImoji(EditorBitmapCache.getInstance().get(EditorBitmapCache.Keys.OUTLINED_BITMAP));
         }
     }
 
@@ -81,7 +83,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void showCreatedImoji(final Bitmap bitmap){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setPositiveButton("Awesome", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.dialog_title_created_imoji);
+        builder.setPositiveButton(R.string.dialog_positive_label_created_imoji, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();

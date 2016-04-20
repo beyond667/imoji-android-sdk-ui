@@ -5,4 +5,8 @@
     <string name="example_label_quarter_screen_widget">Quarter Screen Widget</string>
     <string name="example_label_half_screen_widget">Half Screen Widget</string>
     <string name="example_label_full_screen_widget">Full Screen Widget</string>
+
+    <string name="dialog_title_created_imoji">You created an Imoji!</string>
+    <string name="dialog_positive_label_created_imoji">Awesome</string>
+    <string name="title_activity_widget">WidgetActivity</string>
 </resources>

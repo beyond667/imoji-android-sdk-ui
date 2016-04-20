@@ -7,4 +7,7 @@
     <dimen name="tag_title_text_size">24sp</dimen>
     <dimen name="dot_dot_radius">7dp</dimen>
     <dimen name="dot_dot_margin">9dp</dimen>
+
+    <dimen name="imoji_box_side_length">74dp</dimen>
+    <dimen name="imoji_box_padding">6dp</dimen>
 </resources>

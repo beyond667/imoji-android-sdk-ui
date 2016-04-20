@@ -3,4 +3,21 @@
     <color name="dotdotview_selected_color">#FFFFFF</color>
     <color name="dotdotview_unselected_color">#66FFFFFF</color>
     <color name="imoji_hint_text_color">#666666</color>
+
+    <color name="search_widget_placeholder_1">#339dff</color>
+    <color name="search_widget_placeholder_2">#69cbd2</color>
+    <color name="search_widget_placeholder_3">#ffcf33</color>
+    <color name="search_widget_placeholder_4">#fb6370</color>
+    <color name="search_widget_placeholder_5">#deabc9</color>
+    <color name="search_widget_placeholder_6">#85add6</color>
+    <color name="search_widget_placeholder_7">#42d942</color>
+    <color name="search_widget_placeholder_8">#ff9854</color>
+    <color name="search_widget_placeholder_9">#eb9d9d</color>
+    <color name="search_widget_placeholder_10">#916bff</color>
+    <color name="search_widget_placeholder_11">#4dd8f7</color>
+    <color name="search_widget_placeholder_12">#85c686</color>
+    <color name="search_widget_placeholder_13">#d4a88c</color>
+    <color name="search_widget_placeholder_14">#ff7db4</color>
+    <color name="search_widget_placeholder_15">#b8aad2</color>
+
 </resources>
