@@ -20,4 +20,6 @@
     <color name="search_widget_placeholder_14">#ff7db4</color>
     <color name="search_widget_placeholder_15">#b8aad2</color>
 
+    <color name="search_widget_category_text">#393d49</color>
+
 </resources>

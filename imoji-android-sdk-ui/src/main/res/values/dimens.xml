@@ -8,7 +8,10 @@
     <dimen name="dot_dot_radius">7dp</dimen>
     <dimen name="dot_dot_margin">9dp</dimen>
 
-    <dimen name="imoji_image_view_side">74dp</dimen>
-    <dimen name="imoji_image_view_placeholder_padding">6dp</dimen>
-    <dimen name="imoji_image_view_vertical_margin">6dp</dimen>
+    <dimen name="imoji_search_result_width">74dp</dimen>
+    <dimen name="imoji_search_result_height">81dp</dimen>
+    <dimen name="imoji_search_result_text_box_height">24dp</dimen>
+    <dimen name="imoji_search_result_text_box_text_size">10.5sp</dimen>
+    <dimen name="imoji_search_result_placeholder_padding">6dp</dimen>
+    <dimen name="imoji_search_result_small_sticker_width">52dp</dimen>
 </resources>
