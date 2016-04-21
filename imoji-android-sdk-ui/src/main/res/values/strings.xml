@@ -18,4 +18,6 @@
 
 
     <string name="imoji_tips">Tips</string>
+
+    <string name="imoji_search_widget_search_box_hint">imoji stickers</string>
 </resources>

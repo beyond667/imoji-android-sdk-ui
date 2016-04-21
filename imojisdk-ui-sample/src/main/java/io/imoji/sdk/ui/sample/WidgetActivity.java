@@ -40,6 +40,11 @@ public class WidgetActivity extends AppCompatActivity {
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
         container.addView(layout, params);
 
+        ImojiSearchBarLayout layout2 = new ImojiSearchBarLayout(this);
+        LayoutParams params2 = new LayoutParams(LayoutParams.MATCH_PARENT, height);
+        params2.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        container.addView(layout2, params2);
+
     }
 
 }

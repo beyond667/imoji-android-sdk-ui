@@ -19,19 +19,21 @@
         android:layout_toRightOf="@id/search_bar_first_left_icon"
         android:background="@drawable/imoji_search" />
 
-    <EditText
+    <io.imoji.sdk.widgets.searchwidgets.ui.ImojiEditText
         android:id="@+id/search_bar_text_box"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/imoji_search_bar_icon_side"
         android:layout_toLeftOf="@+id/search_bar_right_icon"
         android:layout_toRightOf="@id/search_bar_second_left_icon"
+        android:background="@null"
         android:inputType="textNoSuggestions"
         android:maxHeight="@dimen/imoji_search_bar_icon_side"
         android:minHeight="@dimen/imoji_search_bar_icon_side"
         android:singleLine="true"
+        android:textCursorDrawable="@drawable/search_bar_cursor"
         android:textSize="@dimen/imoji_search_bar_text"
-        android:background="@null"
-        android:textCursorDrawable="@drawable/search_bar_cursor" />
+        android:hint="@string/imoji_search_widget_search_box_hint"
+        android:textColorHint="@color/search_widget_search_bar_unfocused_text_color"/>
 
     <View
         android:id="@+id/search_bar_right_icon"
