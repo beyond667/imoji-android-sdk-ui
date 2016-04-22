@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/quarter_widget_recycler"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/imoji_quarter_search_widget_recycler_height"
+        android:layout_marginTop="@dimen/imoji_quarter_search_widget_recycler_top_margin"/>
+
+    <io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchBarLayout
+        android:id="@+id/quarter_widget_search"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/imoji_search_bar_height"/>
+
+</LinearLayout>

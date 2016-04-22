@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/imoji_search_bar_height"
+    android:focusableInTouchMode="true"
+    android:gravity="center_vertical">
 
     <View
         android:id="@+id/search_bar_first_left_icon"
@@ -43,6 +47,4 @@
         android:layout_marginRight="@dimen/imoji_search_bar_right_icon_right_marg"
         android:background="@drawable/imoji_clearfield"
         android:visibility="gone"/>
-
-
-</merge>
+</RelativeLayout>

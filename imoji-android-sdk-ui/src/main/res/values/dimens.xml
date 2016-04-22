@@ -22,4 +22,7 @@
     <dimen name="imoji_search_bar_second_left_icon_right_marg">8dp</dimen>
     <dimen name="imoji_search_bar_right_icon_right_marg">14dp</dimen>
     <dimen name="imoji_search_bar_text">20sp</dimen>
+
+    <dimen name="imoji_quarter_search_widget_recycler_height">91dp</dimen>
+    <dimen name="imoji_quarter_search_widget_recycler_top_margin">5dp</dimen>
 </resources>

@@ -1,10 +1,9 @@
-package io.imoji.sdk.widgets.searchwidgets;
+package io.imoji.sdk.widgets.searchwidgets.components;
 
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -21,15 +20,18 @@ public class ImojiSearchBarLayout extends RelativeLayout {
     private View rightIcon;
     private ImojiEditText textBox;
 
-
     public ImojiSearchBarLayout(Context context) {
         super(context);
-        setVerticalGravity(Gravity.CENTER_VERTICAL);
-        //so that textBox doesn't grab focus automatically
-        setFocusableInTouchMode(true);
+        init();
+    }
 
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.imoji_search_bar, this);
+    public ImojiSearchBarLayout(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
+
+    private void init() {
+        inflate(getContext(), R.layout.imoji_search_bar, this);
 
         firstLeftIcon = this.findViewById(R.id.search_bar_first_left_icon);
         secondLeftIcon = this.findViewById(R.id.search_bar_second_left_icon);
@@ -63,11 +65,6 @@ public class ImojiSearchBarLayout extends RelativeLayout {
                 textBox.setText("");
             }
         });
-        init();
-    }
-
-    public void init(){
-
     }
 
     public void onDeleteSearchText() {
