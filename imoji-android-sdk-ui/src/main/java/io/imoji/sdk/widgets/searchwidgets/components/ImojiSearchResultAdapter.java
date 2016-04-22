@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import io.imoji.sdk.ui.R;
 import io.imoji.sdk.widgets.searchwidgets.ui.ImojiImageView;
@@ -22,15 +23,25 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<ImojiSearchRe
 
     private List<SearchResult> results;
     private Context context;
+    private int placeholderRandomizer;
 
     public ImojiSearchResultAdapter(Context context) {
         results = new ArrayList<>();
         this.context = context;
+
+        int[] colorArray = context.getResources().getIntArray(R.array.search_widget_placeholder_colors);
+        this.placeholderRandomizer = new Random().nextInt(colorArray.length);
     }
 
     public void add(SearchResult item) {
         results.add(item);
         notifyItemInserted(results.size() - 1);
+    }
+
+    public void clearSet(){
+        int size = results.size();
+        results.clear();
+        notifyItemRangeRemoved(0,size);
     }
 
     @Override
@@ -44,17 +55,22 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<ImojiSearchRe
     @Override
     public void onBindViewHolder(final SearchResultHolder holder, int position) {
         SearchResult result = results.get(position);
-        //        int[] colorArray = context.getResources().getIntArray(R.array.search_widget_placeholder_colors);
-//        int color =colorArray[new Random().nextInt(colorArray.length)];
-        holder.imageView.setPlaceholder(R.color.search_widget_placeholder_1);
+        holder.imageView.setPlaceholder(pickPlaceholderColor(position));
         holder.imageView.displayResult(result, new ImojiImageView.ResultDisplayedCallback() {
             @Override
             public void onResultDisplayed(SearchResult result) {
-                holder.textView.setText(result.getTitle());
-                holder.textView.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Montserrat-Light.otf"));
-                holder.textView.setVisibility(View.VISIBLE);
+                if(result.isCategory()){
+                    holder.textView.setText(result.getTitle());
+                    holder.textView.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Montserrat-Light.otf"));
+                    holder.textView.setVisibility(View.VISIBLE);
+                }
             }
         });
+    }
+
+    private int pickPlaceholderColor(int position) {
+        int[] colorArray = context.getResources().getIntArray(R.array.search_widget_placeholder_colors);
+        return colorArray[(placeholderRandomizer + position) % colorArray.length];
     }
 
     @Override

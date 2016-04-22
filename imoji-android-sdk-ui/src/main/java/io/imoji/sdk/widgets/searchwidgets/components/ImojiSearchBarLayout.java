@@ -4,8 +4,11 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import io.imoji.sdk.ui.R;
 import io.imoji.sdk.widgets.searchwidgets.ui.ImojiEditText;
@@ -20,10 +23,7 @@ public class ImojiSearchBarLayout extends RelativeLayout {
     private View rightIcon;
     private ImojiEditText textBox;
 
-    public ImojiSearchBarLayout(Context context) {
-        super(context);
-        init();
-    }
+    private ImojiSearchListener imojiSearchListener;
 
     public ImojiSearchBarLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -59,6 +59,20 @@ public class ImojiSearchBarLayout extends RelativeLayout {
             }
         });
 
+        textBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_DONE ||
+                        (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_DOWN)) {
+                    if (imojiSearchListener != null) {
+                        imojiSearchListener.onTextSubmit(textBox.getText().toString());
+                    }
+                    textBox.clearFocus();
+                }
+                return true;
+            }
+        });
+
         rightIcon.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,12 +81,25 @@ public class ImojiSearchBarLayout extends RelativeLayout {
         });
     }
 
+    public void setImojiSearchListener(ImojiSearchListener searchListener){
+        this.imojiSearchListener = searchListener;
+    }
+
+    public void hideLeftButton() {
+        firstLeftIcon.setVisibility(GONE);
+    }
+
     public void onDeleteSearchText() {
 
     }
 
     public void onStartSearchText() {
 
+    }
+
+    public interface ImojiSearchListener{
+
+        void onTextSubmit(String term);
     }
 
 }

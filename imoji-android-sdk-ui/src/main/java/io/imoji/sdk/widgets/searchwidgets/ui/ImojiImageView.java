@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.support.annotation.ColorRes;
 import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
 import android.view.animation.Animation;
@@ -24,7 +23,7 @@ import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter;
 public class ImojiImageView extends ImageView {
 
     private final static int GRADIENT_START_ALPHA = 0;
-    private final static int GRADIENT_END_ALPHA = 16;
+    private final static int GRADIENT_END_ALPHA = 100;
 
     public ImojiImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -79,14 +78,13 @@ public class ImojiImageView extends ImageView {
         setTag(target);
 
         Picasso.with(getContext()).load(searchResult.getUri()).into(target);
-        Picasso.with(getContext()).setIndicatorsEnabled(true);
     }
 
 
-    public void setPlaceholder(@ColorRes int placeholderColor) {
-        int color = getResources().getColor(placeholderColor);
+    public void setPlaceholder(int placeholderColor) {
         GradientDrawable placeholder = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[]{ColorUtils.setAlphaComponent(color, GRADIENT_START_ALPHA), ColorUtils.setAlphaComponent(color, GRADIENT_END_ALPHA)});
+                new int[]{ColorUtils.setAlphaComponent(placeholderColor, GRADIENT_START_ALPHA),
+                        ColorUtils.setAlphaComponent(placeholderColor, GRADIENT_END_ALPHA)});
         placeholder.setShape(GradientDrawable.OVAL);
         setImageDrawable(placeholder);
     }

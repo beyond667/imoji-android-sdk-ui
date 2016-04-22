@@ -30,14 +30,15 @@
         android:layout_toLeftOf="@+id/search_bar_right_icon"
         android:layout_toRightOf="@id/search_bar_second_left_icon"
         android:background="@null"
+        android:hint="@string/imoji_search_widget_search_box_hint"
+        android:imeOptions="actionDone"
         android:inputType="textNoSuggestions"
         android:maxHeight="@dimen/imoji_search_bar_icon_side"
         android:minHeight="@dimen/imoji_search_bar_icon_side"
         android:singleLine="true"
+        android:textColorHint="@color/search_widget_search_bar_unfocused_text_color"
         android:textCursorDrawable="@drawable/search_bar_cursor"
-        android:textSize="@dimen/imoji_search_bar_text"
-        android:hint="@string/imoji_search_widget_search_box_hint"
-        android:textColorHint="@color/search_widget_search_bar_unfocused_text_color"/>
+        android:textSize="@dimen/imoji_search_bar_text" />
 
     <View
         android:id="@+id/search_bar_right_icon"
@@ -46,5 +47,5 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/imoji_search_bar_right_icon_right_marg"
         android:background="@drawable/imoji_clearfield"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 </RelativeLayout>

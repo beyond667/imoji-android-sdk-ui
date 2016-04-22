@@ -25,4 +25,5 @@
 
     <dimen name="imoji_quarter_search_widget_recycler_height">91dp</dimen>
     <dimen name="imoji_quarter_search_widget_recycler_top_margin">5dp</dimen>
+    <dimen name="imoji_quarter_search_widget_recycler_inbetween_padding">10dp</dimen>
 </resources>
