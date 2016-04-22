@@ -28,7 +28,7 @@ public class ImojiEditText extends EditText {
         init();
     }
 
-    private void init(){
+    private void init() {
         super.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Montserrat-Light.otf"));
     }
 

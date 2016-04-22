@@ -41,7 +41,8 @@
         android:layout_height="@dimen/imoji_search_bar_icon_side"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/imoji_search_bar_right_icon_right_marg"
-        android:background="@drawable/imoji_clearfield" />
+        android:background="@drawable/imoji_clearfield"
+        android:visibility="gone"/>
 
 
 </merge>
