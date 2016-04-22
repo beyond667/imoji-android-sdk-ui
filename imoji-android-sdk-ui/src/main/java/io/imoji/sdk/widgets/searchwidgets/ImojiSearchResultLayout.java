@@ -8,8 +8,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.support.annotation.ColorRes;
 import android.support.v4.graphics.ColorUtils;
-import android.util.TypedValue;
-import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -28,7 +27,6 @@ public class ImojiSearchResultLayout extends RelativeLayout {
 
     private final static int GRADIENT_START_ALPHA = 0;
     private final static int GRADIENT_END_ALPHA = 16;
-    private final static float TEXT_SIZE_SP = 10.5f;
 
     private ImageView imageView;
     private TextView textView;
@@ -36,14 +34,13 @@ public class ImojiSearchResultLayout extends RelativeLayout {
     public ImojiSearchResultLayout(Context context, @ColorRes int placeholderColor) {
         super(context);
 
-        imageView = new ImageView(context);
-        int width = (int) getResources().getDimension(io.imoji.sdk.ui.R.dimen.imoji_search_result_width);
-        LayoutParams params = new LayoutParams(width, width);
-        params.addRule(RelativeLayout.CENTER_IN_PARENT);
-        int padding = (int) getResources().getDimension(R.dimen.imoji_search_result_placeholder_padding);
-        imageView.setPadding(padding, padding, padding, padding);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater.inflate(R.layout.imoji_search_result, this);
+
+        imageView = (ImageView) this.findViewById(R.id.imoji_search_result_image);
         imageView.setImageDrawable(createPlaceholder(placeholderColor));
-        addView(imageView, params);
+
+        textView = (TextView) this.findViewById(R.id.imoji_search_result_category_title);
     }
 
     private Drawable createPlaceholder(@ColorRes int placeholderColor) {
@@ -71,7 +68,7 @@ public class ImojiSearchResultLayout extends RelativeLayout {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         if (title != null) {
-                            displayCategory(bitmap,title);
+                            displayCategory(bitmap, title);
                         } else {
                             displaySticker(bitmap);
                         }
@@ -114,17 +111,8 @@ public class ImojiSearchResultLayout extends RelativeLayout {
         imageView.setLayoutParams(params);
         imageView.setImageBitmap(bitmap);
 
-        textView = new TextView(getContext());
-        int textHeight = (int) getResources().getDimension(R.dimen.imoji_search_result_text_box_height);
-        LayoutParams textParams = new LayoutParams(LayoutParams.MATCH_PARENT, textHeight);
-        textParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, TEXT_SIZE_SP);
-        textView.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Montserrat-Light.otf"));
         textView.setText(title);
-        textView.setTextColor(getResources().getColor(R.color.search_widget_category_text));
-        textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-        addView(textView, textParams);
+        textView.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Montserrat-Light.otf"));
+        textView.setVisibility(VISIBLE);
     }
-
-
 }
