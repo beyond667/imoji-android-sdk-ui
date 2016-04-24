@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                     case 2:
                     case 3:
                         Intent intent = new Intent(MainActivity.this,WidgetActivity.class);
-                        intent.putExtra("title",String.valueOf(id));
+                        intent.putExtra(WidgetActivity.WIDGET_IDENTIFIER,(int)id);
                         startActivity(intent);
                         break;
                 }

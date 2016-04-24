@@ -3,7 +3,6 @@ package io.imoji.sdk.widgets.searchwidgets.components;
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -25,32 +24,29 @@ import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter.Se
  */
 public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBarListener, ImojiSearchTapListener {
 
-    private RecyclerView recyclerView;
-    private ImojiSearchBarLayout searchBarLayout;
+    protected RecyclerView recyclerView;
+    protected ImojiSearchBarLayout searchBarLayout;
     private ImojiSearchResultAdapter resultAdapter;
     private ImojiWidgetListener widgetListener;
 
-    public ImojiBaseSearchWidget(Context context) {
+    public ImojiBaseSearchWidget(Context context, int spanCount, int orientation, boolean searchOnTop) {
         super(context);
-        init(context);
-    }
+        inflate(getContext(), R.layout.imoji_base_widget, this);
 
-    public ImojiBaseSearchWidget(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context);
-    }
-
-    private void init(Context context) {
-        inflate(getContext(), R.layout.imoji_quarter_screen_widget, this);
-
-        recyclerView = (RecyclerView) this.findViewById(R.id.quarter_widget_recycler);
-        searchBarLayout = (ImojiSearchBarLayout) this.findViewById(R.id.quarter_widget_search);
+        recyclerView = (RecyclerView) this.findViewById(R.id.widget_recycler);
+        searchBarLayout = (ImojiSearchBarLayout) this.findViewById(R.id.widget_search);
         searchBarLayout.setImojiSearchListener(this);
-        searchBarLayout.hideLeftButton();
+
+        if(searchOnTop){
+            LinearLayout container = (LinearLayout) this.findViewById(R.id.widget_container);
+            container.removeAllViews();
+            container.addView(searchBarLayout,0);
+            container.addView(recyclerView,1);
+        }
 
         resultAdapter = new ImojiSearchResultAdapter(context);
         resultAdapter.setSearchTapListener(this);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(context.getApplicationContext(), 1, HORIZONTAL, false);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(context.getApplicationContext(), spanCount, orientation, false);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(resultAdapter);
