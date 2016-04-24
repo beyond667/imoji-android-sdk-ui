@@ -24,6 +24,7 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<ImojiSearchRe
     private List<SearchResult> results;
     private Context context;
     private int placeholderRandomizer;
+    private ImojiSearchTapListener tapListener;
 
     public ImojiSearchResultAdapter(Context context) {
         results = new ArrayList<>();
@@ -33,15 +34,10 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<ImojiSearchRe
         this.placeholderRandomizer = new Random().nextInt(colorArray.length);
     }
 
-    public void add(SearchResult item) {
-        results.add(item);
-        notifyItemInserted(results.size() - 1);
-    }
-
-    public void clearSet(){
-        int size = results.size();
+    public void repopulate(List<SearchResult> newResults) {
         results.clear();
-        notifyItemRangeRemoved(0,size);
+        results.addAll(newResults);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -78,7 +74,7 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<ImojiSearchRe
         return results.size();
     }
 
-    public class SearchResultHolder extends RecyclerView.ViewHolder {
+    public class SearchResultHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImojiImageView imageView;
         private TextView textView;
 
@@ -86,7 +82,23 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<ImojiSearchRe
             super(itemView);
             imageView = (ImojiImageView) itemView.findViewById(R.id.imoji_search_result_image);
             textView = (TextView) itemView.findViewById(R.id.imoji_search_result_category_title);
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            if(tapListener != null){
+                tapListener.onTap(results.get(getAdapterPosition()));
+            }
+        }
+    }
+
+    public void setSearchTapListener(ImojiSearchTapListener tapListener){
+        this.tapListener = tapListener;
+    }
+
+    public interface ImojiSearchTapListener{
+        void onTap(SearchResult searchResult);
     }
 
     public static class SearchResult {

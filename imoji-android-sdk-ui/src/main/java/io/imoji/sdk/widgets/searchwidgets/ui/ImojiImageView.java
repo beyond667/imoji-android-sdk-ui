@@ -23,7 +23,7 @@ import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter;
 public class ImojiImageView extends ImageView {
 
     private final static int GRADIENT_START_ALPHA = 0;
-    private final static int GRADIENT_END_ALPHA = 100;
+    private final static int GRADIENT_END_ALPHA = 16;
 
     public ImojiImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -47,9 +47,11 @@ public class ImojiImageView extends ImageView {
                     public void onAnimationEnd(Animation animation) {
                         setPadding(0, 0, 0, 0);
                         setImageBitmap(bitmap);
-                        if(searchResult.isCategory()){
+                        if (searchResult.isCategory()) {
                             int width = (int) getResources().getDimension(R.dimen.imoji_search_result_small_sticker_width);
                             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, width);
+                            int topMargin = (int) getResources().getDimension(R.dimen.imoji_search_result_small_sticker_top_margin);
+                            params.setMargins(0, topMargin, 0, 0);
                             params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
                             params.addRule(RelativeLayout.CENTER_HORIZONTAL);
                             setLayoutParams(params);
@@ -89,7 +91,7 @@ public class ImojiImageView extends ImageView {
         setImageDrawable(placeholder);
     }
 
-    public interface ResultDisplayedCallback{
+    public interface ResultDisplayedCallback {
 
         void onResultDisplayed(ImojiSearchResultAdapter.SearchResult result);
     }

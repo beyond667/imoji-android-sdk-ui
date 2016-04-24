@@ -9,11 +9,12 @@
     <dimen name="dot_dot_margin">9dp</dimen>
 
     <dimen name="imoji_search_result_width">74dp</dimen>
-    <dimen name="imoji_search_result_height">81dp</dimen>
+    <dimen name="imoji_search_result_height">86dp</dimen>
     <dimen name="imoji_search_result_text_box_height">24dp</dimen>
     <dimen name="imoji_search_result_text_box_text_size">10.5sp</dimen>
     <dimen name="imoji_search_result_placeholder_padding">6dp</dimen>
     <dimen name="imoji_search_result_small_sticker_width">52dp</dimen>
+    <dimen name="imoji_search_result_small_sticker_top_margin">5dp</dimen>
 
     <dimen name="imoji_search_bar_height">44dp</dimen>
     <dimen name="imoji_search_bar_icon_side">24dp</dimen>
@@ -23,7 +24,7 @@
     <dimen name="imoji_search_bar_right_icon_right_marg">14dp</dimen>
     <dimen name="imoji_search_bar_text">20sp</dimen>
 
-    <dimen name="imoji_quarter_search_widget_recycler_height">91dp</dimen>
+    <dimen name="imoji_quarter_search_widget_recycler_height">86dp</dimen>
     <dimen name="imoji_quarter_search_widget_recycler_top_margin">5dp</dimen>
     <dimen name="imoji_quarter_search_widget_recycler_inbetween_padding">10dp</dimen>
 </resources>

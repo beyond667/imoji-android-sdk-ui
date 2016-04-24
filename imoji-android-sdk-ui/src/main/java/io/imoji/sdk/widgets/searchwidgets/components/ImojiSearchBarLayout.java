@@ -19,11 +19,10 @@ import io.imoji.sdk.widgets.searchwidgets.ui.ImojiEditText;
 public class ImojiSearchBarLayout extends RelativeLayout {
 
     private View firstLeftIcon;
-    private View secondLeftIcon;
     private View rightIcon;
     private ImojiEditText textBox;
 
-    private ImojiSearchListener imojiSearchListener;
+    private ImojiSearchBarListener imojiSearchBarListener;
 
     public ImojiSearchBarLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -34,7 +33,6 @@ public class ImojiSearchBarLayout extends RelativeLayout {
         inflate(getContext(), R.layout.imoji_search_bar, this);
 
         firstLeftIcon = this.findViewById(R.id.search_bar_first_left_icon);
-        secondLeftIcon = this.findViewById(R.id.search_bar_second_left_icon);
         textBox = (ImojiEditText) this.findViewById(R.id.search_bar_text_box);
         rightIcon = this.findViewById(R.id.search_bar_right_icon);
 
@@ -64,8 +62,8 @@ public class ImojiSearchBarLayout extends RelativeLayout {
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_DONE ||
                         (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_DOWN)) {
-                    if (imojiSearchListener != null) {
-                        imojiSearchListener.onTextSubmit(textBox.getText().toString());
+                    if (imojiSearchBarListener != null) {
+                        imojiSearchBarListener.onTextSubmit(textBox.getText().toString());
                     }
                     textBox.clearFocus();
                 }
@@ -77,29 +75,59 @@ public class ImojiSearchBarLayout extends RelativeLayout {
             @Override
             public void onClick(View view) {
                 textBox.setText("");
+                textBox.requestFocus();
+            }
+        });
+        setupBackButton();
+    }
+
+    public void setImojiSearchListener(ImojiSearchBarListener searchListener){
+        this.imojiSearchBarListener = searchListener;
+    }
+
+    protected void setupCloseButton(){
+        firstLeftIcon.setBackgroundResource(R.drawable.imoji_close);
+        firstLeftIcon.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(imojiSearchBarListener != null){
+                    imojiSearchBarListener.onCloseButtonTapped();
+                }
             }
         });
     }
 
-    public void setImojiSearchListener(ImojiSearchListener searchListener){
-        this.imojiSearchListener = searchListener;
+    protected void setupBackButton(){
+        firstLeftIcon.setBackgroundResource(R.drawable.imoji_back);
+        firstLeftIcon.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(imojiSearchBarListener != null){
+                    imojiSearchBarListener.onBackButtonTapped();
+                }
+            }
+        });
     }
 
     public void hideLeftButton() {
         firstLeftIcon.setVisibility(GONE);
     }
 
-    public void onDeleteSearchText() {
+    protected void onDeleteSearchText() {
 
     }
 
-    public void onStartSearchText() {
+    protected void onStartSearchText() {
 
     }
 
-    public interface ImojiSearchListener{
+    public interface ImojiSearchBarListener{
 
         void onTextSubmit(String term);
+
+        void onBackButtonTapped();
+
+        void onCloseButtonTapped();
     }
 
 }
