@@ -4,12 +4,12 @@
     android:layout_height="@dimen/imoji_search_result_height"
     android:orientation="vertical">
 
-    <io.imoji.sdk.widgets.searchwidgets.ui.ImojiImageView
+    <ImageView
         android:id="@+id/imoji_search_result_image"
         android:layout_width="match_parent"
         android:layout_height="@dimen/imoji_search_result_width"
         android:layout_centerInParent="true"
-        android:padding="@dimen/imoji_search_result_placeholder_padding" />
+        android:padding="@dimen/imoji_search_result_placeholder_padding"/>
 
     <TextView
         android:id="@+id/imoji_search_result_category_title"

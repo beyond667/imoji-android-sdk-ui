@@ -30,6 +30,7 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
     protected ImojiSearchBarLayout searchBarLayout;
     private ImojiSearchResultAdapter resultAdapter;
     private ImojiWidgetListener widgetListener;
+    private GridLayoutManager gridLayoutManager;
 
     public ImojiBaseSearchWidget(Context context, int spanCount, int orientation, boolean searchOnTop) {
         super(context);
@@ -48,7 +49,7 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
 
         resultAdapter = new ImojiSearchResultAdapter(context);
         resultAdapter.setSearchTapListener(this);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(context.getApplicationContext(), spanCount, orientation, false);
+        gridLayoutManager = new GridLayoutManager(context.getApplicationContext(), spanCount, orientation, false);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(resultAdapter);
@@ -112,7 +113,6 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
     }
 
     private void repopulateAdapter(List<SearchResult> newResults) {
-        recyclerView.removeAllViews();
         resultAdapter.repopulate(newResults);
     }
 
@@ -145,6 +145,7 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
     @Override
     public void onTap(SearchResult searchResult) {
         if (searchResult.isCategory()) {
+            gridLayoutManager.scrollToPositionWithOffset(0, 0);
             searchTerm(searchResult.getTitle());
             if (this.widgetListener != null) {
                 this.widgetListener.onCategoryTapped();
