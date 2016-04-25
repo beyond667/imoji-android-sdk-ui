@@ -15,6 +15,9 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
 
     public ImojiHalfScreenWidget(Context context) {
         super(context, SPAN_COUNT, HORIZONTAL, true);
+
+        searchBarLayout.setLeftButtonVisibility(GONE);
+
         int rowHeight = (int)getResources().getDimension(R.dimen.imoji_search_result_row_height);
         recyclerView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, rowHeight * SPAN_COUNT));
 
@@ -23,5 +26,19 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
         recyclerView.setPadding(horizontalPadding,0,horizontalPadding,0);
 
         recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(context));
+    }
+
+    @Override
+    public void onBackButtonTapped() {
+        super.onBackButtonTapped();
+        if(historyStack.size() == 0){
+            searchBarLayout.setLeftButtonVisibility(GONE);
+        }
+    }
+
+    @Override
+    protected void onHistoryCreated() {
+        super.onHistoryCreated();
+        searchBarLayout.setLeftButtonVisibility(VISIBLE);
     }
 }

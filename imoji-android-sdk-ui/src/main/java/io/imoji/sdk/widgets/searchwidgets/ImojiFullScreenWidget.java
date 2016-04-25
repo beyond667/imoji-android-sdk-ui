@@ -22,6 +22,8 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
         LinearLayout container = (LinearLayout) this.findViewById(R.id.widget_container);
         container.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
+        searchBarLayout.setupCloseButton();
+
         recyclerView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(context) {
@@ -37,5 +39,17 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
         });
     }
 
+    @Override
+    public void onBackButtonTapped() {
+        super.onBackButtonTapped();
+        if(historyStack.size() == 0){
+            searchBarLayout.setupCloseButton();
+        }
+    }
 
+    @Override
+    protected void onHistoryCreated() {
+        super.onHistoryCreated();
+        searchBarLayout.setupBackButton();
+    }
 }

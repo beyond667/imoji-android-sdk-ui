@@ -15,7 +15,7 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
 
     public ImojiQuarterScreenWidget(Context context) {
         super(context, 1, HORIZONTAL, false);
-        searchBarLayout.hideLeftButton();
+        searchBarLayout.setLeftButtonVisibility(GONE);
 
         int horizontalPadding = (int)getResources()
                 .getDimension(R.dimen.imoji_search_recycler_horizontal_padding);

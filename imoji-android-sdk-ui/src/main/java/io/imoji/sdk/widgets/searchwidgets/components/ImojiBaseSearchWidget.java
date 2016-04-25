@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import io.imoji.sdk.ApiTask;
 import io.imoji.sdk.ImojiSDK;
@@ -32,9 +33,22 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
     private ImojiWidgetListener widgetListener;
     private GridLayoutManager gridLayoutManager;
 
+    protected Stack<String> historyStack;
+
     public ImojiBaseSearchWidget(Context context, int spanCount, int orientation, boolean searchOnTop) {
         super(context);
         inflate(getContext(), R.layout.imoji_base_widget, this);
+
+        historyStack = new Stack<String>() {
+
+            @Override
+            public String push(String object) {
+                if (size() == 0) {
+                    onHistoryCreated();
+                }
+                return super.push(object);
+            }
+        };
 
         recyclerView = (RecyclerView) this.findViewById(R.id.widget_recycler);
         searchBarLayout = (ImojiSearchBarLayout) this.findViewById(R.id.widget_search);
@@ -54,7 +68,7 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(resultAdapter);
 
-        searchCategories(context);
+        searchCategories();
     }
 
     public class VerticalSpaceItemDecoration extends RecyclerView.ItemDecoration {
@@ -79,7 +93,7 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
     }
 
 
-    private void searchTerm(String term) {
+    private void searchTerm(String term, boolean addToHistory) {
         ImojiSDK.getInstance()
                 .createSession(getContext().getApplicationContext())
                 .searchImojis(term)
@@ -93,11 +107,14 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
                         repopulateAdapter(newResults);
                     }
                 });
+        if (addToHistory) {
+            historyStack.push(term);
+        }
     }
 
-    private void searchCategories(Context context) {
+    private void searchCategories() {
         ImojiSDK.getInstance()
-                .createSession(context.getApplicationContext())
+                .createSession(getContext().getApplicationContext())
                 .getImojiCategories(Category.Classification.Trending)
                 .executeAsyncTask(new ApiTask.WrappedAsyncTask<CategoriesResponse>() {
                     @Override
@@ -118,7 +135,7 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
 
     @Override
     public void onTextSubmit(String term) {
-        searchTerm(term);
+        searchTerm(term, true);
         if (this.widgetListener != null) {
             widgetListener.onTermSearched(term);
         }
@@ -126,6 +143,14 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
 
     @Override
     public void onBackButtonTapped() {
+        historyStack.pop();
+        if (historyStack.size() == 0) {
+            searchBarLayout.setText(getContext().getString(R.string.imoji_search_widget_search_box_hint));
+            searchCategories();
+        } else {
+            searchBarLayout.setText(historyStack.peek());
+            searchTerm(historyStack.peek(), false);
+        }
         if (this.widgetListener != null) {
             widgetListener.onBackButtonTapped();
         }
@@ -145,8 +170,9 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
     @Override
     public void onTap(SearchResult searchResult) {
         if (searchResult.isCategory()) {
+            searchBarLayout.setText(searchResult.getTitle());
             gridLayoutManager.scrollToPositionWithOffset(0, 0);
-            searchTerm(searchResult.getTitle());
+            searchTerm(searchResult.getTitle(), true);
             if (this.widgetListener != null) {
                 this.widgetListener.onCategoryTapped();
             }
@@ -155,6 +181,10 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
                 this.widgetListener.onStickerTapped();
             }
         }
+    }
+
+    protected void onHistoryCreated() {
+
     }
 
     public interface ImojiWidgetListener {

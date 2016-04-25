@@ -85,7 +85,7 @@ public class ImojiSearchBarLayout extends RelativeLayout {
         this.imojiSearchBarListener = searchListener;
     }
 
-    protected void setupCloseButton(){
+    public void setupCloseButton(){
         firstLeftIcon.setBackgroundResource(R.drawable.imoji_close);
         firstLeftIcon.setOnClickListener(new OnClickListener() {
             @Override
@@ -97,7 +97,7 @@ public class ImojiSearchBarLayout extends RelativeLayout {
         });
     }
 
-    protected void setupBackButton(){
+    public void setupBackButton(){
         firstLeftIcon.setBackgroundResource(R.drawable.imoji_back);
         firstLeftIcon.setOnClickListener(new OnClickListener() {
             @Override
@@ -109,8 +109,13 @@ public class ImojiSearchBarLayout extends RelativeLayout {
         });
     }
 
-    public void hideLeftButton() {
-        firstLeftIcon.setVisibility(GONE);
+    public void setLeftButtonVisibility (int visibility) {
+        firstLeftIcon.setVisibility(visibility);
+    }
+
+    public void setText(String text){
+        textBox.setText(text);
+        textBox.clearFocus();
     }
 
     protected void onDeleteSearchText() {
