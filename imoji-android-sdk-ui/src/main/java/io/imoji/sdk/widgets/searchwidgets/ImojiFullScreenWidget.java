@@ -1,6 +1,9 @@
 package io.imoji.sdk.widgets.searchwidgets;
 
 import android.content.Context;
+import android.graphics.Rect;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
@@ -17,5 +20,16 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
         LinearLayout container = (LinearLayout) this.findViewById(R.id.widget_container);
         container.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         recyclerView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(context){
+
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                super.getItemOffsets(outRect, view, parent, state);
+
+            }
+        });
     }
+
+
 }

@@ -1,8 +1,10 @@
 package io.imoji.sdk.widgets.searchwidgets.components;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -37,11 +39,11 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
         searchBarLayout = (ImojiSearchBarLayout) this.findViewById(R.id.widget_search);
         searchBarLayout.setImojiSearchListener(this);
 
-        if(searchOnTop){
+        if (searchOnTop) {
             LinearLayout container = (LinearLayout) this.findViewById(R.id.widget_container);
             container.removeAllViews();
-            container.addView(searchBarLayout,0);
-            container.addView(recyclerView,1);
+            container.addView(searchBarLayout, 0);
+            container.addView(recyclerView, 1);
         }
 
         resultAdapter = new ImojiSearchResultAdapter(context);
@@ -53,6 +55,28 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
 
         searchCategories(context);
     }
+
+    public class VerticalSpaceItemDecoration extends RecyclerView.ItemDecoration {
+
+        private final int verticalPadding;
+        private final int horizontalPadding;
+
+        public VerticalSpaceItemDecoration(Context context) {
+            this.verticalPadding = (int) context.getResources()
+                    .getDimension(R.dimen.imoji_search_recycler_vertical_padding);
+            this.horizontalPadding = (int) context.getResources()
+                    .getDimension(R.dimen.imoji_search_recycler_horizontal_padding);
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
+                                   RecyclerView.State state) {
+            outRect.bottom = verticalPadding;
+            outRect.left = horizontalPadding;
+            outRect.right = horizontalPadding;
+        }
+    }
+
 
     private void searchTerm(String term) {
         ImojiSDK.getInstance()
