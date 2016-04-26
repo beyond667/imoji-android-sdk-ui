@@ -14,6 +14,7 @@ import java.util.Stack;
 import io.imoji.sdk.ApiTask;
 import io.imoji.sdk.ImojiSDK;
 import io.imoji.sdk.objects.Category;
+import io.imoji.sdk.objects.CategoryFetchOptions;
 import io.imoji.sdk.objects.Imoji;
 import io.imoji.sdk.response.CategoriesResponse;
 import io.imoji.sdk.response.ImojisResponse;
@@ -115,7 +116,7 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
     private void searchCategories() {
         ImojiSDK.getInstance()
                 .createSession(getContext().getApplicationContext())
-                .getImojiCategories(Category.Classification.Trending)
+                .getImojiCategories(new CategoryFetchOptions(Category.Classification.Trending))
                 .executeAsyncTask(new ApiTask.WrappedAsyncTask<CategoriesResponse>() {
                     @Override
                     protected void onPostExecute(CategoriesResponse categoriesResponse) {
