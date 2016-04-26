@@ -21,6 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import io.imoji.sdk.objects.Category;
+import io.imoji.sdk.objects.Imoji;
+import io.imoji.sdk.objects.RenderingOptions;
+import io.imoji.sdk.objects.RenderingOptions.ImageFormat;
 import io.imoji.sdk.ui.R;
 
 /**
@@ -67,7 +71,7 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<ImojiSearchRe
         final SearchResult result = results.get(position);
         resetView(holder.imageView, holder.textView);
         Picasso.with(context)
-                .load(result.getUri())
+                .load(result.getThumbnailUri())
                 .placeholder(getPlaceholder(position))
                 .into(holder.imageView, new Callback() {
                     @Override
@@ -120,28 +124,50 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<ImojiSearchRe
 
     public static class SearchResult {
 
-        private Uri uri;
-        private String title;
+        private Imoji imoji;
+        private Category category;
 
-        public SearchResult(Uri uri, String title) {
-            this.uri = uri;
-            this.title = title;
+        public SearchResult(Imoji imoji) {
+            this.imoji = imoji;
         }
 
-        public SearchResult(Uri uri) {
-            this.uri = uri;
+        public SearchResult(Category category) {
+            this.category = category;
         }
 
-        public Uri getUri() {
-            return uri;
+        public Imoji getImoji() {
+            return imoji;
+        }
+
+        public Category getCategory() {
+            return category;
+        }
+
+        public Uri getThumbnailUri(){
+            Imoji thumbailImoji = this.imoji;
+            if(isCategory()){
+                thumbailImoji = category.getPreviewImoji();
+            }
+            return thumbailImoji.getStandardThumbnailUri();
         }
 
         public String getTitle() {
+            String title = null;
+            if(isCategory()){
+                title = category.getTitle();
+            }
             return title;
         }
 
         public boolean isCategory() {
-            return title != null;
+            return category != null && imoji == null;
+        }
+
+        public Uri getUri(ImageFormat imageFormat){
+            return getImoji().urlForRenderingOption(new RenderingOptions(
+                    RenderingOptions.BorderStyle.Sticker,
+                    imageFormat,
+                    RenderingOptions.Size.Thumbnail));
         }
     }
 

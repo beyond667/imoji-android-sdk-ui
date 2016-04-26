@@ -1,5 +1,6 @@
 package io.imoji.sdk.ui.sample;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ViewGroup;
@@ -58,7 +59,7 @@ public class WidgetActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onStickerTapped() {
+            public void onStickerTapped(Uri uri) {
                 Toast.makeText(getApplicationContext(), "STICKER TAPPED", Toast.LENGTH_SHORT).show();
             }
 
