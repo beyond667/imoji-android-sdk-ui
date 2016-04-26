@@ -113,10 +113,10 @@ public class ImojiSearchBarLayout extends RelativeLayout {
         firstLeftIcon.setVisibility(visibility);
     }
 
-    public void setText(String text){
-        textBox.setText(text);
-        textBox.clearFocus();
-    }
+//    public void setText(String text){
+//        textBox.setText(text);
+//        textBox.clearFocus();
+//    }
 
     protected void onDeleteSearchText() {
 

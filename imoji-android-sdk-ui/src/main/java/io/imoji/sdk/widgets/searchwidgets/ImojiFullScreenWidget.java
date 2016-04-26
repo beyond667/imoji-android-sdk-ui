@@ -32,7 +32,7 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                 super.getItemOffsets(outRect, view, parent, state);
                 int resultSize = (int) getResources().getDimension(R.dimen.imoji_search_result_width);
-                int padding = (parent.getWidth() - resultSize * SPAN_COUNT) / (SPAN_COUNT*2);
+                int padding = (parent.getWidth() - resultSize * SPAN_COUNT) / (SPAN_COUNT * 2);
                 outRect.left = padding;
                 outRect.right = padding;
             }
@@ -40,16 +40,14 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
     }
 
     @Override
-    public void onBackButtonTapped() {
-        super.onBackButtonTapped();
-        if(historyStack.size() == 0){
-            searchBarLayout.setupCloseButton();
-        }
-    }
-
-    @Override
     protected void onHistoryCreated() {
         super.onHistoryCreated();
         searchBarLayout.setupBackButton();
+    }
+
+    @Override
+    protected void onHistoryDestroyed() {
+        super.onHistoryDestroyed();
+        searchBarLayout.setupCloseButton();
     }
 }

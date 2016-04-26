@@ -29,16 +29,14 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
     }
 
     @Override
-    public void onBackButtonTapped() {
-        super.onBackButtonTapped();
-        if(historyStack.size() == 0){
-            searchBarLayout.setLeftButtonVisibility(GONE);
-        }
-    }
-
-    @Override
     protected void onHistoryCreated() {
         super.onHistoryCreated();
         searchBarLayout.setLeftButtonVisibility(VISIBLE);
+    }
+
+    @Override
+    protected void onHistoryDestroyed() {
+        super.onHistoryDestroyed();
+        searchBarLayout.setLeftButtonVisibility(GONE);
     }
 }

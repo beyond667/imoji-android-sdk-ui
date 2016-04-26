@@ -49,6 +49,15 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
                 }
                 return super.push(object);
             }
+
+            @Override
+            public synchronized String pop() {
+                String popped = super.pop();
+                if (size() == 0) {
+                    onHistoryDestroyed();
+                }
+                return popped;
+            }
         };
 
         recyclerView = (RecyclerView) this.findViewById(R.id.widget_recycler);
@@ -131,6 +140,7 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
     }
 
     private void repopulateAdapter(List<SearchResult> newResults) {
+        gridLayoutManager.scrollToPositionWithOffset(0, 0);
         resultAdapter.repopulate(newResults);
     }
 
@@ -146,10 +156,8 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
     public void onBackButtonTapped() {
         historyStack.pop();
         if (historyStack.size() == 0) {
-            searchBarLayout.setText(getContext().getString(R.string.imoji_search_widget_search_box_hint));
             searchCategories();
         } else {
-            searchBarLayout.setText(historyStack.peek());
             searchTerm(historyStack.peek(), false);
         }
         if (this.widgetListener != null) {
@@ -171,8 +179,6 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
     @Override
     public void onTap(SearchResult searchResult) {
         if (searchResult.isCategory()) {
-            searchBarLayout.setText(searchResult.getTitle());
-            gridLayoutManager.scrollToPositionWithOffset(0, 0);
             searchTerm(searchResult.getTitle(), true);
             if (this.widgetListener != null) {
                 this.widgetListener.onCategoryTapped();
@@ -185,6 +191,10 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
     }
 
     protected void onHistoryCreated() {
+
+    }
+
+    protected void onHistoryDestroyed(){
 
     }
 
