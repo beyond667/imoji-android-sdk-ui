@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <View
+        android:id="@+id/sticker_separator"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/search_widget_sticker_separator"
+        android:visibility="gone"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/widget_recycler"
         android:layout_width="match_parent"
@@ -15,5 +22,4 @@
         android:id="@+id/widget_search"
         android:layout_width="match_parent"
         android:layout_height="@dimen/imoji_search_bar_height" />
-
 </LinearLayout>

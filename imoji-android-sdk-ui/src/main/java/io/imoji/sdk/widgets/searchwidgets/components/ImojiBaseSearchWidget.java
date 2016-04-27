@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
     private ImojiSearchResultAdapter resultAdapter;
     private ImojiWidgetListener widgetListener;
     private GridLayoutManager gridLayoutManager;
+    private View separator;
     private RenderingOptions.ImageFormat imageFormat = RenderingOptions.ImageFormat.WebP;
 
     protected Stack<Pair<String, String>> historyStack;
@@ -68,13 +70,15 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
 
         recyclerView = (RecyclerView) this.findViewById(R.id.widget_recycler);
         searchBarLayout = (ImojiSearchBarLayout) this.findViewById(R.id.widget_search);
+        separator = this.findViewById(R.id.sticker_separator);
         searchBarLayout.setImojiSearchListener(this);
 
         if (searchOnTop) {
             LinearLayout container = (LinearLayout) this.findViewById(R.id.widget_container);
             container.removeAllViews();
             container.addView(searchBarLayout, 0);
-            container.addView(recyclerView, 1);
+            container.addView(separator, 1);
+            container.addView(recyclerView, 2);
         }
 
         resultAdapter = new ImojiSearchResultAdapter(context);
@@ -198,6 +202,10 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
         }catch (EmptyStackException e){
             searchBarLayout.setText("");
         }
+    }
+
+    protected void setSeparatorVisibility(int visibility) {
+        separator.setVisibility(visibility);
     }
 
     protected void onHistoryCreated() {

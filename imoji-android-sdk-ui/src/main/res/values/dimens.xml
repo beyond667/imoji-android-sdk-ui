@@ -18,6 +18,7 @@
     <dimen name="imoji_search_result_small_sticker_top_margin">5dp</dimen>
 
     <dimen name="imoji_search_bar_height">44dp</dimen>
+    <dimen name="imoji_search_bar_height_full_widget">56dp</dimen>
     <dimen name="imoji_search_bar_icon_side">24dp</dimen>
     <dimen name="imoji_search_bar_first_left_icon_left_marg">16dp</dimen>
     <dimen name="imoji_search_bar_first_left_icon_right_marg">4dp</dimen>

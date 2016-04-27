@@ -9,4 +9,7 @@
     <string name="dialog_title_created_imoji">You created an Imoji!</string>
     <string name="dialog_positive_label_created_imoji">Awesome</string>
     <string name="title_activity_widget">WidgetActivity</string>
+
+    <string name="activity_title_quarter_screen">Quarter Screen</string>
+    <string name="activity_title_half_screen">Half Screen</string>
 </resources>

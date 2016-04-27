@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import io.imoji.sdk.ui.R;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiBaseSearchWidget;
@@ -19,6 +20,9 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
         super(context, SPAN_COUNT, HORIZONTAL, true);
 
         searchBarLayout.setLeftButtonVisibility(GONE);
+        setSeparatorVisibility(VISIBLE);
+
+        LinearLayout container = (LinearLayout) this.findViewById(R.id.widget_container);
 
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
 

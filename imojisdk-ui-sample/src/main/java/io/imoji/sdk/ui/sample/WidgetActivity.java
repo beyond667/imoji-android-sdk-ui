@@ -1,11 +1,14 @@
 package io.imoji.sdk.ui.sample;
 
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import io.imoji.sdk.widgets.searchwidgets.ImojiFullScreenWidget;
 import io.imoji.sdk.widgets.searchwidgets.ImojiHalfScreenWidget;
@@ -21,6 +24,12 @@ public class WidgetActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(
+                getResources().getColor(R.color.widget_activity_action_bar_color)
+        ));
         setContentView(R.layout.activity_widget);
 
         RelativeLayout container = (RelativeLayout) findViewById(R.id.widget_main_view);
@@ -34,43 +43,55 @@ public class WidgetActivity extends AppCompatActivity {
         switch (identifier) {
             case 1:
                 widget = new ImojiQuarterScreenWidget(this);
+                setTitle(R.string.activity_title_quarter_screen);
                 container.addView(widget, params);
                 break;
             case 2:
                 widget = new ImojiHalfScreenWidget(this);
+                setTitle(R.string.activity_title_half_screen);
                 container.addView(widget, params);
                 break;
             case 3:
                 widget = new ImojiFullScreenWidget(this);
+                getSupportActionBar().hide();
                 container.addView(widget);
+                widget.setWidgetListener(new ImojiWidgetListener() {
+                    @Override
+                    public void onBackButtonTapped() {
+                    }
+
+                    @Override
+                    public void onCloseButtonTapped() {
+                        NavUtils.navigateUpFromSameTask(WidgetActivity.this);
+                    }
+
+                    @Override
+                    public void onCategoryTapped() {
+
+                    }
+
+                    @Override
+                    public void onStickerTapped(Uri uri) {
+
+                    }
+
+                    @Override
+                    public void onTermSearched(String term) {
+
+                    }
+                });
                 break;
         }
+    }
 
-        widget.setWidgetListener(new ImojiWidgetListener() {
-            @Override
-            public void onBackButtonTapped() {
-                Toast.makeText(getApplicationContext(), "BACK BUTTON TAPPED", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCloseButtonTapped() {
-                Toast.makeText(getApplicationContext(), "CLOSE BUTTON TAPPED", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCategoryTapped() {
-                Toast.makeText(getApplicationContext(), "CATEGORY TAPPED", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onStickerTapped(Uri uri) {
-                Toast.makeText(getApplicationContext(), "STICKER TAPPED", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onTermSearched(String term) {
-                Toast.makeText(getApplicationContext(), "TERM SEARCHED: " + term, Toast.LENGTH_SHORT).show();
-            }
-        });
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

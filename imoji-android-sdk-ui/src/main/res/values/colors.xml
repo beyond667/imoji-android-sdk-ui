@@ -24,5 +24,5 @@
     <color name="search_widget_search_bar_unfocused_text_color">#0a8cff</color>
     <color name="search_widget_search_bar_focused_text_color">#262832</color>
     <color name="search_widget_search_bar_focused_hint_color">#cccccc</color>
-
+    <color name="search_widget_sticker_separator">#000000</color>
 </resources>

@@ -24,6 +24,9 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
 
         searchBarLayout.setupCloseButton();
 
+        searchBarLayout.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                (int)getResources().getDimension(R.dimen.imoji_search_bar_height_full_widget)));
+
 
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
 
