@@ -1,6 +1,7 @@
 package io.imoji.sdk.widgets.searchwidgets.components;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -189,8 +190,9 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<ImojiSearchRe
         int color = colorArray[(placeholderRandomizer + position) % colorArray.length];
 
         GradientDrawable placeholder = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[]{ColorUtils.setAlphaComponent(color, GRADIENT_START_ALPHA),
-                        ColorUtils.setAlphaComponent(color, GRADIENT_END_ALPHA)});
+                new int[]{ColorUtils.setAlphaComponent(Color.WHITE, GRADIENT_START_ALPHA),
+                        ColorUtils.setAlphaComponent(Color.WHITE, GRADIENT_END_ALPHA)});
+        placeholder.setColor(color);
         placeholder.setShape(GradientDrawable.OVAL);
         return placeholder;
     }

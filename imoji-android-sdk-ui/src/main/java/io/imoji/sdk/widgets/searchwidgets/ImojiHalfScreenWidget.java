@@ -1,7 +1,6 @@
 package io.imoji.sdk.widgets.searchwidgets;
 
 import android.content.Context;
-import android.view.ViewGroup;
 
 import io.imoji.sdk.ui.R;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiBaseSearchWidget;
@@ -17,9 +16,6 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
         super(context, SPAN_COUNT, HORIZONTAL, true);
 
         searchBarLayout.setLeftButtonVisibility(GONE);
-
-        int rowHeight = (int)getResources().getDimension(R.dimen.imoji_search_result_row_height);
-        recyclerView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, rowHeight * SPAN_COUNT));
 
         int horizontalPadding = (int)getResources()
                 .getDimension(R.dimen.imoji_search_recycler_horizontal_padding);

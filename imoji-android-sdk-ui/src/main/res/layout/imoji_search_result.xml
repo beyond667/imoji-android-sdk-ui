@@ -15,9 +15,10 @@
         android:id="@+id/imoji_search_result_category_title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/imoji_search_result_text_box_height"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/imoji_search_result_image"
         android:gravity="center"
         android:textColor="@color/search_widget_category_text"
         android:textSize="@dimen/imoji_search_result_text_box_text_size"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/imoji_search_result_text_box_top_margin"/>
 </RelativeLayout>

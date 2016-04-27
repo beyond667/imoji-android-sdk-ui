@@ -24,23 +24,26 @@ public class WidgetActivity extends AppCompatActivity {
 
         RelativeLayout container = (RelativeLayout) findViewById(R.id.widget_main_view);
 
-        int identifier = getIntent().getIntExtra(WIDGET_IDENTIFIER,1);
+        int identifier = getIntent().getIntExtra(WIDGET_IDENTIFIER, 1);
         ImojiBaseSearchWidget widget = new ImojiQuarterScreenWidget(this);
-        switch (identifier){
-            case 1:
-               widget = new ImojiQuarterScreenWidget(this);
-                break;
-            case 2:
-                widget = new ImojiHalfScreenWidget(this);
-                break;
-            case 3:
-                widget = new ImojiFullScreenWidget(this);
-                break;
-        }
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        container.addView(widget, params);
+
+        switch (identifier) {
+            case 1:
+                widget = new ImojiQuarterScreenWidget(this);
+                container.addView(widget, params);
+                break;
+            case 2:
+                widget = new ImojiHalfScreenWidget(this);
+                container.addView(widget, params);
+                break;
+            case 3:
+                widget = new ImojiFullScreenWidget(this);
+                container.addView(widget);
+                break;
+        }
 
         widget.setWidgetListener(new ImojiBaseSearchWidget.ImojiWidgetListener() {
             @Override

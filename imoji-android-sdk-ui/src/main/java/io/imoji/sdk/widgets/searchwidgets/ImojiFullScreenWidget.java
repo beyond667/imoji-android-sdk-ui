@@ -23,18 +23,15 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
         container.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         searchBarLayout.setupCloseButton();
-
-        recyclerView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
+        
         recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(context) {
 
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                super.getItemOffsets(outRect, view, parent, state);
                 int resultSize = (int) getResources().getDimension(R.dimen.imoji_search_result_width);
-                int padding = (parent.getWidth() - resultSize * SPAN_COUNT) / (SPAN_COUNT * 2);
+                int padding = (recyclerView.getWidth() - resultSize * SPAN_COUNT) / (SPAN_COUNT * 2);
+                outRect.right = outRect.right - padding;
                 outRect.left = padding;
-                outRect.right = padding;
             }
         });
     }
