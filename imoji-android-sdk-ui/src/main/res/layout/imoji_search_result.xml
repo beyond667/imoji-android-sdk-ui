@@ -19,6 +19,5 @@
         android:gravity="center"
         android:textColor="@color/search_widget_category_text"
         android:textSize="@dimen/imoji_search_result_text_box_text_size"
-        android:visibility="gone"
-        android:layout_marginTop="@dimen/imoji_search_result_text_box_top_margin"/>
+        android:visibility="gone" />
 </RelativeLayout>

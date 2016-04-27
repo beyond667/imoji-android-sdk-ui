@@ -201,8 +201,8 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<ImojiSearchRe
         imageView.setPadding(0, 0, 0, 0);
         int width = (int) context.getResources().getDimension(R.dimen.imoji_search_result_small_sticker_width);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, width);
-        int topMargin = (int) context.getResources().getDimension(R.dimen.imoji_search_result_small_sticker_top_margin);
-        params.setMargins(0, topMargin, 0, 0);
+        int margin = (int) context.getResources().getDimension(R.dimen.imoji_search_result_small_sticker_top_margin);
+        params.setMargins(0, margin, 0, margin);
         params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
         params.addRule(RelativeLayout.CENTER_HORIZONTAL);
         imageView.setLayoutParams(params);

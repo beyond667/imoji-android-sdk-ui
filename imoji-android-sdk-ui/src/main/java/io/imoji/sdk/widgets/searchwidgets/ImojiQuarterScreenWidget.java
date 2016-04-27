@@ -21,12 +21,14 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
                 .getDimension(R.dimen.imoji_search_recycler_horizontal_padding);
         recyclerView.setPadding(horizontalPadding,0,horizontalPadding,0);
 
-        recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(context) {
+        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+
+            private int horizontalPadd = (int) getContext().getResources().getDimension(R.dimen.imoji_search_recycler_horizontal_padding);
 
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                super.getItemOffsets(outRect, view, parent, state);
-                outRect.bottom = 0;
+                outRect.left = horizontalPadd;
+                outRect.right = horizontalPadd;
             }
         });
     }
