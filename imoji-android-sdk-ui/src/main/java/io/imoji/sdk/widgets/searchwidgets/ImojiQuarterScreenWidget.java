@@ -31,5 +31,6 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
                 outRect.right = horizontalPadd;
             }
         });
+        searchBarLayout.requestTextFocus();
     }
 }

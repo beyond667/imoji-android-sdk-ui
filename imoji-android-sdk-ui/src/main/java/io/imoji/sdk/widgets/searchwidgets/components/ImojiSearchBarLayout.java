@@ -26,10 +26,6 @@ public class ImojiSearchBarLayout extends RelativeLayout {
 
     public ImojiSearchBarLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
-    }
-
-    private void init() {
         inflate(getContext(), R.layout.imoji_search_bar, this);
 
         firstLeftIcon = this.findViewById(R.id.search_bar_first_left_icon);
@@ -41,10 +37,8 @@ public class ImojiSearchBarLayout extends RelativeLayout {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (start == 0 && s.length() > 0) {
                     rightIcon.setVisibility(VISIBLE);
-                    onStartSearchText();
                 } else if (before > 0 && s.length() == 0) {
                     rightIcon.setVisibility(GONE);
-                    onDeleteSearchText();
                 }
             }
 
@@ -81,6 +75,10 @@ public class ImojiSearchBarLayout extends RelativeLayout {
         setupBackButton();
     }
 
+    public void requestTextFocus(){
+        textBox.requestFocus();
+    }
+
     public void setImojiSearchListener(ImojiSearchBarListener searchListener){
         this.imojiSearchBarListener = searchListener;
     }
@@ -90,14 +88,14 @@ public class ImojiSearchBarLayout extends RelativeLayout {
         firstLeftIcon.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(imojiSearchBarListener != null){
+                if(imojiSearchBarListener != null) {
                     imojiSearchBarListener.onCloseButtonTapped();
                 }
             }
         });
     }
 
-    public void setupBackButton(){
+    public void setupBackButton() {
         firstLeftIcon.setBackgroundResource(R.drawable.imoji_back);
         firstLeftIcon.setOnClickListener(new OnClickListener() {
             @Override
@@ -113,17 +111,9 @@ public class ImojiSearchBarLayout extends RelativeLayout {
         firstLeftIcon.setVisibility(visibility);
     }
 
-//    public void setText(String text){
-//        textBox.setText(text);
-//        textBox.clearFocus();
-//    }
-
-    protected void onDeleteSearchText() {
-
-    }
-
-    protected void onStartSearchText() {
-
+    public void setText(String text){
+        textBox.setText(text);
+        textBox.clearFocus();
     }
 
     public interface ImojiSearchBarListener{

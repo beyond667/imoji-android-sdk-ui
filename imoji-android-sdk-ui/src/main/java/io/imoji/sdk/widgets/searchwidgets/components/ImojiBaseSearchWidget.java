@@ -1,12 +1,13 @@
 package io.imoji.sdk.widgets.searchwidgets.components;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.List;
 import java.util.Stack;
 
@@ -35,29 +36,32 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
     private GridLayoutManager gridLayoutManager;
     private RenderingOptions.ImageFormat imageFormat = RenderingOptions.ImageFormat.WebP;
 
-    protected Stack<String> historyStack;
+    protected Stack<Pair<String, String>> historyStack;
 
     public ImojiBaseSearchWidget(Context context, int spanCount, int orientation, boolean searchOnTop, RenderingOptions.ImageFormat imageFormat) {
         super(context);
         inflate(getContext(), R.layout.imoji_base_widget, this);
         this.imageFormat = imageFormat;
 
-        historyStack = new Stack<String>() {
+        historyStack = new Stack<Pair<String, String>>() {
 
             @Override
-            public String push(String object) {
+            public Pair<String, String> push(Pair<String, String> object) {
                 if (size() == 0) {
                     onHistoryCreated();
                 }
-                return super.push(object);
+                Pair<String, String> pair = super.push(object);
+                updateText();
+                return pair;
             }
 
             @Override
-            public synchronized String pop() {
-                String popped = super.pop();
+            public synchronized Pair<String, String> pop() {
+                Pair<String, String> popped = super.pop();
                 if (size() == 0) {
                     onHistoryDestroyed();
                 }
+                updateText();
                 return popped;
             }
         };
@@ -80,15 +84,14 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(resultAdapter);
 
-        searchCategories();
+        searchTrending();
     }
 
     public ImojiBaseSearchWidget(Context context, int spanCount, int orientation, boolean searchOnTop) {
-        this(context,spanCount,orientation,searchOnTop, RenderingOptions.ImageFormat.WebP);
+        this(context, spanCount, orientation, searchOnTop, RenderingOptions.ImageFormat.WebP);
     }
 
-
-    private void searchTerm(String term, boolean addToHistory) {
+    private void searchTerm(String term, String title, boolean addToHistory) {
         ImojiSDK.getInstance()
                 .createSession(getContext().getApplicationContext())
                 .searchImojis(term)
@@ -103,11 +106,11 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
                     }
                 });
         if (addToHistory) {
-            historyStack.push(term);
+            historyStack.push(new Pair<String, String>(term, title));
         }
     }
 
-    private void searchCategories() {
+    private void searchTrending() {
         ImojiSDK.getInstance()
                 .createSession(getContext().getApplicationContext())
                 .getImojiCategories(new CategoryFetchOptions(Category.Classification.Trending))
@@ -123,6 +126,21 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
                 });
     }
 
+    private void searchPrevious(){
+        try{
+            historyStack.pop();
+        }catch (EmptyStackException e){
+            searchTrending();
+        }
+        if(!historyStack.isEmpty()){
+            Pair<String,String> pair = historyStack.peek();
+            searchTerm(pair.first,pair.second,false);
+        }else{
+            searchTrending();
+        }
+    }
+
+
     private void repopulateAdapter(List<SearchResult> newResults) {
         gridLayoutManager.scrollToPositionWithOffset(0, 0);
         resultAdapter.repopulate(newResults);
@@ -130,7 +148,7 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
 
     @Override
     public void onTextSubmit(String term) {
-        searchTerm(term, true);
+        searchTerm(term, null, true);
         if (this.widgetListener != null) {
             widgetListener.onTermSearched(term);
         }
@@ -138,12 +156,7 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
 
     @Override
     public void onBackButtonTapped() {
-        historyStack.pop();
-        if (historyStack.size() == 0) {
-            searchCategories();
-        } else {
-            searchTerm(historyStack.peek(), false);
-        }
+        searchPrevious();
         if (this.widgetListener != null) {
             widgetListener.onBackButtonTapped();
         }
@@ -163,7 +176,7 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
     @Override
     public void onTap(SearchResult searchResult) {
         if (searchResult.isCategory()) {
-            searchTerm(searchResult.getCategory().getIdentifier(), true);
+            searchTerm(searchResult.getCategory().getIdentifier(), searchResult.getCategory().getTitle(), true);
             if (this.widgetListener != null) {
                 this.widgetListener.onCategoryTapped();
             }
@@ -174,24 +187,24 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
         }
     }
 
+    private void updateText() {
+        try{
+            Pair<String,String> pair = historyStack.peek();
+            String text = pair.first;
+            if (pair.second != null) {
+                text = pair.second;
+            }
+            searchBarLayout.setText(text);
+        }catch (EmptyStackException e){
+            searchBarLayout.setText("");
+        }
+    }
+
     protected void onHistoryCreated() {
 
     }
 
-    protected void onHistoryDestroyed(){
+    protected void onHistoryDestroyed() {
 
-    }
-
-    public interface ImojiWidgetListener {
-
-        void onBackButtonTapped();
-
-        void onCloseButtonTapped();
-
-        void onCategoryTapped();
-
-        void onStickerTapped(Uri uri);
-
-        void onTermSearched(String term);
     }
 }

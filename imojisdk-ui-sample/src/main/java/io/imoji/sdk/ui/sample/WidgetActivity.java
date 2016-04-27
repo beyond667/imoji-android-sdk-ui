@@ -11,6 +11,7 @@ import io.imoji.sdk.widgets.searchwidgets.ImojiFullScreenWidget;
 import io.imoji.sdk.widgets.searchwidgets.ImojiHalfScreenWidget;
 import io.imoji.sdk.widgets.searchwidgets.ImojiQuarterScreenWidget;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiBaseSearchWidget;
+import io.imoji.sdk.widgets.searchwidgets.components.ImojiWidgetListener;
 
 
 public class WidgetActivity extends AppCompatActivity {
@@ -45,7 +46,7 @@ public class WidgetActivity extends AppCompatActivity {
                 break;
         }
 
-        widget.setWidgetListener(new ImojiBaseSearchWidget.ImojiWidgetListener() {
+        widget.setWidgetListener(new ImojiWidgetListener() {
             @Override
             public void onBackButtonTapped() {
                 Toast.makeText(getApplicationContext(), "BACK BUTTON TAPPED", Toast.LENGTH_SHORT).show();
