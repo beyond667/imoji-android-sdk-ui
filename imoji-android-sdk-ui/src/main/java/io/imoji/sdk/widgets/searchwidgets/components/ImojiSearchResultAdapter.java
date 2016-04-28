@@ -15,8 +15,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+import com.felipecsl.gifimageview.library.GifImageView;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,26 +70,23 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<ImojiSearchRe
 
     @Override
     public void onBindViewHolder(final SearchResultHolder holder, int position) {
-        final SearchResult result = results.get(position);
+        final SearchResult sr = results.get(position);
         resetView(holder.imageView, holder.textView);
-        Picasso.with(context)
-                .load(result.getThumbnailUri())
+
+        Ion.with(holder.imageView)
                 .placeholder(getPlaceholder(position))
-                .into(holder.imageView, new Callback() {
+                .load(sr.getThumbnailUri().toString())
+                .setCallback(new FutureCallback<ImageView>() {
                     @Override
-                    public void onSuccess() {
-                        if (result.isCategory()) {
-                            loadCategory(holder.imageView, holder.textView, result.getTitle());
+                    public void onCompleted(Exception e, ImageView result) {
+                        if (sr.isCategory()) {
+                            loadCategory(holder.imageView, holder.textView, sr.getTitle());
                         } else {
                             loadSticker(holder.imageView);
                         }
                     }
-
-                    @Override
-                    public void onError() {
-
-                    }
                 });
+
     }
 
     @Override
@@ -97,12 +95,12 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<ImojiSearchRe
     }
 
     public class SearchResultHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ImageView imageView;
+        private GifImageView imageView;
         private TextView textView;
 
         public SearchResultHolder(View itemView) {
             super(itemView);
-            imageView = (ImageView) itemView.findViewById(R.id.imoji_search_result_image);
+            imageView = (GifImageView) itemView.findViewById(R.id.imoji_search_result_image);
             textView = (TextView) itemView.findViewById(R.id.imoji_search_result_category_title);
             itemView.setOnClickListener(this);
         }
@@ -149,7 +147,7 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<ImojiSearchRe
             if(isCategory()){
                 thumbailImoji = category.getPreviewImoji();
             }
-            return thumbailImoji.getStandardThumbnailUri();
+            return thumbailImoji.getStandardThumbnailUri(true);
         }
 
         public String getTitle() {

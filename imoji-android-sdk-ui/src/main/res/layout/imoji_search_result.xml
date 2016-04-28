@@ -4,7 +4,7 @@
     android:layout_height="@dimen/imoji_search_result_height"
     android:orientation="vertical">
 
-    <ImageView
+    <com.felipecsl.gifimageview.library.GifImageView
         android:id="@+id/imoji_search_result_image"
         android:layout_width="match_parent"
         android:layout_height="@dimen/imoji_search_result_width"
