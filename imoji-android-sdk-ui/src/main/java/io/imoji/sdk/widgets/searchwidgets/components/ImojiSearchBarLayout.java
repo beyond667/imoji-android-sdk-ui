@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -51,6 +52,13 @@ public class ImojiSearchBarLayout extends RelativeLayout {
             }
         });
 
+        textBox.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                imojiSearchBarListener.onFocusChanged(hasFocus);
+            }
+        });
+
         textBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
@@ -70,6 +78,8 @@ public class ImojiSearchBarLayout extends RelativeLayout {
             public void onClick(View view) {
                 textBox.setText("");
                 textBox.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(textBox, InputMethodManager.SHOW_IMPLICIT);
             }
         });
         setupBackButton();
@@ -123,6 +133,8 @@ public class ImojiSearchBarLayout extends RelativeLayout {
         void onBackButtonTapped();
 
         void onCloseButtonTapped();
+
+        void onFocusChanged(boolean hasFocus);
     }
 
 }

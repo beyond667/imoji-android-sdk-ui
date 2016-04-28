@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import io.imoji.sdk.objects.RenderingOptions;
 import io.imoji.sdk.ui.R;
@@ -36,7 +37,14 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
             }
         });
         searchBarLayout.requestTextFocus();
+    }
 
-
+    @Override
+    public void onFocusChanged(boolean hasFocus) {
+        super.onFocusChanged(hasFocus);
+        if(hasFocus){
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(searchBarLayout.getFocusedChild(), InputMethodManager.SHOW_IMPLICIT);
+        }
     }
 }

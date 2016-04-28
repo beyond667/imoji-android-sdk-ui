@@ -173,6 +173,11 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
         }
     }
 
+    @Override
+    public void onFocusChanged(boolean hasFocus) {
+
+    }
+
     public void setWidgetListener(ImojiWidgetListener widgetListener) {
         this.widgetListener = widgetListener;
     }
