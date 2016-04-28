@@ -125,3 +125,138 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     }
 }
 ```
+
+# Imoji Search Widgets
+
+Imoji Android SDK UI offers three search views you can use in your apps; quarter, half and full screen widgets. Search widgets handles searching for imojis and categories. You can create one with
+```java
+ ImojiQuarterScreenWidget widget = new ImojiQuarterScreenWidget(this, RenderingOptions.ImageFormat.WebP, new ImojiSearchResultAdapter.ImojiImageLoader() {
+        @Override
+        public void loadImage(ImageView target, Drawable placeholder, @AnimRes int animationId, Uri uri,
+                                          final ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
+                        
+        }
+ });
+```
+You'll need to pass the context, image format for stickers to be found and a new ImojiImageLoader.
+
+## ImojiImageLoader
+ImojiImageLoader is a simple interface with a single ```loadImage``` method that lets you use your choice of image library to load all assets in the widget. First parameter ```target``` is the ImageView in which your assets should be loaded. It also supports Gifs. Second parameter ```placeholder``` is a simple Drawable to be used as a placeholder. Third parameter ```animationId``` is the resource id for loading animation. Final parameter ```callback``` is a callback that handles ui changes once image is loaded. As soon as you are done with loading the image, you should call ```callback.updateImageView();```
+
+It is recommended to use an image loading library with Gif support.
+
+###Glide Example
+```java
+ ImojiFullScreenWidget fullWidget = new ImojiFullScreenWidget(this, 
+                RenderingOptions.ImageFormat.WebP, 
+                new ImojiSearchResultAdapter.ImojiImageLoader() {
+        @Override
+        public void loadImage(ImageView target, Drawable placeholder, 
+                                @AnimRes int animationId, Uri uri,
+                                final ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
+                Glide.with(context)
+                        .load(uri)
+                        .placeholder(placeholder)
+                        .crossFade(animationId,300)
+                        .listener(new RequestListener<Uri, GlideDrawable>() {
+                                @Override
+                                 public boolean onException(Exception e, 
+                                                Uri model, Target<GlideDrawable> target, 
+                                                boolean isFirstResource) {
+                                        return false;
+                                }
+
+                                @Override
+                                public boolean onResourceReady(GlideDrawable resource, 
+                                                Uri model, Target<GlideDrawable> target, 
+                                                boolean isFromMemoryCache, boolean isFirstResource) {
+                                        callback.updateImageView();
+                                        return false;
+                                }})
+                        .into(target);
+                    }
+                });
+```
+
+###Ion Example
+```java
+ImojiQuarterScreenWidget widget = new ImojiQuarterScreenWidget(this, 
+                RenderingOptions.ImageFormat.WebP, 
+                new ImojiSearchResultAdapter.ImojiImageLoader() {
+
+        @Override
+        public void loadImage(ImageView target, Drawable placeholder, 
+                                @AnimRes int animationId, Uri uri,
+                                final ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
+                Ion.with(target)
+                        .placeholder(placeholder)
+                        .animateIn(animationId)
+                        .load(uri.toString())
+                        .setCallback(new FutureCallback<ImageView>() {
+                                @Override
+                                public void onCompleted(Exception e, ImageView result) {
+                                        callback.updateImageView();
+                                }
+                        });
+        }
+});
+```
+
+###Picasso Example
+```java
+ImojiHalfScreenWidget halfWidget = new ImojiHalfScreenWidget(this, 
+        RenderingOptions.ImageFormat.Png, 
+        new ImojiSearchResultAdapter.ImojiImageLoader() {
+                @Override
+                public void loadImage(ImageView target, Drawable placeholder, 
+                                        @AnimRes int animationId, Uri uri,
+                                        final ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
+                Picasso.with(context)
+                        .load(uri)
+                        .placeholder(placeholder)
+                        .into(target, new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                        callback.updateImageView();
+                                }
+
+                                @Override
+                                public void onError() {
+
+                                }
+                        });
+                }
+        });
+```
+
+##Imoji Widget Listener
+Once you created a search widget you can set an Imoji Widget Listener on it to listen for events.
+```java
+widget.setWidgetListener(new ImojiWidgetListener() {
+                    @Override
+                    public void onBackButtonTapped() {
+                    }
+
+                    @Override
+                    public void onCloseButtonTapped() {
+ 
+                    }
+
+                    @Override
+                    public void onCategoryTapped(Category category) {
+                        //When a category gets tapped, Imoji SDK Category object returned
+                    }
+
+                    @Override
+                    public void onStickerTapped(Uri uri) {
+                        //When a sticker gets tapped, uri from Imoji API with widget's imageFormat
+                    }
+
+                    @Override
+                    public void onTermSearched(String term) {
+                        //When a term is searched from the search box
+                    }
+                });
+```
+
+
