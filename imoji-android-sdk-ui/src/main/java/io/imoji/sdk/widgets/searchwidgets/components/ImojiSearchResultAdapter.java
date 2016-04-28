@@ -75,6 +75,7 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<ImojiSearchRe
 
         Ion.with(holder.imageView)
                 .placeholder(getPlaceholder(position))
+                .animateIn(R.anim.search_widget_fade_in)
                 .load(sr.getThumbnailUri().toString())
                 .setCallback(new FutureCallback<ImageView>() {
                     @Override

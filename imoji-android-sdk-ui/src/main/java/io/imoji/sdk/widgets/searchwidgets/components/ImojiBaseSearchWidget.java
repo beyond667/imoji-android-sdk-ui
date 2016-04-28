@@ -106,6 +106,9 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
                         for (Imoji imoji : imojisResponse.getImojis()) {
                             newResults.add(new ImojiSearchResultAdapter.SearchResult(imoji));
                         }
+                        for(Category c :imojisResponse.getRelatedCategories()){
+                            newResults.add(new ImojiSearchResultAdapter.SearchResult(c));
+                        }
                         repopulateAdapter(newResults);
                     }
                 });
