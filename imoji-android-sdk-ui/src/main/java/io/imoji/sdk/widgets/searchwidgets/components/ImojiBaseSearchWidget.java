@@ -40,7 +40,8 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
 
     protected Stack<Pair<String, String>> historyStack;
 
-    public ImojiBaseSearchWidget(Context context, int spanCount, int orientation, boolean searchOnTop, RenderingOptions.ImageFormat imageFormat) {
+    public ImojiBaseSearchWidget(Context context, int spanCount, int orientation,
+                                 boolean searchOnTop, RenderingOptions.ImageFormat imageFormat,ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
         super(context);
         inflate(getContext(), R.layout.imoji_base_widget, this);
         this.imageFormat = imageFormat;
@@ -81,7 +82,7 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
             container.addView(recyclerView, 2);
         }
 
-        resultAdapter = new ImojiSearchResultAdapter(context);
+        resultAdapter = new ImojiSearchResultAdapter(context,imageLoader);
         resultAdapter.setSearchTapListener(this);
         gridLayoutManager = new GridLayoutManager(context.getApplicationContext(), spanCount, orientation, false);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -89,10 +90,6 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
         recyclerView.setAdapter(resultAdapter);
 
         searchTrending();
-    }
-
-    public ImojiBaseSearchWidget(Context context, int spanCount, int orientation, boolean searchOnTop) {
-        this(context, spanCount, orientation, searchOnTop, RenderingOptions.ImageFormat.WebP);
     }
 
     private void searchTerm(String term, String title, boolean addToHistory) {

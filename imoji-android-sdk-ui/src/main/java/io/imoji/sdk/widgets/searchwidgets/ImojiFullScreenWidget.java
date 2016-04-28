@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import io.imoji.sdk.objects.RenderingOptions;
 import io.imoji.sdk.ui.R;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiBaseSearchWidget;
+import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter;
 
 /**
  * Created by engind on 4/24/16.
@@ -17,8 +19,8 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
 
     private final static int SPAN_COUNT = 4;
 
-    public ImojiFullScreenWidget(Context context) {
-        super(context, SPAN_COUNT, VERTICAL, true);
+    public ImojiFullScreenWidget(Context context,RenderingOptions.ImageFormat imageFormat, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
+        super(context, SPAN_COUNT, VERTICAL, true, imageFormat,imageLoader);
         LinearLayout container = (LinearLayout) this.findViewById(R.id.widget_container);
         container.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 

@@ -6,8 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import io.imoji.sdk.objects.RenderingOptions;
 import io.imoji.sdk.ui.R;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiBaseSearchWidget;
+import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter;
 
 /**
  * Created by engind on 4/24/16.
@@ -16,8 +18,8 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
 
     public final static int SPAN_COUNT = 2;
 
-    public ImojiHalfScreenWidget(Context context) {
-        super(context, SPAN_COUNT, HORIZONTAL, true);
+    public ImojiHalfScreenWidget(Context context, RenderingOptions.ImageFormat imageFormat, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
+        super(context, SPAN_COUNT, HORIZONTAL, true, imageFormat, imageLoader);
 
         searchBarLayout.setLeftButtonVisibility(GONE);
         setSeparatorVisibility(VISIBLE);
@@ -36,9 +38,9 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                 outRect.left = horizontalPadd;
                 outRect.right = horizontalPadd;
-                if(parent.getChildLayoutPosition(view) % 2 != 0){
+                if (parent.getChildLayoutPosition(view) % 2 != 0) {
                     outRect.top += verticalPadd;
-                    outRect.bottom -= (int) getContext().getResources().getDimension(R.dimen.imoji_search_recycler_vertical_padding)*2;
+                    outRect.bottom -= (int) getContext().getResources().getDimension(R.dimen.imoji_search_recycler_vertical_padding) * 2;
                 }
 
             }

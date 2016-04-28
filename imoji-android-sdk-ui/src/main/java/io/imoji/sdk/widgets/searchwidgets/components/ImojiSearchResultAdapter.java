@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
+import android.support.annotation.AnimRes;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,8 +17,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.felipecsl.gifimageview.library.GifImageView;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,10 +40,12 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<ImojiSearchRe
     private Context context;
     private int placeholderRandomizer;
     private ImojiSearchTapListener tapListener;
+    private ImojiImageLoader imageLoader;
 
-    public ImojiSearchResultAdapter(Context context) {
+    public ImojiSearchResultAdapter(Context context, ImojiImageLoader imageLoader) {
         results = new ArrayList<>();
         this.context = context;
+        this.imageLoader = imageLoader;
 
         int[] colorArray = context.getResources().getIntArray(R.array.search_widget_placeholder_colors);
         this.placeholderRandomizer = new Random().nextInt(colorArray.length);
@@ -73,13 +74,11 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<ImojiSearchRe
         final SearchResult sr = results.get(position);
         resetView(holder.imageView, holder.textView);
 
-        Ion.with(holder.imageView)
-                .placeholder(getPlaceholder(position))
-                .animateIn(R.anim.search_widget_fade_in)
-                .load(sr.getThumbnailUri().toString())
-                .setCallback(new FutureCallback<ImageView>() {
+        imageLoader.loadImage(holder.imageView, getPlaceholder(position),
+                R.anim.search_widget_fade_in, sr.getThumbnailUri(),
+                new ImojiImageLoadCompleteCallback() {
                     @Override
-                    public void onCompleted(Exception e, ImageView result) {
+                    public void updateImageView() {
                         if (sr.isCategory()) {
                             loadCategory(holder.imageView, holder.textView, sr.getTitle());
                         } else {
@@ -87,7 +86,6 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<ImojiSearchRe
                         }
                     }
                 });
-
     }
 
     @Override
@@ -143,9 +141,9 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<ImojiSearchRe
             return category;
         }
 
-        public Uri getThumbnailUri(){
+        public Uri getThumbnailUri() {
             Imoji thumbailImoji = this.imoji;
-            if(isCategory()){
+            if (isCategory()) {
                 thumbailImoji = category.getPreviewImoji();
             }
             return thumbailImoji.getStandardThumbnailUri(true);
@@ -153,7 +151,7 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<ImojiSearchRe
 
         public String getTitle() {
             String title = null;
-            if(isCategory()){
+            if (isCategory()) {
                 title = category.getTitle();
             }
             return title;
@@ -163,7 +161,7 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<ImojiSearchRe
             return category != null && imoji == null;
         }
 
-        public Uri getUri(ImageFormat imageFormat){
+        public Uri getUri(ImageFormat imageFormat) {
             return getImoji().urlForRenderingOption(new RenderingOptions(
                     RenderingOptions.BorderStyle.Sticker,
                     imageFormat,
@@ -214,4 +212,17 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<ImojiSearchRe
     private void loadSticker(ImageView imageView) {
         imageView.setPadding(0, 0, 0, 0);
     }
+
+    public interface ImojiImageLoader {
+
+        void loadImage(ImageView target, Drawable placeholder, @AnimRes int animationId,
+                       Uri uri,ImojiImageLoadCompleteCallback callback);
+    }
+
+    public abstract class ImojiImageLoadCompleteCallback {
+
+        public abstract void updateImageView();
+    }
+
+
 }

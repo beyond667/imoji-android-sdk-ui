@@ -35,4 +35,6 @@ dependencies {
     compile (project(':imoji-android-sdk-ui')) {
             transitive=true
     }
+    compile 'com.koushikdutta.ion:ion:2.+'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }
