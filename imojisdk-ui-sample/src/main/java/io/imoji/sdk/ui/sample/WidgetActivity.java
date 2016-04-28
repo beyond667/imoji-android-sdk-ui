@@ -16,9 +16,8 @@ import android.widget.RelativeLayout;
 
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 
+import io.imoji.sdk.objects.Category;
 import io.imoji.sdk.objects.RenderingOptions;
 import io.imoji.sdk.widgets.searchwidgets.ImojiFullScreenWidget;
 import io.imoji.sdk.widgets.searchwidgets.ImojiHalfScreenWidget;
@@ -51,70 +50,36 @@ public class WidgetActivity extends AppCompatActivity {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 
+        ImojiSearchResultAdapter.ImojiImageLoader imageLoader = new ImojiSearchResultAdapter.ImojiImageLoader() {
+            @Override
+            public void loadImage(ImageView target, Drawable placeholder, @AnimRes int animationId, Uri uri,
+                                  final ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
+                Ion.with(target)
+                        .placeholder(placeholder)
+                        .animateIn(animationId)
+                        .load(uri.toString())
+                        .setCallback(new FutureCallback<ImageView>() {
+                            @Override
+                            public void onCompleted(Exception e, ImageView result) {
+                                callback.updateImageView();
+                            }
+                        });
+            }
+        };
+
         switch (identifier) {
             case 1:
-                ImojiQuarterScreenWidget widget = new ImojiQuarterScreenWidget(this, RenderingOptions.ImageFormat.WebP, new ImojiSearchResultAdapter.ImojiImageLoader() {
-
-                    @Override
-                    public void loadImage(ImageView target, Drawable placeholder, @AnimRes int animationId, Uri uri,
-                                          final ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
-                        Ion.with(target)
-                                .placeholder(placeholder)
-                                .animateIn(animationId)
-                                .load(uri.toString())
-                                .setCallback(new FutureCallback<ImageView>() {
-                                    @Override
-                                    public void onCompleted(Exception e, ImageView result) {
-                                        callback.updateImageView();
-                                    }
-                                });
-                    }
-                });
+                ImojiQuarterScreenWidget widget = new ImojiQuarterScreenWidget(this, RenderingOptions.ImageFormat.WebP, imageLoader);
                 setTitle(R.string.activity_title_quarter_screen);
                 container.addView(widget, params);
                 break;
             case 2:
-                ImojiHalfScreenWidget halfWidget = new ImojiHalfScreenWidget(this, RenderingOptions.ImageFormat.Png, new ImojiSearchResultAdapter.ImojiImageLoader() {
-                    @Override
-                    public void loadImage(ImageView target, Drawable placeholder, @AnimRes int animationId, Uri uri,
-                                          final ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
-                        Picasso.with(context)
-                                .load(uri)
-                                .placeholder(placeholder)
-                                .into(target, new Callback() {
-                                    @Override
-                                    public void onSuccess() {
-                                        callback.updateImageView();
-                                    }
-
-                                    @Override
-                                    public void onError() {
-
-                                    }
-                                });
-
-                    }
-                });
+                ImojiHalfScreenWidget halfWidget = new ImojiHalfScreenWidget(this, RenderingOptions.ImageFormat.Png, imageLoader);
                 setTitle(R.string.activity_title_half_screen);
                 container.addView(halfWidget, params);
                 break;
             case 3:
-                ImojiFullScreenWidget fullWidget = new ImojiFullScreenWidget(this, RenderingOptions.ImageFormat.WebP, new ImojiSearchResultAdapter.ImojiImageLoader() {
-                    @Override
-                    public void loadImage(ImageView target, Drawable placeholder, @AnimRes int animationId, Uri uri,
-                                          final ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
-                        Ion.with(target)
-                                .placeholder(placeholder)
-                                .animateIn(animationId)
-                                .load(uri.toString())
-                                .setCallback(new FutureCallback<ImageView>() {
-                                    @Override
-                                    public void onCompleted(Exception e, ImageView result) {
-                                        callback.updateImageView();
-                                    }
-                                });
-                    }
-                });
+                ImojiFullScreenWidget fullWidget = new ImojiFullScreenWidget(this, RenderingOptions.ImageFormat.WebP, imageLoader);
                 getSupportActionBar().hide();
                 container.addView(fullWidget);
                 fullWidget.setWidgetListener(new ImojiWidgetListener() {
@@ -128,9 +93,10 @@ public class WidgetActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onCategoryTapped() {
+                    public void onCategoryTapped(Category category) {
 
                     }
+
 
                     @Override
                     public void onStickerTapped(Uri uri) {

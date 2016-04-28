@@ -187,7 +187,7 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
         if (searchResult.isCategory()) {
             searchTerm(searchResult.getCategory().getIdentifier(), searchResult.getCategory().getTitle(), true);
             if (this.widgetListener != null) {
-                this.widgetListener.onCategoryTapped();
+                this.widgetListener.onCategoryTapped(searchResult.getCategory());
             }
         } else {
             if (this.widgetListener != null) {
