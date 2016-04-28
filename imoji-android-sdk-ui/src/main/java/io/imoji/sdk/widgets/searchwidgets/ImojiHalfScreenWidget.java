@@ -22,7 +22,10 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
         searchBarLayout.setLeftButtonVisibility(GONE);
         setSeparatorVisibility(VISIBLE);
 
-        LinearLayout container = (LinearLayout) this.findViewById(R.id.widget_container);
+        int row = (int) getContext().getResources().getDimension(R.dimen.imoji_search_result_row_height);
+        int padd = (int) getContext().getResources().getDimension(R.dimen.imoji_search_result_row_top_margin);
+
+        recyclerView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, SPAN_COUNT * (row + padd)));
 
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
 
@@ -33,9 +36,11 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                 outRect.left = horizontalPadd;
                 outRect.right = horizontalPadd;
-                if(parent.getChildLayoutPosition(view) % 2 == 0){
-                    outRect.bottom +=verticalPadd;
+                if(parent.getChildLayoutPosition(view) % 2 != 0){
+                    outRect.top += verticalPadd;
+                    outRect.bottom -= (int) getContext().getResources().getDimension(R.dimen.imoji_search_recycler_vertical_padding)*2;
                 }
+
             }
         });
     }
