@@ -20,7 +20,7 @@
     <color name="search_widget_placeholder_14">#ff7db4</color>
     <color name="search_widget_placeholder_15">#b8aad2</color>
 
-    <color name="search_widget_category_text">#393d49</color>
+    <color name="search_result_category_title">#393d49</color>
     <color name="search_widget_search_bar_unfocused_text_color">#0a8cff</color>
     <color name="search_widget_search_bar_focused_text_color">#262832</color>
     <color name="search_widget_search_bar_focused_hint_color">#cccccc</color>

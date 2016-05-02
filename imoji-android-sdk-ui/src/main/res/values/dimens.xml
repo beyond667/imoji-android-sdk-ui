@@ -12,7 +12,7 @@
     <dimen name="imoji_result_height_small">86dp</dimen>
     <dimen name="imoji_result_category_title_height_small">24dp</dimen>
     <dimen name="imoji_result_category_title_size_small">10.5sp</dimen>
-    <dimen name="imoji_result_placeholder_padding_small">6dp</dimen>
+    <dimen name="imoji_result_placeholder_side_small">62dp</dimen>
     <dimen name="imoji_result_category_image_side_small">52dp</dimen>
     <dimen name="imoji_result_category_image_top_margin_small">5dp</dimen>
 

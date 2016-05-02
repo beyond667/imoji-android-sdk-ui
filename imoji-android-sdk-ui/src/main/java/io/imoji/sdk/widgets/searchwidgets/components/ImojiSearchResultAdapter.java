@@ -60,7 +60,7 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<RecyclerView.
             public void updateImageView() {
                 if (sr.isCategory()) {
                     resultView.loadCategory(sr.getTitle());
-                } else {
+                }else{
                     resultView.loadSticker();
                 }
             }
