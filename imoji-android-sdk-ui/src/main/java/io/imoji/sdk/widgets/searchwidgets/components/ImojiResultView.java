@@ -1,10 +1,13 @@
 package io.imoji.sdk.widgets.searchwidgets.components;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.support.annotation.IntDef;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v4.view.animation.PathInterpolatorCompat;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -20,12 +23,22 @@ import android.widget.TextView;
 
 import com.felipecsl.gifimageview.library.GifImageView;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 import io.imoji.sdk.ui.R;
 
 /**
  * Created by engind on 5/2/16.
  */
 public class ImojiResultView extends RelativeLayout {
+
+    @IntDef({LARGE, SMALL})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ResultViewSize {}
+
+    public static final int LARGE = 0;
+    public static final int SMALL = 1;
 
     private final static int GRADIENT_START_ALPHA = 0;
     private final static int GRADIENT_END_ALPHA = 16;
@@ -35,17 +48,20 @@ public class ImojiResultView extends RelativeLayout {
     private final TextView textView;
 
     private Context context;
+    private @ResultViewSize int viewSize;
 
-    public ImojiResultView(Context context) {
+    public ImojiResultView(Context context, @ResultViewSize int viewSize) {
         super(context);
         this.context = context;
 
-        int resultWidth = (int) getResources().getDimension(R.dimen.imoji_result_width_small);
-        int resultHeight = (int) getResources().getDimension(R.dimen.imoji_result_height_small);
+        this.viewSize = viewSize;
+
+        int resultWidth = getDimension(0);
+        int resultHeight = getDimension(1);
         setLayoutParams(new StaggeredGridLayoutManager.LayoutParams(resultWidth, resultHeight));
 
         placeholder = new ImageView(context);
-        int placeholderSide = (int) getResources().getDimension(R.dimen.imoji_result_placeholder_side_small);
+        int placeholderSide = getDimension(4);
         RelativeLayout.LayoutParams placeholderParams = new LayoutParams(placeholderSide, placeholderSide);
         placeholderParams.addRule(RelativeLayout.CENTER_IN_PARENT);
         placeholder.setLayoutParams(placeholderParams);
@@ -62,13 +78,12 @@ public class ImojiResultView extends RelativeLayout {
 
 
         textView = new TextView(context);
-        int titleHeight = (int) getResources().getDimension(R.dimen.imoji_result_category_title_height_small);
+        int titleHeight = getDimension(2);
         RelativeLayout.LayoutParams titleParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, titleHeight);
         titleParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         textView.setLayoutParams(titleParams);
         textView.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Montserrat-Light.otf"));
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.imoji_result_category_title_size_small));
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getDimension(3));
         //TODO // FIXME: 5/2/16
         textView.setTextColor(getResources().getColor(R.color.search_result_category_title));
         textView.setGravity(Gravity.CENTER);
@@ -94,9 +109,9 @@ public class ImojiResultView extends RelativeLayout {
     }
 
     public void loadCategory(String title) {
-        int width = (int) context.getResources().getDimension(R.dimen.imoji_result_category_image_side_small);
+        int width = getDimension(5);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, width);
-        int margin = (int) context.getResources().getDimension(R.dimen.imoji_result_category_image_top_margin_small);
+        int margin = getDimension(6);
         params.setMargins(0, margin, 0, 0);
         params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
         params.addRule(RelativeLayout.CENTER_HORIZONTAL);
@@ -109,7 +124,7 @@ public class ImojiResultView extends RelativeLayout {
     }
 
     public void loadSticker(){
-        int width = (int) context.getResources().getDimension(R.dimen.imoji_result_width_small);
+        int width = getDimension(0);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, width);
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
         imageView.setLayoutParams(params);
@@ -141,7 +156,8 @@ public class ImojiResultView extends RelativeLayout {
         Animation appearAnimation = getAppearAnimation();
         appearAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {}
+            public void onAnimationStart(Animation animation) {
+            }
 
             @Override
             public void onAnimationEnd(Animation animation) {
@@ -171,5 +187,14 @@ public class ImojiResultView extends RelativeLayout {
         Animation fadeOutAnimation = AnimationUtils.loadAnimation(context, R.anim.search_widget_result_fade_out);
         fadeOutAnimation.setInterpolator(PathInterpolatorCompat.create(0.25f, 0.1f, 0.25f, 1));
         return fadeOutAnimation;
+    }
+
+    private int getDimension(int position){
+        Resources res = getResources();
+        TypedArray dimensions = res.obtainTypedArray(viewSize == LARGE ?
+                R.array.search_result_large_dimens : R.array.search_result_small_dimens);
+        int dimension = (int) dimensions.getDimension(position,0f);
+        dimensions.recycle();
+        return  dimension;
     }
 }

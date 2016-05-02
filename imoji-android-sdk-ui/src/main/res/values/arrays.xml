@@ -19,4 +19,24 @@
         <item>@color/search_widget_placeholder_15</item>
     </array>
 
+    <array name="search_result_small_dimens">
+        <item>@dimen/imoji_result_width_small</item>
+        <item>@dimen/imoji_result_height_small</item>
+        <item>@dimen/imoji_result_category_title_height_small</item>
+        <item>@dimen/imoji_result_category_title_size_small</item>
+        <item>@dimen/imoji_result_placeholder_side_small</item>
+        <item>@dimen/imoji_result_category_image_side_small</item>
+        <item>@dimen/imoji_result_category_image_top_margin_small</item>
+    </array>
+
+    <array name="search_result_large_dimens">
+        <item>@dimen/imoji_result_width_large</item>
+        <item>@dimen/imoji_result_height_large</item>
+        <item>@dimen/imoji_result_category_title_height_large</item>
+        <item>@dimen/imoji_result_category_title_size_large</item>
+        <item>@dimen/imoji_result_placeholder_side_large</item>
+        <item>@dimen/imoji_result_category_image_side_large</item>
+        <item>@dimen/imoji_result_category_image_top_margin_large</item>
+    </array>
+
 </resources>

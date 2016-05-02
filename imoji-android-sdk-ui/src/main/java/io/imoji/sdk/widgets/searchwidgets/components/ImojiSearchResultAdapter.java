@@ -45,7 +45,7 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ResultHolder(new ImojiResultView(context));
+        return new ResultHolder(new ImojiResultView(context, ImojiResultView.LARGE));
     }
 
 

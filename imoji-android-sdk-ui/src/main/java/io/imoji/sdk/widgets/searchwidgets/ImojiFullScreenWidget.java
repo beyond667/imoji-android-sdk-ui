@@ -17,7 +17,7 @@ import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter;
  */
 public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
 
-    private final static int SPAN_COUNT = 4;
+    private final static int SPAN_COUNT = 3;
 
     public ImojiFullScreenWidget(Context context,RenderingOptions.ImageFormat imageFormat, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
         super(context, SPAN_COUNT, VERTICAL, true, imageFormat,imageLoader);

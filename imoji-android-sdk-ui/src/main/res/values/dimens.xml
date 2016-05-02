@@ -16,13 +16,13 @@
     <dimen name="imoji_result_category_image_side_small">52dp</dimen>
     <dimen name="imoji_result_category_image_top_margin_small">5dp</dimen>
 
-    <dimen name="imoji_result_width_large">74dp</dimen>
-    <dimen name="imoji_result_height_large">86dp</dimen>
-    <dimen name="imoji_result_category_title_height_large">24dp</dimen>
+    <dimen name="imoji_result_width_large">100dp</dimen>
+    <dimen name="imoji_result_height_large">114dp</dimen>
+    <dimen name="imoji_result_category_title_height_large">32dp</dimen>
     <dimen name="imoji_result_category_title_size_large">10.5sp</dimen>
-    <dimen name="imoji_result_placeholder_padding_large">6dp</dimen>
-    <dimen name="imoji_result_category_image_side_large">52dp</dimen>
-    <dimen name="imoji_result_category_image_top_margin_large">5dp</dimen>
+    <dimen name="imoji_result_placeholder_side_large">80dp</dimen>
+    <dimen name="imoji_result_category_image_side_large">70dp</dimen>
+    <dimen name="imoji_result_category_image_top_margin_large">7dp</dimen>
 
     <dimen name="imoji_search_bar_height">44dp</dimen>
     <dimen name="imoji_search_bar_height_full_widget">56dp</dimen>
