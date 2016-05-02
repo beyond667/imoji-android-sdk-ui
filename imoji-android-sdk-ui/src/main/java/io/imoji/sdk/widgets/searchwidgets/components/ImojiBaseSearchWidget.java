@@ -114,7 +114,7 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
         }
     }
 
-    private void searchTrending() {
+    protected void searchTrending() {
         ImojiSDK.getInstance()
                 .createSession(getContext().getApplicationContext())
                 .getImojiCategories(new CategoryFetchOptions(Category.Classification.Trending))
@@ -156,6 +156,11 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
         if (this.widgetListener != null) {
             widgetListener.onTermSearched(term);
         }
+    }
+
+    @Override
+    public void onTextCleared() {
+
     }
 
     @Override

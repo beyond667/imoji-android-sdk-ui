@@ -47,4 +47,12 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
             imm.showSoftInput(searchBarLayout.getFocusedChild(), InputMethodManager.SHOW_IMPLICIT);
         }
     }
+
+    @Override
+    public void onTextCleared() {
+        super.onTextCleared();
+        if(historyStack.peek().second != null){
+            searchTrending();
+        }
+    }
 }

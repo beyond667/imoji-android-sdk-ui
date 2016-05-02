@@ -80,6 +80,7 @@ public class ImojiSearchBarLayout extends RelativeLayout {
                 textBox.requestFocus();
                 InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(textBox, InputMethodManager.SHOW_IMPLICIT);
+                imojiSearchBarListener.onTextCleared();
             }
         });
         setupBackButton();
@@ -129,6 +130,8 @@ public class ImojiSearchBarLayout extends RelativeLayout {
     public interface ImojiSearchBarListener{
 
         void onTextSubmit(String term);
+
+        void onTextCleared();
 
         void onBackButtonTapped();
 
