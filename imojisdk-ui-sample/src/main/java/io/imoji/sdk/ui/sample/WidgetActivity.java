@@ -2,10 +2,8 @@ package io.imoji.sdk.ui.sample;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.AnimRes;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -52,11 +50,8 @@ public class WidgetActivity extends AppCompatActivity {
 
         ImojiSearchResultAdapter.ImojiImageLoader imageLoader = new ImojiSearchResultAdapter.ImojiImageLoader() {
             @Override
-            public void loadImage(ImageView target, Drawable placeholder, @AnimRes int animationId, Uri uri,
-                                  final ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
+            public void loadImage(ImageView target,Uri uri, final ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
                 Ion.with(target)
-                        .placeholder(placeholder)
-                        .animateIn(animationId)
                         .load(uri.toString())
                         .setCallback(new FutureCallback<ImageView>() {
                             @Override

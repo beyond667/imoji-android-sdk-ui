@@ -4,18 +4,30 @@
     android:layout_height="@dimen/imoji_search_result_height"
     android:orientation="vertical">
 
-    <com.felipecsl.gifimageview.library.GifImageView
-        android:id="@+id/imoji_search_result_image"
+    <FrameLayout
+        android:id="@+id/imoji_search_result_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/imoji_search_result_width"
-        android:layout_centerInParent="true"
-        android:padding="@dimen/imoji_search_result_placeholder_padding"/>
+        android:layout_centerInParent="true">
+
+        <com.felipecsl.gifimageview.library.GifImageView
+            android:id="@+id/imoji_search_result_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <ImageView
+            android:id="@+id/imoji_search_result_placeholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/imoji_search_result_placeholder_padding" />
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/imoji_search_result_category_title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/imoji_search_result_text_box_height"
-        android:layout_below="@+id/imoji_search_result_image"
+        android:layout_below="@+id/imoji_search_result_container"
         android:gravity="center"
         android:textColor="@color/search_widget_category_text"
         android:textSize="@dimen/imoji_search_result_text_box_text_size"

@@ -6,12 +6,15 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
-import android.support.annotation.AnimRes;
 import android.support.v4.graphics.ColorUtils;
+import android.support.v4.view.animation.PathInterpolatorCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,10 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import io.imoji.sdk.objects.Category;
-import io.imoji.sdk.objects.Imoji;
-import io.imoji.sdk.objects.RenderingOptions;
-import io.imoji.sdk.objects.RenderingOptions.ImageFormat;
 import io.imoji.sdk.ui.R;
 
 /**
@@ -72,20 +71,18 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<ImojiSearchRe
     @Override
     public void onBindViewHolder(final SearchResultHolder holder, int position) {
         final SearchResult sr = results.get(position);
-        resetView(holder.imageView, holder.textView);
+        resetView(holder.container, holder.placeholder, holder.textView, position);
 
-        imageLoader.loadImage(holder.imageView, getPlaceholder(position),
-                R.anim.search_widget_fade_in, sr.getThumbnailUri(),
-                new ImojiImageLoadCompleteCallback() {
-                    @Override
-                    public void updateImageView() {
-                        if (sr.isCategory()) {
-                            loadCategory(holder.imageView, holder.textView, sr.getTitle());
-                        } else {
-                            loadSticker(holder.imageView);
-                        }
-                    }
-                });
+        imageLoader.loadImage(holder.imageView, sr.getThumbnailUri(), new ImojiImageLoadCompleteCallback() {
+            @Override
+            public void updateImageView() {
+                if (sr.isCategory()) {
+                    loadCategory(holder.container, holder.imageView, holder.placeholder, holder.textView, sr.getTitle());
+                } else {
+                    loadSticker(holder.imageView, holder.placeholder);
+                }
+            }
+        });
     }
 
     @Override
@@ -94,12 +91,16 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<ImojiSearchRe
     }
 
     public class SearchResultHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private FrameLayout container;
         private GifImageView imageView;
+        private ImageView placeholder;
         private TextView textView;
 
         public SearchResultHolder(View itemView) {
             super(itemView);
+            container = (FrameLayout) itemView.findViewById(R.id.imoji_search_result_container);
             imageView = (GifImageView) itemView.findViewById(R.id.imoji_search_result_image);
+            placeholder = (ImageView) itemView.findViewById(R.id.imoji_search_result_placeholder);
             textView = (TextView) itemView.findViewById(R.id.imoji_search_result_category_title);
             itemView.setOnClickListener(this);
         }
@@ -120,66 +121,35 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<ImojiSearchRe
         void onTap(SearchResult searchResult);
     }
 
-    public static class SearchResult {
-
-        private Imoji imoji;
-        private Category category;
-
-        public SearchResult(Imoji imoji) {
-            this.imoji = imoji;
-        }
-
-        public SearchResult(Category category) {
-            this.category = category;
-        }
-
-        public Imoji getImoji() {
-            return imoji;
-        }
-
-        public Category getCategory() {
-            return category;
-        }
-
-        public Uri getThumbnailUri() {
-            Imoji thumbailImoji = this.imoji;
-            if (isCategory()) {
-                thumbailImoji = category.getPreviewImoji();
-            }
-            return thumbailImoji.getStandardThumbnailUri(true);
-        }
-
-        public String getTitle() {
-            String title = null;
-            if (isCategory()) {
-                title = category.getTitle();
-            }
-            return title;
-        }
-
-        public boolean isCategory() {
-            return category != null && imoji == null;
-        }
-
-        public Uri getUri(ImageFormat imageFormat) {
-            return getImoji().urlForRenderingOption(new RenderingOptions(
-                    RenderingOptions.BorderStyle.Sticker,
-                    imageFormat,
-                    RenderingOptions.Size.Thumbnail));
-        }
-    }
-
-    public void resetView(ImageView imageView, TextView textView) {
+    public void resetView(FrameLayout container, final ImageView placeholder, TextView textView, int position) {
         textView.setVisibility(View.GONE);
 
         int width = (int) context.getResources().getDimension(R.dimen.imoji_search_result_width);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, width);
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
-        imageView.setLayoutParams(params);
+        container.setLayoutParams(params);
 
-        int padding = (int) context.getResources()
-                .getDimension(R.dimen.imoji_search_result_placeholder_padding);
-        imageView.setPadding(padding, padding, padding, padding);
+        placeholder.setImageDrawable(getPlaceholder(position));
+        placeholder.setVisibility(View.INVISIBLE);
+        Animation fadeInAnimation = AnimationUtils.loadAnimation(context, R.anim.search_widget_result_fade_in);
+        fadeInAnimation.setInterpolator(PathInterpolatorCompat.create(0.3f, 0.14f, 0.36f, 1.36f));
+        fadeInAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                placeholder.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        placeholder.startAnimation(fadeInAnimation);
     }
 
     private Drawable getPlaceholder(int position) {
@@ -194,29 +164,66 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<ImojiSearchRe
         return placeholder;
     }
 
-    private void loadCategory(ImageView imageView, TextView textView, String title) {
-        imageView.setPadding(0, 0, 0, 0);
+    private void loadCategory(FrameLayout container, ImageView imageView, ImageView placeholder, TextView textView, String title) {
         int width = (int) context.getResources().getDimension(R.dimen.imoji_search_result_small_sticker_width);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, width);
         int margin = (int) context.getResources().getDimension(R.dimen.imoji_search_result_small_sticker_top_margin);
         params.setMargins(0, margin, 0, margin);
         params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
         params.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        imageView.setLayoutParams(params);
+        container.setLayoutParams(params);
 
         textView.setText(title);
         textView.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Montserrat-Light.otf"));
         textView.setVisibility(View.VISIBLE);
+
+        loadSticker(imageView, placeholder);
     }
 
-    private void loadSticker(ImageView imageView) {
-        imageView.setPadding(0, 0, 0, 0);
+    private void loadSticker(final ImageView imageView, final ImageView placeholder) {
+        Animation fadeOutAnimation = AnimationUtils.loadAnimation(context, R.anim.search_widget_result_fade_out);
+        fadeOutAnimation.setInterpolator(PathInterpolatorCompat.create(0.25f, 0.1f, 0.25f, 1));
+        fadeOutAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                placeholder.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        placeholder.startAnimation(fadeOutAnimation);
+
+        Animation fadeInAnimation = AnimationUtils.loadAnimation(context, R.anim.search_widget_result_fade_in);
+        fadeInAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                imageView.bringToFront();
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                imageView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        fadeInAnimation.setInterpolator(PathInterpolatorCompat.create(0.3f, 0.14f, 0.36f, 1.36f));
+        imageView.startAnimation(fadeInAnimation);
     }
 
     public interface ImojiImageLoader {
 
-        void loadImage(ImageView target, Drawable placeholder, @AnimRes int animationId,
-                       Uri uri,ImojiImageLoadCompleteCallback callback);
+        void loadImage(ImageView target, Uri uri, ImojiImageLoadCompleteCallback callback);
     }
 
     public abstract class ImojiImageLoadCompleteCallback {

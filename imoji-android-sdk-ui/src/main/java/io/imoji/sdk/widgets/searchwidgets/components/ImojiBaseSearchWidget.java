@@ -23,7 +23,6 @@ import io.imoji.sdk.response.ImojisResponse;
 import io.imoji.sdk.ui.R;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchBarLayout.ImojiSearchBarListener;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter.ImojiSearchTapListener;
-import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter.SearchResult;
 
 /**
  * Created by engind on 4/22/16.
@@ -70,6 +69,7 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
         };
 
         recyclerView = (RecyclerView) this.findViewById(R.id.widget_recycler);
+        recyclerView.setItemAnimator(null);
         searchBarLayout = (ImojiSearchBarLayout) this.findViewById(R.id.widget_search);
         separator = this.findViewById(R.id.sticker_separator);
         searchBarLayout.setImojiSearchListener(this);
@@ -101,10 +101,10 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
                     protected void onPostExecute(ImojisResponse imojisResponse) {
                         List<SearchResult> newResults = new ArrayList<SearchResult>();
                         for (Imoji imoji : imojisResponse.getImojis()) {
-                            newResults.add(new ImojiSearchResultAdapter.SearchResult(imoji));
+                            newResults.add(new SearchResult(imoji));
                         }
                         for(Category c :imojisResponse.getRelatedCategories()){
-                            newResults.add(new ImojiSearchResultAdapter.SearchResult(c));
+                            newResults.add(new SearchResult(c));
                         }
                         repopulateAdapter(newResults);
                     }
@@ -123,7 +123,7 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
                     protected void onPostExecute(CategoriesResponse categoriesResponse) {
                         List<SearchResult> newResults = new ArrayList<SearchResult>();
                         for (Category category : categoriesResponse.getCategories()) {
-                            newResults.add(new ImojiSearchResultAdapter.SearchResult(category));
+                            newResults.add(new SearchResult(category));
                         }
                         repopulateAdapter(newResults);
                     }
