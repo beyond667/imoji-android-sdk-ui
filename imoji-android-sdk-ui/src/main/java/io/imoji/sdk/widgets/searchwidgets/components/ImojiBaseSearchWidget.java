@@ -1,8 +1,8 @@
 package io.imoji.sdk.widgets.searchwidgets.components;
 
 import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Pair;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -31,15 +31,15 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
 
     protected RecyclerView recyclerView;
     protected ImojiSearchBarLayout searchBarLayout;
-    private ImojiSearchResultAdapter resultAdapter;
+    protected ImojiSearchResultAdapter resultAdapter;
     private ImojiWidgetListener widgetListener;
-    private StaggeredGridLayoutManager gridLayoutManager;
+    private GridLayoutManager gridLayoutManager;
     private View separator;
     private RenderingOptions.ImageFormat imageFormat = RenderingOptions.ImageFormat.WebP;
 
     protected Stack<Pair<String, String>> historyStack;
 
-    public ImojiBaseSearchWidget(Context context, int spanCount, int orientation,
+    public ImojiBaseSearchWidget(Context context, final int spanCount, int orientation,
                                  boolean searchOnTop, @ImojiResultView.ResultViewSize int resultViewSize,
                                  RenderingOptions.ImageFormat imageFormat, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
         super(context);
@@ -85,7 +85,18 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
 
         resultAdapter = new ImojiSearchResultAdapter(context, imageLoader, resultViewSize, orientation);
         resultAdapter.setSearchTapListener(this);
-        gridLayoutManager = new StaggeredGridLayoutManager(spanCount, orientation);
+        gridLayoutManager = new GridLayoutManager(context,spanCount, orientation,false);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                switch(resultAdapter.getItemViewType(position)){
+                    case ImojiSearchResultAdapter.DIVIDER_VIEW_TYPE:
+                        return spanCount;
+                    default:
+                        return 1;
+                }
+            }
+        });
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(resultAdapter);

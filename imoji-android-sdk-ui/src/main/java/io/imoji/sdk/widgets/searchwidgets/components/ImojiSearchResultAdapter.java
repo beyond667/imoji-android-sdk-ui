@@ -21,7 +21,7 @@ import io.imoji.sdk.ui.R;
  */
 public class ImojiSearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final static int DIVIDER_VIEW_TYPE = 2343234;
+    public final static int DIVIDER_VIEW_TYPE = 2343234;
 
     private List<SearchResult> results;
     private Context context;
@@ -101,6 +101,7 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<RecyclerView.
         return super.getItemViewType(position);
     }
 
+
     public class ResultHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public ResultHolder(View itemView) {
@@ -126,9 +127,8 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<RecyclerView.
 
             int width = (int) context.getResources().getDimension(R.dimen.imoji_search_recycler_divider_width);
             StaggeredGridLayoutManager.LayoutParams layoutParams = new StaggeredGridLayoutManager.LayoutParams(
-                    orientation == LinearLayout.HORIZONTAL ? width : 10,
+                    orientation == LinearLayout.HORIZONTAL ? width : ViewGroup.LayoutParams.MATCH_PARENT,
                     orientation == LinearLayout.HORIZONTAL ? ViewGroup.LayoutParams.MATCH_PARENT : width);
-            layoutParams.setFullSpan(true);
             if(orientation == LinearLayout.HORIZONTAL){
                 int marg = (int) context.getResources().getDimension(R.dimen.imoji_search_horizontal_recycler_divider_padding);
                 layoutParams.setMargins(0,marg,0,marg);
@@ -142,6 +142,10 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<RecyclerView.
 
     public void setSearchTapListener(ImojiSearchTapListener tapListener) {
         this.tapListener = tapListener;
+    }
+
+    public int getDividerPosition() {
+        return dividerPosition;
     }
 
     public interface ImojiSearchTapListener {
