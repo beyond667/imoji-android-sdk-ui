@@ -39,8 +39,18 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                 outRect.left = horizontalPadd;
-                outRect.right = horizontalPadd;
                 outRect.bottom = verticalPadd;
+                outRect.right = horizontalPadd;
+
+                int position = parent.getChildLayoutPosition(view);
+
+                if(position == resultAdapter.getDividerPosition()){
+                    outRect.right = 0;
+                }else if (position == 0){
+                    outRect.left = horizontalPadd*2;
+                }else if (position >= state.getItemCount()-SPAN_COUNT){
+                    outRect.right = horizontalPadd*2;
+                }
             }
         });
     }

@@ -37,11 +37,15 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
                 //TODO // FIXME: 5/3/16
                 int resultSize = (int) getResources().getDimension(R.dimen.imoji_result_width_large);
                 int padding = (recyclerView.getWidth() - resultSize * SPAN_COUNT) / (SPAN_COUNT * 2);
-                if(parent.getChildLayoutPosition(view) != resultAdapter.getDividerPosition()){
+                if (parent.getChildLayoutPosition(view) != resultAdapter.getDividerPosition()) {
                     outRect.right = outRect.right - padding;
                     outRect.left = padding;
+                    outRect.bottom = (int) getContext().getResources().getDimension(R.dimen.imoji_search_recycler_vertical_padding);
+                } else {
+                    outRect.top = (int) getContext().getResources().getDimension(R.dimen.imoji_search_vertical_recycler_divider_top_margin);
+                    outRect.bottom = (int) getContext().getResources().getDimension(R.dimen.imoji_search_vertical_recycler_divider_bottom_margin);
                 }
-                outRect.bottom = (int) getContext().getResources().getDimension(R.dimen.imoji_search_recycler_vertical_padding);
+
             }
         });
     }

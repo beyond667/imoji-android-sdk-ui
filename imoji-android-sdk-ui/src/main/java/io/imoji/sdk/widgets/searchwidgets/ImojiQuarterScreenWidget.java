@@ -18,16 +18,14 @@ import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter;
  */
 public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
 
+    public final static int SPAN_COUNT = 1;
+
     public ImojiQuarterScreenWidget(Context context, RenderingOptions.ImageFormat imageFormat, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
-        super(context, 1, HORIZONTAL, false, ImojiResultView.SMALL, imageFormat, imageLoader);
+        super(context, SPAN_COUNT, HORIZONTAL, false, ImojiResultView.SMALL, imageFormat, imageLoader);
         searchBarLayout.setLeftButtonVisibility(GONE);
         setSeparatorVisibility(VISIBLE);
         int height = (int) getResources().getDimension(R.dimen.imoji_search_result_row_height);
         recyclerView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
-
-        int horizontalPadding = (int) getResources()
-                .getDimension(R.dimen.imoji_search_recycler_horizontal_padding);
-        recyclerView.setPadding(horizontalPadding, 0, horizontalPadding, 0);
 
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
 
@@ -37,6 +35,15 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                 outRect.left = horizontalPadd;
                 outRect.right = horizontalPadd;
+
+                int position = parent.getChildLayoutPosition(view);
+                if(position == resultAdapter.getDividerPosition()){
+                    outRect.right = 0;
+                }else if (position == 0){
+                    outRect.left = horizontalPadd*2;
+                }else if (position >= state.getItemCount()-SPAN_COUNT){
+                    outRect.right = horizontalPadd*2;
+                }
             }
         });
         searchBarLayout.requestTextFocus();
