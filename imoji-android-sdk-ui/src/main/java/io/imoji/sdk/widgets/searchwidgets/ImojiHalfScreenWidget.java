@@ -2,6 +2,7 @@ package io.imoji.sdk.widgets.searchwidgets;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -68,12 +69,17 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
     }
 
     @Override
-    public void onFocusChanged(boolean hasFocus) {
+    public void onFocusChanged(final boolean hasFocus) {
         super.onFocusChanged(hasFocus);
         if (!hasFocus) {
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(searchBarLayout.getWindowToken(), 0);
         }
-        recyclerView.setVisibility(hasFocus ? GONE : VISIBLE);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                recyclerView.setVisibility(hasFocus ? GONE : VISIBLE);
+            }
+        }, 100);
     }
 }
