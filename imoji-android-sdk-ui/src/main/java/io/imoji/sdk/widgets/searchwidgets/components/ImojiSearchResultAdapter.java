@@ -70,14 +70,7 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (position == dividerPosition) {
-            int width = (int) context.getResources().getDimension(R.dimen.imoji_search_recycler_divider_width);
-            StaggeredGridLayoutManager.LayoutParams layoutParams = new StaggeredGridLayoutManager.LayoutParams(
-                    orientation == LinearLayout.HORIZONTAL ? width : ViewGroup.LayoutParams.MATCH_PARENT,
-                    orientation == LinearLayout.HORIZONTAL ? ViewGroup.LayoutParams.MATCH_PARENT : width);
-            layoutParams.setFullSpan(true);
-            holder.itemView.setLayoutParams(layoutParams);
-        } else {
+        if (position != dividerPosition) {
             final SearchResult sr = results.get(position);
             final ImojiResultView resultView = (ImojiResultView) holder.itemView;
             resultView.resetView(placeholderRandomizer, position);
@@ -129,7 +122,21 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<RecyclerView.
             super(itemView);
             itemView.setBackgroundColor(ColorUtils.setAlphaComponent(
                     //TODO // FIXME: 5/3/16
-                    context.getResources().getColor(R.color.search_widget_category_divider),18));
+                    context.getResources().getColor(R.color.search_widget_category_divider), 18));
+
+            int width = (int) context.getResources().getDimension(R.dimen.imoji_search_recycler_divider_width);
+            StaggeredGridLayoutManager.LayoutParams layoutParams = new StaggeredGridLayoutManager.LayoutParams(
+                    orientation == LinearLayout.HORIZONTAL ? width : 10,
+                    orientation == LinearLayout.HORIZONTAL ? ViewGroup.LayoutParams.MATCH_PARENT : width);
+            layoutParams.setFullSpan(true);
+            if(orientation == LinearLayout.HORIZONTAL){
+                int marg = (int) context.getResources().getDimension(R.dimen.imoji_search_horizontal_recycler_divider_padding);
+                layoutParams.setMargins(0,marg,0,marg);
+            }else{
+                int marg = (int) context.getResources().getDimension(R.dimen.imoji_search_vertical_recycler_divider_padding);
+                layoutParams.setMargins(marg,0,marg,0);
+            }
+            itemView.setLayoutParams(layoutParams);
         }
     }
 

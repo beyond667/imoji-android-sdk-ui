@@ -38,7 +38,8 @@
     <dimen name="imoji_search_recycler_vertical_padding">5dp</dimen>
     <dimen name="imoji_search_recycler_horizontal_padding">5dp</dimen>
     <dimen name="imoji_search_recycler_divider_width">2dp</dimen>
-    <dimen name="imoji_search_horizontal_recycler_divider_padding">9dp</dimen>
+    <dimen name="imoji_search_horizontal_recycler_divider_padding">11.5dp</dimen>
+    <dimen name="imoji_search_vertical_recycler_divider_padding">10dp</dimen>
 
 
 </resources>

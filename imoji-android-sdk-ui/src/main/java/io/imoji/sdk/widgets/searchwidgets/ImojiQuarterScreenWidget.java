@@ -1,9 +1,11 @@
 package io.imoji.sdk.widgets.searchwidgets;
 
 import android.content.Context;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import io.imoji.sdk.objects.RenderingOptions;
+import io.imoji.sdk.ui.R;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiBaseSearchWidget;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiResultView;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter;
@@ -17,6 +19,8 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
         super(context, 1, HORIZONTAL, false, ImojiResultView.SMALL, imageFormat, imageLoader);
         searchBarLayout.setLeftButtonVisibility(GONE);
         setSeparatorVisibility(VISIBLE);
+        int height = (int) getResources().getDimension(R.dimen.imoji_search_result_row_height);
+        recyclerView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
 
 
 //        int horizontalPadding = (int) getResources()
