@@ -87,11 +87,11 @@ public class ImojiResultView extends RelativeLayout {
         //TODO // FIXME: 5/2/16
         textView.setTextColor(getResources().getColor(R.color.search_result_category_title));
         textView.setGravity(Gravity.CENTER);
-        textView.setVisibility(GONE);
         container.addView(textView);
     }
 
     public void resetView(final int placeholderRandomizer, final int position) {
+        textView.setVisibility(GONE);
         placeholder.setImageDrawable(getPlaceholder(placeholderRandomizer, position));
         placeholder.startAnimation(getAppearAnimation());
     }

@@ -1,8 +1,8 @@
 package io.imoji.sdk.widgets.searchwidgets.components;
 
 import android.content.Context;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Pair;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -33,14 +33,15 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
     protected ImojiSearchBarLayout searchBarLayout;
     private ImojiSearchResultAdapter resultAdapter;
     private ImojiWidgetListener widgetListener;
-    private GridLayoutManager gridLayoutManager;
+    private StaggeredGridLayoutManager gridLayoutManager;
     private View separator;
     private RenderingOptions.ImageFormat imageFormat = RenderingOptions.ImageFormat.WebP;
 
     protected Stack<Pair<String, String>> historyStack;
 
     public ImojiBaseSearchWidget(Context context, int spanCount, int orientation,
-                                 boolean searchOnTop, RenderingOptions.ImageFormat imageFormat,ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
+                                 boolean searchOnTop, @ImojiResultView.ResultViewSize int resultViewSize,
+                                 RenderingOptions.ImageFormat imageFormat, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
         super(context);
         inflate(getContext(), R.layout.imoji_base_widget, this);
         this.imageFormat = imageFormat;
@@ -82,9 +83,9 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
             container.addView(recyclerView, 2);
         }
 
-        resultAdapter = new ImojiSearchResultAdapter(context,imageLoader);
+        resultAdapter = new ImojiSearchResultAdapter(context, imageLoader, resultViewSize, orientation);
         resultAdapter.setSearchTapListener(this);
-        gridLayoutManager = new GridLayoutManager(context.getApplicationContext(), spanCount, orientation, false);
+        gridLayoutManager = new StaggeredGridLayoutManager(spanCount, orientation);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(resultAdapter);
@@ -103,14 +104,18 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
                         for (Imoji imoji : imojisResponse.getImojis()) {
                             newResults.add(new SearchResult(imoji));
                         }
-                        for(Category c :imojisResponse.getRelatedCategories()){
+                        if(!imojisResponse.getRelatedCategories().isEmpty()){
+                            newResults.add(new SearchResult((Imoji)null));
+                        }
+                        for (Category c : imojisResponse.getRelatedCategories()) {
                             newResults.add(new SearchResult(c));
                         }
-                        repopulateAdapter(newResults);
+                        repopulateAdapter(newResults,
+                                !imojisResponse.getRelatedCategories().isEmpty() ? imojisResponse.getImojis().size() : -1);
                     }
                 });
         if (addToHistory) {
-            historyStack.push(new Pair<String, String>(term, title));
+            historyStack.push(new Pair<>(term, title));
         }
     }
 
@@ -125,29 +130,29 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
                         for (Category category : categoriesResponse.getCategories()) {
                             newResults.add(new SearchResult(category));
                         }
-                        repopulateAdapter(newResults);
+                        repopulateAdapter(newResults,-1);
                     }
                 });
     }
 
-    private void searchPrevious(){
-        try{
+    private void searchPrevious() {
+        try {
             historyStack.pop();
-        }catch (EmptyStackException e){
+        } catch (EmptyStackException e) {
             searchTrending();
         }
-        if(!historyStack.isEmpty()){
-            Pair<String,String> pair = historyStack.peek();
-            searchTerm(pair.first,pair.second,false);
-        }else{
+        if (!historyStack.isEmpty()) {
+            Pair<String, String> pair = historyStack.peek();
+            searchTerm(pair.first, pair.second, false);
+        } else {
             searchTrending();
         }
     }
 
 
-    private void repopulateAdapter(List<SearchResult> newResults) {
+    private void repopulateAdapter(List<SearchResult> newResults, int dividerPosition) {
         gridLayoutManager.scrollToPositionWithOffset(0, 0);
-        resultAdapter.repopulate(newResults);
+        resultAdapter.repopulate(newResults,dividerPosition);
     }
 
     @Override
@@ -202,14 +207,14 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
     }
 
     private void updateText() {
-        try{
-            Pair<String,String> pair = historyStack.peek();
+        try {
+            Pair<String, String> pair = historyStack.peek();
             String text = pair.first;
             if (pair.second != null) {
                 text = pair.second;
             }
             searchBarLayout.setText(text);
-        }catch (EmptyStackException e){
+        } catch (EmptyStackException e) {
             searchBarLayout.setText("");
         }
     }
