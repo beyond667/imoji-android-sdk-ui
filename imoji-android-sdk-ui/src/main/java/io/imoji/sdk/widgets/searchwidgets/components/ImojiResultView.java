@@ -15,6 +15,8 @@ import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -31,6 +33,7 @@ import io.imoji.sdk.ui.R;
  * Created by engind on 5/2/16.
  */
 public class ImojiResultView extends RelativeLayout {
+
 
     @IntDef({LARGE, SMALL})
     @Retention(RetentionPolicy.SOURCE)
@@ -52,6 +55,9 @@ public class ImojiResultView extends RelativeLayout {
     @ResultViewSize
     int viewSize;
 
+    private ImojiSearchResultAdapter.ImojiSearchTapListener listener;
+    private SearchResult searchResult;
+
     public ImojiResultView(Context context, @ResultViewSize int viewSize) {
         super(context);
         this.context = context;
@@ -72,7 +78,35 @@ public class ImojiResultView extends RelativeLayout {
         container = new RelativeLayout(context);
         addView(container, new LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
 
-        imageView = new GifImageView(context);
+        final Animator pressedAnimator = AnimatorInflater.loadAnimator(context, R.animator.search_result_pressed);
+        final Animator releasedAnimator = AnimatorInflater.loadAnimator(context, R.animator.search_result_released);
+        imageView = new GifImageView(context) {
+
+            @Override
+            public boolean onTouchEvent(MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (searchResult != null && !searchResult.isCategory()) {
+                            pressedAnimator.start();
+                        }
+                        break;
+                    case MotionEvent.ACTION_CANCEL:
+                    case MotionEvent.ACTION_UP:
+                        if (searchResult != null && !searchResult.isCategory()) {
+                            if (pressedAnimator.isRunning()) {
+                                pressedAnimator.cancel();
+                            }
+                            releasedAnimator.start();
+                        }
+                        break;
+                }
+                return super.onTouchEvent(event);
+            }
+        };
+        releasedAnimator.setTarget(imageView);
+        pressedAnimator.setTarget(imageView);
+
+
         RelativeLayout.LayoutParams imageParams = new LayoutParams(resultWidth, resultWidth);
         imageParams.addRule(RelativeLayout.CENTER_IN_PARENT);
         imageView.setLayoutParams(imageParams);
@@ -90,12 +124,24 @@ public class ImojiResultView extends RelativeLayout {
         textView.setTextColor(getResources().getColor(R.color.search_result_category_title));
         textView.setGravity(Gravity.CENTER);
         container.addView(textView);
+
+        imageView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onTap(searchResult);
+            }
+        });
+
+    }
+
+    public void setListener(ImojiSearchResultAdapter.ImojiSearchTapListener tapListener, SearchResult searchResult) {
+        listener = tapListener;
+        this.searchResult = searchResult;
     }
 
     public void resetView(final int placeholderRandomizer, final int position) {
         textView.setVisibility(GONE);
         placeholder.setImageDrawable(getPlaceholder(placeholderRandomizer, position));
-        //placeholder.startAnimation(getAppearAnimation());
         Animator animator = AnimatorInflater.loadAnimator(context, R.animator.search_result_appear);
         animator.setTarget(placeholder);
         animator.start();

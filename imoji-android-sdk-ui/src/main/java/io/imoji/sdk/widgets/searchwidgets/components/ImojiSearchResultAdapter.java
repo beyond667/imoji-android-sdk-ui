@@ -69,11 +69,13 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<RecyclerView.
 
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (position != dividerPosition) {
             final SearchResult sr = results.get(position);
             final ImojiResultView resultView = (ImojiResultView) holder.itemView;
+            resultView.setListener(tapListener, results.get(holder.getAdapterPosition()));
             resultView.resetView(placeholderRandomizer, position);
+
 
             imageLoader.loadImage(resultView.getImageView(), sr.getThumbnailUri(), new ImojiImageLoadCompleteCallback() {
                 @Override
@@ -102,18 +104,10 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
 
-    public class ResultHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ResultHolder extends RecyclerView.ViewHolder{
 
         public ResultHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            if (tapListener != null) {
-                tapListener.onTap(results.get(getAdapterPosition()));
-            }
         }
     }
 
