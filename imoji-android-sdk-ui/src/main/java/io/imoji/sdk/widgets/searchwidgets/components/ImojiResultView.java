@@ -2,7 +2,6 @@ package io.imoji.sdk.widgets.searchwidgets.components;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -12,12 +11,15 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.IntDef;
 import android.support.v4.graphics.ColorUtils;
+import android.support.v4.view.animation.PathInterpolatorCompat;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -142,9 +144,12 @@ public class ImojiResultView extends RelativeLayout {
     public void resetView(final int placeholderRandomizer, final int position) {
         textView.setVisibility(GONE);
         placeholder.setImageDrawable(getPlaceholder(placeholderRandomizer, position));
-        Animator animator = AnimatorInflater.loadAnimator(context, R.animator.search_result_appear);
-        animator.setTarget(placeholder);
-        animator.start();
+
+        placeholder.startAnimation(getAppearAnimation());
+
+//        Animator animator = AnimatorInflater.loadAnimator(context, R.animator.search_result_appear);
+//        animator.setTarget(placeholder);
+//        animator.start();
     }
 
     private Drawable getPlaceholder(int placeholderRandomizer, int position) {
@@ -186,59 +191,98 @@ public class ImojiResultView extends RelativeLayout {
 
     private void startResultAnimation() {
 
-        Animator appearAnimator = AnimatorInflater.loadAnimator(context, R.animator.search_result_disappear);
-        appearAnimator.setTarget(placeholder);
-
-        appearAnimator.addListener(new Animator.AnimatorListener() {
+        Animation disappearAnimation = getDisappearAnimation();
+        disappearAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animator animation) {
+            public void onAnimationStart(Animation animation) {
+                placeholder.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
 
             }
 
             @Override
-            public void onAnimationEnd(Animator animation) {
-                container.setVisibility(VISIBLE);
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
+            public void onAnimationRepeat(Animation animation) {
 
             }
         });
+        placeholder.startAnimation(disappearAnimation);
 
-        Animator disappearAnimator = AnimatorInflater.loadAnimator(context, R.animator.search_result_appear);
-        disappearAnimator.setTarget(container);
-
-        disappearAnimator.addListener(new Animator.AnimatorListener() {
+        Animation appearAnimation = getAppearAnimation();
+        appearAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animator animation) {
+            public void onAnimationStart(Animation animation) {
 
             }
 
             @Override
-            public void onAnimationEnd(Animator animation) {
-                placeholder.setVisibility(GONE);
+            public void onAnimationEnd(Animation animation) {
+                container.setVisibility(View.VISIBLE);
             }
 
             @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
+            public void onAnimationRepeat(Animation animation) {
 
             }
         });
+        container.startAnimation(appearAnimation);
 
-        AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.play(appearAnimator).with(disappearAnimator);
-        animatorSet.start();
+
+//        Animator appearAnimator = AnimatorInflater.loadAnimator(context, R.animator.search_result_disappear);
+//        appearAnimator.setTarget(placeholder);
+//
+//        appearAnimator.addListener(new Animator.AnimatorListener() {
+//            @Override
+//            public void onAnimationStart(Animator animation) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animator animation) {
+//                container.setVisibility(VISIBLE);
+//            }
+//
+//            @Override
+//            public void onAnimationCancel(Animator animation) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animator animation) {
+//
+//            }
+//        });
+//
+//        Animator disappearAnimator = AnimatorInflater.loadAnimator(context, R.animator.search_result_appear);
+//        disappearAnimator.setTarget(container);
+//
+//        disappearAnimator.addListener(new Animator.AnimatorListener() {
+//            @Override
+//            public void onAnimationStart(Animator animation) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animator animation) {
+//                placeholder.setVisibility(GONE);
+//            }
+//
+//            @Override
+//            public void onAnimationCancel(Animator animation) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animator animation) {
+//
+//            }
+//        });
+//
+//        AnimatorSet animatorSet = new AnimatorSet();
+//        animatorSet.play(appearAnimator).with(disappearAnimator);
+//        animatorSet.start();
     }
 
 
@@ -253,5 +297,17 @@ public class ImojiResultView extends RelativeLayout {
         int dimension = (int) dimensions.getDimension(position, 0f);
         dimensions.recycle();
         return dimension;
+    }
+
+    private Animation getAppearAnimation() {
+        Animation fadeInAnimation = AnimationUtils.loadAnimation(context, R.anim.search_widget_result_fade_in);
+        fadeInAnimation.setInterpolator(PathInterpolatorCompat.create(0.3f, 0.14f, 0.36f, 1.36f));
+        return fadeInAnimation;
+    }
+
+    private Animation getDisappearAnimation() {
+        Animation fadeOutAnimation = AnimationUtils.loadAnimation(context, R.anim.search_widget_result_fade_out);
+        fadeOutAnimation.setInterpolator(PathInterpolatorCompat.create(0.25f, 0.1f, 0.25f, 1));
+        return fadeOutAnimation;
     }
 }
