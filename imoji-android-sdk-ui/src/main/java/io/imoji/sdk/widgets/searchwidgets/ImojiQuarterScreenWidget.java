@@ -37,12 +37,12 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
                 outRect.right = horizontalPadd;
 
                 int position = parent.getChildLayoutPosition(view);
-                if(position == resultAdapter.getDividerPosition()){
+                if (position == resultAdapter.getDividerPosition()) {
                     outRect.right = 0;
-                }else if (position == 0){
-                    outRect.left = horizontalPadd*2;
-                }else if (position >= state.getItemCount()-SPAN_COUNT){
-                    outRect.right = horizontalPadd*2;
+                } else if (position == 0) {
+                    outRect.left = horizontalPadd * 2;
+                } else if (position >= state.getItemCount() - SPAN_COUNT) {
+                    outRect.right = horizontalPadd * 2;
                 }
             }
         });
@@ -61,7 +61,7 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
     @Override
     public void onTextCleared() {
         super.onTextCleared();
-        if (historyStack.peek().second != null) {
+        if (historyStack.isEmpty() || historyStack.peek().second != null) {
             searchTrending();
         }
     }
