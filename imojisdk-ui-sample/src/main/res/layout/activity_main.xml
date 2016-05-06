@@ -1,31 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context="io.imoji.sdk.ui.sample.MainActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:theme="@style/AppTheme.AppBarOverlay">
+    <View
+        android:id="@+id/main_activity_logo"
+        android:layout_width="@dimen/main_activity_logo_width"
+        android:layout_height="@dimen/main_activity_logo_height"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/main_activity_logo_margin_bottom"
+        android:layout_marginTop="@dimen/main_activity_logo_margin_top"
+        android:background="@drawable/imoji_menu_logo" />
 
-        <!--<android.support.v7.widget.Toolbar-->
-            <!--android:id="@+id/toolbar"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="?attr/actionBarSize"-->
-            <!--android:background="?attr/colorPrimary"-->
-            <!--android:theme="@style/AppTheme.AppBarOverlay"-->
-            <!--app:popupTheme="@style/AppTheme.PopupOverlay"/>-->
-
-    </android.support.design.widget.AppBarLayout>
+    <View
+        android:id="@+id/main_activity_separator"
+        android:layout_width="@dimen/main_activity_logo_width"
+        android:layout_height="@dimen/main_activity_separator_height"
+        android:layout_below="@id/main_activity_logo"
+        android:layout_centerHorizontal="true"
+        android:background="@color/main_activity_separator" />
 
     <ListView
-        android:id="@+id/example_list"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
-    </ListView>
+        android:id="@+id/main_activity_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/main_activity_separator"
+        android:layout_marginLeft="@dimen/main_activity_list_margin_left"
+        android:layout_marginRight="@dimen/main_activity_list_margin_right"
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/main_activity_list_padding_top" />
 
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">Imoji SDK UI Sample</string>
     <string name="action_settings">Settings</string>
-    <string name="example_label_trace">Imoji Editor</string>
-    <string name="example_label_quarter_screen_widget">Quarter Screen Widget</string>
-    <string name="example_label_half_screen_widget">Half Screen Widget</string>
-    <string name="example_label_full_screen_widget">Full Screen Widget</string>
+    <string name="section_title_quarter_screen">Quarter Screen</string>
+    <string name="section_title_half_screen">Half Screen</string>
+    <string name="section_title_full_screen">Full Screen</string>
+    <string name="section_title_sticker_creator">Sticker Creator</string>
+    <string name="section_title_settings">UI Settings</string>
 
     <string name="dialog_title_created_imoji">You created an Imoji!</string>
     <string name="dialog_positive_label_created_imoji">Awesome</string>

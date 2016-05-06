@@ -2,10 +2,11 @@
 <resources>
 
     <string-array name="example_labels">
-        <item>@string/example_label_trace</item>
-        <item>@string/example_label_quarter_screen_widget</item>
-        <item>@string/example_label_half_screen_widget</item>
-        <item>@string/example_label_full_screen_widget</item>
+        <item>@string/section_title_quarter_screen</item>
+        <item>@string/section_title_half_screen</item>
+        <item>@string/section_title_full_screen</item>
+        <item>@string/section_title_sticker_creator</item>
+        <item>@string/section_title_settings</item>
     </string-array>
 
 </resources>

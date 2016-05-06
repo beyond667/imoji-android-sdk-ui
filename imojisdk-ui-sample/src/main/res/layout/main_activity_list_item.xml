@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="@dimen/main_activity_list_item_height">
+
+    <TextView
+        android:id="@+id/main_activity_list_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:textSize="@dimen/main_activity_list_item_text_size"
+        android:textColor="@color/main_activity_list_item_title"/>
+
+    <View
+        android:id="@+id/main_activity_list_item_icon"
+        android:layout_width="@dimen/main_activity_list_item_icon_default_width"
+        android:layout_height="@dimen/main_activity_list_item_icon_default_height"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/imoji_menu_forward"
+        android:layout_marginRight="@dimen/main_activity_list_item_icon_default_margin_right"/>
+
+</RelativeLayout>

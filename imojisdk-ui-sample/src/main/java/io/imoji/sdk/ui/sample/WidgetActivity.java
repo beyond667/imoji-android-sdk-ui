@@ -1,6 +1,5 @@
 package io.imoji.sdk.ui.sample;
 
-import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,14 +26,12 @@ import io.imoji.sdk.widgets.searchwidgets.components.ImojiWidgetListener;
 public class WidgetActivity extends AppCompatActivity {
 
     public static final String WIDGET_IDENTIFIER = "widget_identifier";
-    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        this.context = this;
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(
                 getResources().getColor(R.color.widget_activity_action_bar_color)
@@ -63,17 +60,17 @@ public class WidgetActivity extends AppCompatActivity {
         };
 
         switch (identifier) {
-            case 1:
+            case 0:
                 ImojiQuarterScreenWidget widget = new ImojiQuarterScreenWidget(this, RenderingOptions.ImageFormat.WebP, imageLoader);
                 setTitle(R.string.activity_title_quarter_screen);
                 container.addView(widget, params);
                 break;
-            case 2:
+            case 1:
                 ImojiHalfScreenWidget halfWidget = new ImojiHalfScreenWidget(this, RenderingOptions.ImageFormat.Png, imageLoader);
                 setTitle(R.string.activity_title_half_screen);
                 container.addView(halfWidget, params);
                 break;
-            case 3:
+            case 2:
                 ImojiFullScreenWidget fullWidget = new ImojiFullScreenWidget(this, RenderingOptions.ImageFormat.WebP, imageLoader);
                 getSupportActionBar().hide();
                 container.addView(fullWidget);

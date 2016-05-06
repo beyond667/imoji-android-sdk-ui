@@ -4,4 +4,20 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="main_activity_logo_width">260dp</dimen>
+    <dimen name="main_activity_logo_height">162dp</dimen>
+    <dimen name="main_activity_logo_margin_top">38dp</dimen>
+    <dimen name="main_activity_logo_margin_bottom">34dp</dimen>
+    <dimen name="main_activity_separator_height">0.5dp</dimen>
+    <dimen name="main_activity_list_margin_left">60dp</dimen>
+    <dimen name="main_activity_list_margin_right">52dp</dimen>
+    <dimen name="main_activity_list_padding_top">17dp</dimen>
+
+    <dimen name="main_activity_list_item_height">56dp</dimen>
+    <dimen name="main_activity_list_item_text_size">18sp</dimen>
+    <dimen name="main_activity_list_item_icon_default_width">8dp</dimen>
+    <dimen name="main_activity_list_item_icon_default_height">12dp</dimen>
+    <dimen name="main_activity_list_item_icon_default_margin_right">8dp</dimen>
+    <dimen name="main_activity_list_item_icon_expanded_side">22dp</dimen>
 </resources>

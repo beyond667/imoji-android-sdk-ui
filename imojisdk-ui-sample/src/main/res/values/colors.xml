@@ -5,4 +5,8 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="widget_activity_action_bar_color">#fafafa</color>
+
+    <color name="main_activity_separator">#33000000</color>
+    <color name="main_activity_list_item_title">#393d49</color>
+
 </resources>
