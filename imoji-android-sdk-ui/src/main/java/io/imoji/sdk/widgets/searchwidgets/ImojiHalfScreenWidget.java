@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import io.imoji.sdk.objects.RenderingOptions;
 import io.imoji.sdk.ui.R;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiBaseSearchWidget;
-import io.imoji.sdk.widgets.searchwidgets.components.ImojiResultView;
+import io.imoji.sdk.widgets.searchwidgets.ui.ImojiResultView;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter;
 
 /**

@@ -1,4 +1,4 @@
-package io.imoji.sdk.widgets.searchwidgets.components;
+package io.imoji.sdk.widgets.searchwidgets.ui;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
@@ -30,6 +30,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import io.imoji.sdk.ui.R;
+import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter;
+import io.imoji.sdk.widgets.searchwidgets.components.SearchResult;
 
 /**
  * Created by engind on 5/2/16.

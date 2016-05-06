@@ -3,6 +3,7 @@ package io.imoji.sdk.widgets.searchwidgets;
 import android.content.Context;
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -10,8 +11,8 @@ import android.view.inputmethod.InputMethodManager;
 import io.imoji.sdk.objects.RenderingOptions;
 import io.imoji.sdk.ui.R;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiBaseSearchWidget;
-import io.imoji.sdk.widgets.searchwidgets.components.ImojiResultView;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter;
+import io.imoji.sdk.widgets.searchwidgets.ui.ImojiResultView;
 
 /**
  * Created by engind on 4/24/16.
@@ -61,8 +62,9 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
     @Override
     public void onTextCleared() {
         super.onTextCleared();
-        if (historyStack.isEmpty() || historyStack.peek().second != null) {
-            searchTrending();
+        Pair pair = searchHandler.getFirstElement();
+        if (pair != null || pair.second != null) {
+            searchHandler.searchTrending(context);
         }
     }
 }

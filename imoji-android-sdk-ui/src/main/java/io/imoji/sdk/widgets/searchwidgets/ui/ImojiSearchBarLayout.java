@@ -1,4 +1,4 @@
-package io.imoji.sdk.widgets.searchwidgets.components;
+package io.imoji.sdk.widgets.searchwidgets.ui;
 
 import android.content.Context;
 import android.text.Editable;

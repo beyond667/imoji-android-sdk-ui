@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchBarLayout
+    <io.imoji.sdk.widgets.searchwidgets.ui.ImojiSearchBarLayout
         android:id="@+id/widget_search"
         android:layout_width="match_parent"
         android:layout_height="@dimen/imoji_search_bar_height" />

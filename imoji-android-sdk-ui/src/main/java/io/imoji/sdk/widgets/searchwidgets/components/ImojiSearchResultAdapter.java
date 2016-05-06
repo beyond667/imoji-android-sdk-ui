@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Random;
 
 import io.imoji.sdk.ui.R;
+import io.imoji.sdk.widgets.searchwidgets.ui.ImojiResultView;
 
 /**
  * Created by engind on 4/22/16.
