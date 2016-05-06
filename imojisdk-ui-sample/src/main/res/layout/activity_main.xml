@@ -26,12 +26,11 @@
 
     <ListView
         android:id="@+id/main_activity_list"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/main_activity_logo_width"
         android:layout_height="match_parent"
         android:layout_below="@id/main_activity_separator"
-        android:layout_marginLeft="@dimen/main_activity_list_margin_left"
-        android:layout_marginRight="@dimen/main_activity_list_margin_right"
         android:clipToPadding="false"
+        android:layout_centerHorizontal="true"
         android:paddingTop="@dimen/main_activity_list_padding_top" />
 
 </RelativeLayout>

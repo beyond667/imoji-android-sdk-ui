@@ -7,6 +7,6 @@
     android:textColor="@color/imoji_quarter_widget_no_sticker_layout_text"
     android:textSize="@dimen/imoji_quarter_widget_no_sticker_layout_text"
     android:gravity="center"
-    android:text="No Stickers Found">
+    android:text="@string/imoji_search_widget_no_sticker_hint">
 
 </TextView>

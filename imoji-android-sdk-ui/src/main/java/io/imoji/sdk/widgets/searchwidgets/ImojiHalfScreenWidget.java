@@ -2,11 +2,14 @@ package io.imoji.sdk.widgets.searchwidgets;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import io.imoji.sdk.objects.RenderingOptions;
 import io.imoji.sdk.ui.R;
@@ -81,5 +84,16 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
                 recyclerView.setVisibility(hasFocus ? GONE : VISIBLE);
             }
         }, 100);
+    }
+
+    @Override
+    protected View getReplacementView() {
+        View view = LayoutInflater.from(getContext())
+                .inflate(R.layout.imoji_half_search_widget_no_result, null);
+
+        TextView textView = (TextView) view.findViewById(R.id.replacement_view_text);
+        textView.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Montserrat-Regular.otf"));
+
+        return view;
     }
 }
