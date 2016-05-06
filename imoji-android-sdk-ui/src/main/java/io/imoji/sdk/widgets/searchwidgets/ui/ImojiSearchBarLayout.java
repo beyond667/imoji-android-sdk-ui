@@ -12,7 +12,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import io.imoji.sdk.ui.R;
-import io.imoji.sdk.widgets.searchwidgets.ui.ImojiEditText;
 
 /**
  * Created by engind on 4/21/16.
@@ -49,6 +48,7 @@ public class ImojiSearchBarLayout extends RelativeLayout {
 
             @Override
             public void afterTextChanged(Editable s) {
+                imojiSearchBarListener.onTextChanged(s.toString());
             }
         });
 
@@ -138,6 +138,8 @@ public class ImojiSearchBarLayout extends RelativeLayout {
         void onCloseButtonTapped();
 
         void onFocusChanged(boolean hasFocus);
+
+        void onTextChanged(String term);
     }
 
 }

@@ -22,7 +22,7 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
     public final static int SPAN_COUNT = 1;
 
     public ImojiQuarterScreenWidget(Context context, RenderingOptions.ImageFormat imageFormat, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
-        super(context, SPAN_COUNT, HORIZONTAL, false, ImojiResultView.SMALL, imageFormat, imageLoader);
+        super(context, SPAN_COUNT, HORIZONTAL, false, true, ImojiResultView.SMALL, imageFormat, imageLoader);
         searchBarLayout.setLeftButtonVisibility(GONE);
         setSeparatorVisibility(VISIBLE);
         int height = (int) getResources().getDimension(R.dimen.imoji_search_result_row_height);

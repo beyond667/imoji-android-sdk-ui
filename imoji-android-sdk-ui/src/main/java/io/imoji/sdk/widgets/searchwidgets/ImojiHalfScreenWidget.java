@@ -22,7 +22,7 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
     public final static int SPAN_COUNT = 2;
 
     public ImojiHalfScreenWidget(Context context, RenderingOptions.ImageFormat imageFormat, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
-        super(context, SPAN_COUNT, HORIZONTAL, true, ImojiResultView.SMALL, imageFormat, imageLoader);
+        super(context, SPAN_COUNT, HORIZONTAL, true, false, ImojiResultView.SMALL, imageFormat, imageLoader);
 
         searchBarLayout.setLeftButtonVisibility(GONE);
         setSeparatorVisibility(VISIBLE);

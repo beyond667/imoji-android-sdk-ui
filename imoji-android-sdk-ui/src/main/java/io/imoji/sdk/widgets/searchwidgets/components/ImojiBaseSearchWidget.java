@@ -34,14 +34,14 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
 
 
     public ImojiBaseSearchWidget(Context context, final int spanCount, int orientation,
-                                 boolean searchOnTop, @ImojiResultView.ResultViewSize int resultViewSize,
+                                 boolean searchOnTop, boolean autoSearchEnabled, @ImojiResultView.ResultViewSize int resultViewSize,
                                  RenderingOptions.ImageFormat imageFormat, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
         super(context);
         inflate(getContext(), R.layout.imoji_base_widget, this);
         this.imageFormat = imageFormat;
         this.context = context;
 
-        this.searchHandler = new ImojiSearchHandler() {
+        this.searchHandler = new ImojiSearchHandler(autoSearchEnabled) {
 
             @Override
             public void onSearchCompleted(List<SearchResult> newResults, int dividerPosition) {
@@ -135,6 +135,11 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
     @Override
     public void onFocusChanged(boolean hasFocus) {
 
+    }
+
+    @Override
+    public void onTextChanged(String term) {
+        searchHandler.autoSearch(context,term);
     }
 
     public void setWidgetListener(ImojiWidgetListener widgetListener) {

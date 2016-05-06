@@ -21,7 +21,7 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
     private final static int SPAN_COUNT = 3;
 
     public ImojiFullScreenWidget(Context context, RenderingOptions.ImageFormat imageFormat, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
-        super(context, SPAN_COUNT, VERTICAL, true, ImojiResultView.LARGE, imageFormat, imageLoader);
+        super(context, SPAN_COUNT, VERTICAL, true, true, ImojiResultView.LARGE, imageFormat, imageLoader);
         LinearLayout container = (LinearLayout) this.findViewById(R.id.widget_container);
         container.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
