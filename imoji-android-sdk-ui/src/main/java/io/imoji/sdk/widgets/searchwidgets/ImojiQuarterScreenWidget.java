@@ -2,11 +2,14 @@ package io.imoji.sdk.widgets.searchwidgets;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 import io.imoji.sdk.objects.RenderingOptions;
 import io.imoji.sdk.ui.R;
@@ -63,8 +66,19 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
     public void onTextCleared() {
         super.onTextCleared();
         Pair pair = searchHandler.getFirstElement();
-        if (pair != null || pair.second != null) {
+        if (pair != null && pair.second != null) {
             searchHandler.searchTrending(context);
         }
+    }
+
+    @Override
+    protected View getReplacementView() {
+        View view =LayoutInflater.from(getContext())
+                .inflate(R.layout.imoji_quarter_search_widget_no_result, null);
+
+        TextView textView = (TextView) view.findViewById(R.id.replacement_view_text);
+        textView.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Montserrat-Regular.otf"));
+
+        return view;
     }
 }

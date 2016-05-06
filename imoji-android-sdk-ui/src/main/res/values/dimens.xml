@@ -43,5 +43,8 @@
     <dimen name="imoji_search_vertical_recycler_divider_top_margin">9dp</dimen>
     <dimen name="imoji_search_vertical_recycler_divider_bottom_margin">9dp</dimen>
 
+    <dimen name="imoji_quarter_widget_no_sticker_layout_height">86dp</dimen>
+    <dimen name="imoji_quarter_widget_no_sticker_layout_text">16sp</dimen>
+
 
 </resources>

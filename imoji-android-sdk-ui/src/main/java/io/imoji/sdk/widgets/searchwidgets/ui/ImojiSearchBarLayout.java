@@ -23,6 +23,7 @@ public class ImojiSearchBarLayout extends RelativeLayout {
     private ImojiEditText textBox;
 
     private ImojiSearchBarListener imojiSearchBarListener;
+    private boolean shouldTriggerAutoSearch = true;
 
     public ImojiSearchBarLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -48,7 +49,7 @@ public class ImojiSearchBarLayout extends RelativeLayout {
 
             @Override
             public void afterTextChanged(Editable s) {
-                imojiSearchBarListener.onTextChanged(s.toString());
+                imojiSearchBarListener.onTextChanged(s.toString(),shouldTriggerAutoSearch);
             }
         });
 
@@ -86,20 +87,20 @@ public class ImojiSearchBarLayout extends RelativeLayout {
         setupBackButton();
     }
 
-    public void requestTextFocus(){
+    public void requestTextFocus() {
         textBox.requestFocus();
     }
 
-    public void setImojiSearchListener(ImojiSearchBarListener searchListener){
+    public void setImojiSearchListener(ImojiSearchBarListener searchListener) {
         this.imojiSearchBarListener = searchListener;
     }
 
-    public void setupCloseButton(){
+    public void setupCloseButton() {
         firstLeftIcon.setBackgroundResource(R.drawable.imoji_close);
         firstLeftIcon.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(imojiSearchBarListener != null) {
+                if (imojiSearchBarListener != null) {
                     imojiSearchBarListener.onCloseButtonTapped();
                 }
             }
@@ -111,23 +112,25 @@ public class ImojiSearchBarLayout extends RelativeLayout {
         firstLeftIcon.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(imojiSearchBarListener != null){
+                if (imojiSearchBarListener != null) {
                     imojiSearchBarListener.onBackButtonTapped();
                 }
             }
         });
     }
 
-    public void setLeftButtonVisibility (int visibility) {
+    public void setLeftButtonVisibility(int visibility) {
         firstLeftIcon.setVisibility(visibility);
     }
 
-    public void setText(String text){
+    public void setText(String text) {
+        shouldTriggerAutoSearch = false;
         textBox.setText(text);
+        shouldTriggerAutoSearch = true;
         textBox.clearFocus();
     }
 
-    public interface ImojiSearchBarListener{
+    public interface ImojiSearchBarListener {
 
         void onTextSubmit(String term);
 
@@ -139,7 +142,7 @@ public class ImojiSearchBarLayout extends RelativeLayout {
 
         void onFocusChanged(boolean hasFocus);
 
-        void onTextChanged(String term);
+        void onTextChanged(String term, boolean shouldTriggerAutoSearch);
     }
 
 }

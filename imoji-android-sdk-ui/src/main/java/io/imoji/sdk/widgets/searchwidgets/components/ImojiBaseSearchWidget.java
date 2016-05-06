@@ -30,6 +30,7 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
     private ImojiWidgetListener widgetListener;
     private GridLayoutManager gridLayoutManager;
     private View separator;
+    private View replacementView;
     private RenderingOptions.ImageFormat imageFormat = RenderingOptions.ImageFormat.WebP;
 
 
@@ -100,6 +101,19 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
     }
 
     private void repopulateAdapter(List<SearchResult> newResults, int dividerPosition) {
+        LinearLayout container = (LinearLayout) this.findViewById(R.id.widget_container);
+        if (newResults.isEmpty()) {
+            replacementView = getReplacementView();
+            int index = container.indexOfChild(recyclerView);
+            container.removeViewAt(index);
+            container.addView(replacementView, index);
+        } else {
+            if (recyclerView.getParent() == null) {
+                int index = container.indexOfChild(replacementView);
+                container.removeViewAt(index);
+                container.addView(recyclerView, index);
+            }
+        }
         gridLayoutManager.scrollToPositionWithOffset(0, 0);
         resultAdapter.repopulate(newResults, dividerPosition);
     }
@@ -138,8 +152,10 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
     }
 
     @Override
-    public void onTextChanged(String term) {
-        searchHandler.autoSearch(context,term);
+    public void onTextChanged(String term, boolean shouldTriggerAutoSearch) {
+        if (shouldTriggerAutoSearch) {
+            searchHandler.autoSearch(context, term);
+        }
     }
 
     public void setWidgetListener(ImojiWidgetListener widgetListener) {
@@ -184,5 +200,9 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
 
     protected void onHistoryDestroyed() {
 
+    }
+
+    protected View getReplacementView() {
+        return null;
     }
 }

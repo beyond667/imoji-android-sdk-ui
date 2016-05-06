@@ -26,4 +26,6 @@
     <color name="search_widget_search_bar_focused_hint_color">#cccccc</color>
     <color name="search_widget_sticker_separator">#000000</color>
     <color name="search_widget_category_divider">#000000</color>
+
+    <color name="imoji_quarter_widget_no_sticker_layout_text">#c2c2c2</color>
 </resources>
