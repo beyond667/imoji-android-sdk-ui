@@ -50,7 +50,6 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
                 }
             }
         });
-        searchBarLayout.requestTextFocus();
     }
 
     @Override

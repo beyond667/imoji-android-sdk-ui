@@ -19,6 +19,7 @@ import io.imoji.sdk.ui.R;
 public class ImojiSearchBarLayout extends RelativeLayout {
 
     private View firstLeftIcon;
+    private View secondLeftIcon;
     private View rightIcon;
     private ImojiEditText textBox;
 
@@ -30,6 +31,7 @@ public class ImojiSearchBarLayout extends RelativeLayout {
         inflate(getContext(), R.layout.imoji_search_bar, this);
 
         firstLeftIcon = this.findViewById(R.id.search_bar_first_left_icon);
+        secondLeftIcon = this.findViewById(R.id.search_bar_second_left_icon);
         textBox = (ImojiEditText) this.findViewById(R.id.search_bar_text_box);
         rightIcon = this.findViewById(R.id.search_bar_right_icon);
 
@@ -56,13 +58,17 @@ public class ImojiSearchBarLayout extends RelativeLayout {
         textBox.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                imojiSearchBarListener.onFocusChanged(hasFocus);
+                if (imojiSearchBarListener != null) {
+                    imojiSearchBarListener.onFocusChanged(hasFocus);
+                }
             }
         });
 
-        textBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+            textBox.setOnEditorActionListener(new TextView.OnEditorActionListener()
+
+            {
+                @Override
+                public boolean onEditorAction (TextView textView,int i, KeyEvent keyEvent){
                 if (i == EditorInfo.IME_ACTION_DONE ||
                         (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_DOWN)) {
                     if (imojiSearchBarListener != null) {
@@ -74,21 +80,39 @@ public class ImojiSearchBarLayout extends RelativeLayout {
             }
         });
 
-        rightIcon.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                textBox.setText("");
-                textBox.requestFocus();
-                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.showSoftInput(textBox, InputMethodManager.SHOW_IMPLICIT);
-                imojiSearchBarListener.onTextCleared();
+            rightIcon.setOnClickListener(new
+
+            OnClickListener() {
+                @Override
+                public void onClick (View view){
+                    textBox.setText("");
+                    textBox.requestFocus();
+                    InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(textBox, InputMethodManager.SHOW_IMPLICIT);
+                    imojiSearchBarListener.onTextCleared();
             }
         });
+
+            secondLeftIcon.setOnClickListener(new
+
+            OnClickListener() {
+                @Override
+                public void onClick (View v){
+                    textBox.requestFocus();
+            }
+            });
+
         setupBackButton();
+
+        textBox.requestFocus();
     }
 
-    public void requestTextFocus() {
-        textBox.requestFocus();
+    public void toggleTextFocus(boolean shouldRequest) {
+        if(shouldRequest){
+            textBox.requestFocus();
+        }else{
+            textBox.clearFocus();
+        }
     }
 
     public void setImojiSearchListener(ImojiSearchBarListener searchListener) {

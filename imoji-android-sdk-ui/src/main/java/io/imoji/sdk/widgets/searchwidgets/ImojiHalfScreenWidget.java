@@ -57,6 +57,8 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
                 }
             }
         });
+
+        searchBarLayout.toggleTextFocus(false);
     }
 
     @Override

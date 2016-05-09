@@ -48,6 +48,8 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
 
             }
         });
+
+        searchBarLayout.toggleTextFocus(false);
     }
 
     @Override
