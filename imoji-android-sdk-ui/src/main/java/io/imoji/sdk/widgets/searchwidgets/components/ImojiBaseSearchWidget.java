@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ViewSwitcher;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ import io.imoji.sdk.widgets.searchwidgets.ui.ImojiSearchBarLayout.ImojiSearchBar
  */
 public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBarListener, ImojiSearchTapListener {
 
+    protected ViewSwitcher switcher;
     protected RecyclerView recyclerView;
     protected ImojiSearchBarLayout searchBarLayout;
     protected ImojiSearchResultAdapter resultAdapter;
@@ -50,6 +52,11 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
             }
 
             @Override
+            public void beforeSearchStarted() {
+                switcher.setDisplayedChild(0);
+            }
+
+            @Override
             public void onFirstHistoryItemAdded() {
                 onHistoryCreated();
             }
@@ -65,8 +72,8 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
             }
         };
 
+        switcher = (ViewSwitcher) this.findViewById(R.id.widget_switcher);
         recyclerView = (RecyclerView) this.findViewById(R.id.widget_recycler);
-        recyclerView.setItemAnimator(null);
         searchBarLayout = (ImojiSearchBarLayout) this.findViewById(R.id.widget_search);
         separator = this.findViewById(R.id.sticker_separator);
         searchBarLayout.setImojiSearchListener(this);
@@ -76,7 +83,7 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
             container.removeAllViews();
             container.addView(searchBarLayout, 0);
             container.addView(separator, 1);
-            container.addView(recyclerView, 2);
+            container.addView(switcher, 2);
         }
 
         resultAdapter = new ImojiSearchResultAdapter(context, imageLoader, resultViewSize, orientation);
@@ -95,27 +102,27 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
         });
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setHasFixedSize(true);
+        recyclerView.setItemAnimator(null);
         recyclerView.setAdapter(resultAdapter);
 
         searchHandler.searchTrending(context);
     }
 
     private void repopulateAdapter(List<SearchResult> newResults, int dividerPosition) {
-        LinearLayout container = (LinearLayout) this.findViewById(R.id.widget_container);
-        if (newResults.isEmpty()) {
-            replacementView = getReplacementView();
-            int index = container.indexOfChild(recyclerView);
-            container.removeViewAt(index);
-            container.addView(replacementView, index);
-        } else {
-            if (recyclerView.getParent() == null) {
-                int index = container.indexOfChild(replacementView);
-                container.removeViewAt(index);
-                container.addView(recyclerView, index);
-            }
-        }
+        updateRecyclerView(newResults.size());
         gridLayoutManager.scrollToPositionWithOffset(0, 0);
         resultAdapter.repopulate(newResults, dividerPosition);
+    }
+
+
+    private void updateRecyclerView(int newSize) {
+        if (newSize == 0) {
+            if(switcher.getChildAt(1) != null){
+                switcher.removeViewAt(1);
+            }
+            switcher.addView(getReplacementView(), 1);
+            switcher.setDisplayedChild(1);
+        }
     }
 
     @Override

@@ -29,7 +29,7 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
         searchBarLayout.setLeftButtonVisibility(GONE);
         setSeparatorVisibility(VISIBLE);
         int height = (int) getResources().getDimension(R.dimen.imoji_search_result_row_height);
-        recyclerView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
+        switcher.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
 
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
 

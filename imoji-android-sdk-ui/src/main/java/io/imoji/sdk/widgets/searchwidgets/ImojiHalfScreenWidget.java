@@ -33,7 +33,7 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
         int row = (int) getContext().getResources().getDimension(R.dimen.imoji_search_result_row_height);
         int padd = (int) getContext().getResources().getDimension(R.dimen.imoji_search_result_row_top_margin);
 
-        recyclerView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, SPAN_COUNT * (row + padd)));
+        switcher.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, SPAN_COUNT * (row + padd)));
 
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
 
@@ -83,7 +83,7 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                recyclerView.setVisibility(hasFocus ? GONE : VISIBLE);
+                switcher.setVisibility(hasFocus ? GONE : VISIBLE);
             }
         }, 100);
     }

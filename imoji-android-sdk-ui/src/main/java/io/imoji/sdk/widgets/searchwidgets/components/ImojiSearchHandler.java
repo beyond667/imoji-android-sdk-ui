@@ -58,6 +58,7 @@ public abstract class ImojiSearchHandler {
     }
 
     public void searchTerm(Context context, final String term, final String title, final boolean addToHistory) {
+        beforeSearchStarted();
         cancelLastTask();
         ApiTask.WrappedAsyncTask<ImojisResponse> task = new ApiTask.WrappedAsyncTask<ImojisResponse>() {
             @Override
@@ -90,6 +91,7 @@ public abstract class ImojiSearchHandler {
     }
 
     public void searchTrending(Context context) {
+        beforeSearchStarted();
         cancelLastTask();
         ApiTask.WrappedAsyncTask<CategoriesResponse> task = new ApiTask.WrappedAsyncTask<CategoriesResponse>() {
             @Override
@@ -153,6 +155,8 @@ public abstract class ImojiSearchHandler {
     }
 
     public abstract void onSearchCompleted(List<SearchResult> newResults, int dividerPosition);
+
+    public abstract void beforeSearchStarted();
 
     public abstract void onFirstHistoryItemAdded();
 
