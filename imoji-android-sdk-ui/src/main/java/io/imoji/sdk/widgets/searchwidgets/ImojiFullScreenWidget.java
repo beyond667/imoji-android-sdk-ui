@@ -66,10 +66,22 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
     @Override
     protected View getReplacementView() {
         View view = LayoutInflater.from(getContext())
-                .inflate(R.layout.imoji_full_search_widget_no_result, null);
+                .inflate(R.layout.imoji_full_search_widget_no_result, switcher);
 
-        TextView textView = (TextView) view.findViewById(R.id.replacement_view_text);
-        textView.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Montserrat-Light.otf"));
+        TextView text = (TextView) view.findViewById(R.id.replacement_view_text);
+        TextView searchTitle = (TextView) view.findViewById(R.id.replacement_search_label);
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Montserrat-Light.otf");
+        text.setTypeface(typeface);
+        searchTitle.setTypeface(typeface);
+
+        View v = findViewById(R.id.replacement_search_container);
+
+        v.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchHandler.retrySearch(context);
+            }
+        });
 
         return view;
     }

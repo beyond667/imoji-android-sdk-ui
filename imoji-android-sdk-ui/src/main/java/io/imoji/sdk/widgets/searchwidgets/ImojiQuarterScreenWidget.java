@@ -82,7 +82,7 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
     @Override
     protected View getReplacementView() {
         View view = LayoutInflater.from(getContext())
-                .inflate(R.layout.imoji_quarter_search_widget_no_result, null);
+                .inflate(R.layout.imoji_quarter_search_widget_no_result, switcher);
 
         TextView textView = (TextView) view.findViewById(R.id.replacement_view_text);
         textView.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Montserrat-Regular.otf"));

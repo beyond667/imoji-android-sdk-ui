@@ -21,4 +21,5 @@
 
     <string name="imoji_search_widget_search_box_hint">imoji stickers</string>
     <string name="imoji_search_widget_no_sticker_hint">No Stickers Found</string>
+    <string name="imoji_search_widget_no_sticker_full_widget_search">Try Again</string>
 </resources>

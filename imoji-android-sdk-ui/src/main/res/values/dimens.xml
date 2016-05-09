@@ -48,6 +48,13 @@
     <dimen name="imoji_half_widget_no_sticker_layout_height">184dp</dimen>
     <dimen name="imoji_half_widget_no_sticker_layout_icon_side">80dp</dimen>
     <dimen name="imoji_half_widget_no_sticker_layout_icon_margin_bottom">12dp</dimen>
+    <dimen name="imoji_full_widget_no_sticker_layout_icon_margin_bottom">40dp</dimen>
+    <dimen name="imoji_full_widget_no_sticker_layout_icon_margin_top">60dp</dimen>
+    <dimen name="imoji_full_widget_no_sticker_layout_icon_width">345dp</dimen>
+    <dimen name="imoji_full_widget_no_sticker_layout_icon_height">108dp</dimen>
+    <dimen name="imoji_full_widget_no_sticker_layout_search_height">24dp</dimen>
+
+    <dimen name="imoji_full_widget_no_sticker_layout_text">18sp</dimen>
 
 
 </resources>

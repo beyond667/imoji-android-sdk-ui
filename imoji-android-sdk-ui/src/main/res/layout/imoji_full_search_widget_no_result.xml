@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical">
 
 
@@ -11,38 +10,49 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/replacement_view_logo"
-        android:layout_marginBottom="100dp"
-        android:layout_centerHorizontal="true"
         android:text="@string/imoji_search_widget_no_sticker_hint"
-        android:textColor="@android:color/black"
-        android:textSize="20sp" />
+        android:textColor="@color/imoji_full_widget_no_sticker_layout_text"
+        android:textSize="@dimen/imoji_full_widget_no_sticker_layout_text"
+        android:layout_centerHorizontal="true"/>
 
     <View
         android:id="@+id/replacement_view_logo"
-        android:layout_width="345dp"
-        android:layout_height="108dp"
-        android:layout_centerInParent="true"
-        android:background="@drawable/imoji_noresults_graphic_large" />
+        android:layout_width="@dimen/imoji_full_widget_no_sticker_layout_icon_width"
+        android:layout_height="@dimen/imoji_full_widget_no_sticker_layout_icon_height"
+        android:background="@drawable/imoji_noresults_graphic_large"
+        android:layout_marginBottom="@dimen/imoji_full_widget_no_sticker_layout_icon_margin_bottom"
+        android:layout_marginTop="@dimen/imoji_full_widget_no_sticker_layout_icon_margin_top"
+        android:layout_centerInParent="true"/>
 
     <LinearLayout
+        android:id="@+id/replacement_search_container"
         android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:layout_below="@+id/replacement_view_logo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp">
+        android:layout_height="@dimen/imoji_full_widget_no_sticker_layout_search_height"
+        android:layout_below="@id/replacement_view_logo"
+        android:layout_centerHorizontal="true">
 
         <View
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="@dimen/imoji_full_widget_no_sticker_layout_search_height"
+            android:layout_height="@dimen/imoji_full_widget_no_sticker_layout_search_height"
             android:layout_marginRight="8dp"
             android:background="@drawable/imoji_search" />
 
         <TextView
+            android:id="@+id/replacement_search_label"
             android:layout_width="wrap_content"
-            android:layout_height="24dp"
-            android:text="Try Again"
-            android:textColor="#0a6cff"
-            android:textSize="20sp" />
+            android:layout_height="@dimen/imoji_full_widget_no_sticker_layout_search_height"
+            android:text="@string/imoji_search_widget_no_sticker_full_widget_search"
+            android:textColor="@color/imoji_full_widget_no_sticker_search_text"
+            android:textSize="@dimen/imoji_full_widget_no_sticker_layout_text" />
     </LinearLayout>
+
+
+    <!--this is a ghost view to force viewswitcher to have full screen height-->
+    <!--should be removed if we can figure out a less hacky way-->
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="invisible" />
 
 </RelativeLayout>

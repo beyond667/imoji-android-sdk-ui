@@ -110,7 +110,7 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
             if (switcher.getChildAt(1) != null) {
                 switcher.removeViewAt(1);
             }
-            switcher.addView(getReplacementView(), 1);
+            getReplacementView();
             switcher.setDisplayedChild(1);
         }
     }

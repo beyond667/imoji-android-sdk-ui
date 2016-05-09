@@ -110,6 +110,10 @@ public abstract class ImojiSearchHandler {
                 .executeAsyncTask(task);
     }
 
+    public void retrySearch(Context context){
+        searchTerm(context,historyStack.peek().first,historyStack.peek().second,false);
+    }
+
 
     public void searchPrevious(Context context) {
         try {
