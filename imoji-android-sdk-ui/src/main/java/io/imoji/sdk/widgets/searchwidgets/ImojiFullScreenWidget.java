@@ -2,16 +2,18 @@ package io.imoji.sdk.widgets.searchwidgets;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import io.imoji.sdk.objects.RenderingOptions;
 import io.imoji.sdk.ui.R;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiBaseSearchWidget;
-import io.imoji.sdk.widgets.searchwidgets.ui.ImojiResultView;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter;
+import io.imoji.sdk.widgets.searchwidgets.ui.ImojiResultView;
 
 /**
  * Created by engind on 4/24/16.
@@ -21,14 +23,11 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
     private final static int SPAN_COUNT = 3;
 
     public ImojiFullScreenWidget(Context context, RenderingOptions.ImageFormat imageFormat, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
-        super(context, SPAN_COUNT, VERTICAL, true, true, ImojiResultView.LARGE, imageFormat, imageLoader);
-        LinearLayout container = (LinearLayout) this.findViewById(R.id.widget_container);
-        container.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        super(context, SPAN_COUNT, VERTICAL, true, ImojiResultView.LARGE, imageFormat, imageLoader);
 
         searchBarLayout.setupCloseButton();
         searchBarLayout.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 (int) getResources().getDimension(R.dimen.imoji_search_bar_height_full_widget)));
-
 
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
 
@@ -62,5 +61,16 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
     protected void onHistoryDestroyed() {
         super.onHistoryDestroyed();
         searchBarLayout.setupCloseButton();
+    }
+
+    @Override
+    protected View getReplacementView() {
+        View view = LayoutInflater.from(getContext())
+                .inflate(R.layout.imoji_full_search_widget_no_result, null);
+
+        TextView textView = (TextView) view.findViewById(R.id.replacement_view_text);
+        textView.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Montserrat-Light.otf"));
+
+        return view;
     }
 }

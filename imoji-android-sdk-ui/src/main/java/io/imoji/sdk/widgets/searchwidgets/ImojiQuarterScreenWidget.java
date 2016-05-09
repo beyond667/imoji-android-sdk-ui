@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import io.imoji.sdk.objects.RenderingOptions;
@@ -25,9 +26,17 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
     public final static int SPAN_COUNT = 1;
 
     public ImojiQuarterScreenWidget(Context context, RenderingOptions.ImageFormat imageFormat, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
-        super(context, SPAN_COUNT, HORIZONTAL, false, true, ImojiResultView.SMALL, imageFormat, imageLoader);
+        super(context, SPAN_COUNT, HORIZONTAL, true, ImojiResultView.SMALL, imageFormat, imageLoader);
         searchBarLayout.setLeftButtonVisibility(GONE);
         setSeparatorVisibility(VISIBLE);
+
+        LinearLayout container = (LinearLayout) this.findViewById(R.id.widget_container);
+        container.removeAllViews();
+        container.addView(separator);
+        container.addView(switcher);
+        container.addView(searchBarLayout);
+
+
         int height = (int) getResources().getDimension(R.dimen.imoji_search_result_row_height);
         switcher.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
 
@@ -72,7 +81,7 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
 
     @Override
     protected View getReplacementView() {
-        View view =LayoutInflater.from(getContext())
+        View view = LayoutInflater.from(getContext())
                 .inflate(R.layout.imoji_quarter_search_widget_no_result, null);
 
         TextView textView = (TextView) view.findViewById(R.id.replacement_view_text);

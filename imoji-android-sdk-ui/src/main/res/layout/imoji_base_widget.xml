@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_container"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <View
@@ -13,19 +13,19 @@
         android:background="@color/search_widget_sticker_separator"
         android:visibility="gone" />
 
+    <io.imoji.sdk.widgets.searchwidgets.ui.ImojiSearchBarLayout
+        android:id="@+id/widget_search"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/imoji_search_bar_height" />
+
     <ViewSwitcher
         android:id="@+id/widget_switcher"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/widget_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </ViewSwitcher>
-
-    <io.imoji.sdk.widgets.searchwidgets.ui.ImojiSearchBarLayout
-        android:id="@+id/widget_search"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/imoji_search_bar_height" />
 </LinearLayout>

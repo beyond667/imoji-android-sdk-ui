@@ -8,14 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import io.imoji.sdk.objects.RenderingOptions;
 import io.imoji.sdk.ui.R;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiBaseSearchWidget;
-import io.imoji.sdk.widgets.searchwidgets.ui.ImojiResultView;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter;
+import io.imoji.sdk.widgets.searchwidgets.ui.ImojiResultView;
 
 /**
  * Created by engind on 4/24/16.
@@ -25,15 +24,10 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
     public final static int SPAN_COUNT = 2;
 
     public ImojiHalfScreenWidget(Context context, RenderingOptions.ImageFormat imageFormat, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
-        super(context, SPAN_COUNT, HORIZONTAL, true, false, ImojiResultView.SMALL, imageFormat, imageLoader);
+        super(context, SPAN_COUNT, HORIZONTAL,false, ImojiResultView.SMALL, imageFormat, imageLoader);
 
         searchBarLayout.setLeftButtonVisibility(GONE);
         setSeparatorVisibility(VISIBLE);
-
-        int row = (int) getContext().getResources().getDimension(R.dimen.imoji_search_result_row_height);
-        int padd = (int) getContext().getResources().getDimension(R.dimen.imoji_search_result_row_top_margin);
-
-        switcher.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, SPAN_COUNT * (row + padd)));
 
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
 
@@ -48,12 +42,12 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
 
                 int position = parent.getChildLayoutPosition(view);
 
-                if(position == resultAdapter.getDividerPosition()){
+                if (position == resultAdapter.getDividerPosition()) {
                     outRect.right = 0;
-                }else if (position == 0){
-                    outRect.left = horizontalPadd*2;
-                }else if (position >= state.getItemCount()-SPAN_COUNT){
-                    outRect.right = horizontalPadd*2;
+                } else if (position == 0) {
+                    outRect.left = horizontalPadd * 2;
+                } else if (position >= state.getItemCount() - SPAN_COUNT) {
+                    outRect.right = horizontalPadd * 2;
                 }
             }
         });

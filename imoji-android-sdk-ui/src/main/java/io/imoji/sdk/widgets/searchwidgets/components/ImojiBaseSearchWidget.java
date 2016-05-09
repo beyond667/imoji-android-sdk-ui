@@ -31,13 +31,11 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
 
     private ImojiWidgetListener widgetListener;
     private GridLayoutManager gridLayoutManager;
-    private View separator;
-    private View replacementView;
+    protected View separator;
     private RenderingOptions.ImageFormat imageFormat = RenderingOptions.ImageFormat.WebP;
 
 
-    public ImojiBaseSearchWidget(Context context, final int spanCount, int orientation,
-                                 boolean searchOnTop, boolean autoSearchEnabled, @ImojiResultView.ResultViewSize int resultViewSize,
+    public ImojiBaseSearchWidget(Context context, final int spanCount, int orientation, boolean autoSearchEnabled, @ImojiResultView.ResultViewSize int resultViewSize,
                                  RenderingOptions.ImageFormat imageFormat, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
         super(context);
         inflate(getContext(), R.layout.imoji_base_widget, this);
@@ -78,14 +76,6 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
         separator = this.findViewById(R.id.sticker_separator);
         searchBarLayout.setImojiSearchListener(this);
 
-        if (searchOnTop) {
-            LinearLayout container = (LinearLayout) this.findViewById(R.id.widget_container);
-            container.removeAllViews();
-            container.addView(searchBarLayout, 0);
-            container.addView(separator, 1);
-            container.addView(switcher, 2);
-        }
-
         resultAdapter = new ImojiSearchResultAdapter(context, imageLoader, resultViewSize, orientation);
         resultAdapter.setSearchTapListener(this);
         gridLayoutManager = new GridLayoutManager(context, spanCount, orientation, false);
@@ -117,7 +107,7 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
 
     private void updateRecyclerView(int newSize) {
         if (newSize == 0) {
-            if(switcher.getChildAt(1) != null){
+            if (switcher.getChildAt(1) != null) {
                 switcher.removeViewAt(1);
             }
             switcher.addView(getReplacementView(), 1);
