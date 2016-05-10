@@ -1,8 +1,10 @@
 package io.imoji.sdk.ui.sample;
 
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -60,22 +62,25 @@ public class WidgetActivity extends AppCompatActivity {
             }
         };
 
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        ImojiUISDKOptions options = new ImojiUISDKOptions();
+        options.setImageFormat(RenderingOptions.ImageFormat.Png);
+        options.setDisplayStickerBorder(preferences.getBoolean(getString(R.string.pref_key_sticker_borders_enabled), true));
+        options.setIncludeRecentsAndCreate(preferences.getBoolean(getString(R.string.pref_key_recents_create_enabled), true));
+
         switch (identifier) {
             case 0:
-                ImojiQuarterScreenWidget widget = new ImojiQuarterScreenWidget(this, new ImojiUISDKOptions(), imageLoader);
+                ImojiQuarterScreenWidget widget = new ImojiQuarterScreenWidget(this, options, imageLoader);
                 setTitle(R.string.activity_title_quarter_screen);
                 container.addView(widget, params);
                 break;
             case 1:
-                ImojiHalfScreenWidget halfWidget = new ImojiHalfScreenWidget(this, new ImojiUISDKOptions(), imageLoader);
+                ImojiHalfScreenWidget halfWidget = new ImojiHalfScreenWidget(this, options, imageLoader);
                 setTitle(R.string.activity_title_half_screen);
                 container.addView(halfWidget, params);
                 break;
             case 2:
-                ImojiUISDKOptions options = new ImojiUISDKOptions();
-                options.setImageFormat(RenderingOptions.ImageFormat.Png);
-                options.setDisplayStickerBorder(false);
-                options.setIncludeRecentsAndCreate(true);
                 ImojiFullScreenWidget fullWidget = new ImojiFullScreenWidget(this, options, imageLoader);
                 getSupportActionBar().hide();
                 container.addView(fullWidget);

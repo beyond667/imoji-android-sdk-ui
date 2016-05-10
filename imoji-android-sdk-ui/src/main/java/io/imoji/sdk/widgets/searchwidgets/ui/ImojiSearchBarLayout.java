@@ -30,6 +30,7 @@ public class ImojiSearchBarLayout extends ViewSwitcher {
 
     private ImojiSearchBarListener imojiSearchBarListener;
     private boolean shouldTriggerAutoSearch = true;
+    private boolean extraButtonsEnabled = true;
 
     public ImojiSearchBarLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -50,7 +51,7 @@ public class ImojiSearchBarLayout extends ViewSwitcher {
                     rightIcon.setVisibility(GONE);
                 }
 
-                if (s.length() == 0 && !textBox.hasFocus()) {
+                if (extraButtonsEnabled && s.length() == 0 && !textBox.hasFocus()) {
                     extraActionsLayout.setVisibility(VISIBLE);
                 } else if (extraActionsLayout.getVisibility() == VISIBLE) {
                     extraActionsLayout.setVisibility(GONE);
@@ -118,6 +119,11 @@ public class ImojiSearchBarLayout extends ViewSwitcher {
 
         setupBackButton();
         textBox.requestFocus();
+    }
+
+    public void setExtraButtonsEnabled(boolean extraButtonsEnabled){
+        this.extraButtonsEnabled = extraButtonsEnabled;
+        extraActionsLayout.setVisibility(extraButtonsEnabled ? VISIBLE : GONE);
     }
 
     public void toggleTextFocus(boolean shouldRequest) {

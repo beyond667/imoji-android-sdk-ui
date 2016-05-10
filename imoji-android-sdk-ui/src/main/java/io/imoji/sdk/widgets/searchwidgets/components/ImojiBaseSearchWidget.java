@@ -74,6 +74,7 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
         searchBarLayout = (ImojiSearchBarLayout) this.findViewById(R.id.widget_search);
         separator = this.findViewById(R.id.sticker_separator);
         searchBarLayout.setImojiSearchListener(this);
+        searchBarLayout.setExtraButtonsEnabled(options.isIncludeRecentsAndCreate());
 
         resultAdapter = new ImojiSearchResultAdapter(context, imageLoader, resultViewSize, orientation,options);
         resultAdapter.setSearchTapListener(this);
@@ -95,6 +96,7 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
         recyclerView.setAdapter(resultAdapter);
 
         searchHandler.searchTrending(context);
+
     }
 
     private void repopulateAdapter(List<SearchResult> newResults, int dividerPosition, boolean isRecents) {
