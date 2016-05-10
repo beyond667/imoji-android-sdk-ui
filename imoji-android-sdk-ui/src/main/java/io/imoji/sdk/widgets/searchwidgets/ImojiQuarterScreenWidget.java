@@ -59,11 +59,12 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
                 }
             }
         });
+
+        searchBarLayout.setRecentsLayout(R.layout.imoji_recents_bar_small);
     }
 
     @Override
     public void onFocusChanged(boolean hasFocus) {
-        super.onFocusChanged(hasFocus);
         if (hasFocus) {
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.showSoftInput(searchBarLayout.getFocusedChild(), InputMethodManager.SHOW_IMPLICIT);
@@ -72,7 +73,6 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
 
     @Override
     public void onTextCleared() {
-        super.onTextCleared();
         Pair pair = searchHandler.getFirstElement();
         if (pair != null && pair.second != null) {
             searchHandler.searchTrending(context);
@@ -80,11 +80,14 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
     }
 
     @Override
-    protected View getNoStickerView() {
+    protected View getNoStickerView(boolean isRecents) {
         View view = LayoutInflater.from(getContext())
                 .inflate(R.layout.imoji_quarter_search_widget_no_result, switcher);
 
         TextView textView = (TextView) view.findViewById(R.id.replacement_view_text);
+        if(isRecents){
+            textView.setText(getContext().getString(R.string.imoji_search_widget_no_recent_hint));
+        }
         textView.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Montserrat-Regular.otf"));
 
         return view;

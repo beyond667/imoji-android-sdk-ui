@@ -68,8 +68,12 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
     }
 
     @Override
+    public void onTextCleared() {
+
+    }
+
+    @Override
     public void onFocusChanged(final boolean hasFocus) {
-        super.onFocusChanged(hasFocus);
         if (!hasFocus) {
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(searchBarLayout.getWindowToken(), 0);
@@ -83,11 +87,15 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
     }
 
     @Override
-    protected View getNoStickerView() {
+    protected View getNoStickerView(boolean isRecents) {
         View view = LayoutInflater.from(getContext())
                 .inflate(R.layout.imoji_half_search_widget_no_result, switcher);
 
+
         TextView textView = (TextView) view.findViewById(R.id.replacement_view_text);
+        if(isRecents){
+            textView.setText(getContext().getString(R.string.imoji_search_widget_no_recent_hint));
+        }
         textView.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Montserrat-Regular.otf"));
 
         return view;

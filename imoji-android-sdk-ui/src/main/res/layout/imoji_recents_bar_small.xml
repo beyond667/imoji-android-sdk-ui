@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</LinearLayout>
+    <View
+        android:id="@+id/recents_bar_recents_icon"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/imoji_android_recents_active"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/recents_bar_text"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_toLeftOf="@+id/recents_bar_search_icon"
+        android:layout_toRightOf="@id/recents_bar_recents_icon"
+        android:background="@null"
+        android:singleLine="true"
+        android:textColor="@color/search_widget_search_bar_unfocused_text_color"
+        android:textSize="20sp"
+        android:text="Recents"
+        android:layout_centerVertical="true"/>
+
+    <View
+        android:id="@+id/recents_bar_search_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/recents_bar_create_icon"
+        android:backgroundTint="@android:color/black"
+        android:background="@drawable/imoji_android_search"
+        android:layout_centerVertical="true"/>
+
+    <View
+        android:id="@+id/recents_bar_create_icon"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:backgroundTint="@android:color/black"
+        android:background="@drawable/imoji_android_create"
+        android:layout_centerVertical="true"/>
+
+</RelativeLayout>

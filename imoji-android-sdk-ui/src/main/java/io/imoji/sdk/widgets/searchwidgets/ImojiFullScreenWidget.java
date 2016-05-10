@@ -44,7 +44,6 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
                     outRect.top = (int) getContext().getResources().getDimension(R.dimen.imoji_search_vertical_recycler_divider_top_margin);
                     outRect.bottom = (int) getContext().getResources().getDimension(R.dimen.imoji_search_vertical_recycler_divider_bottom_margin);
                 }
-
             }
         });
 
@@ -64,11 +63,15 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
     }
 
     @Override
-    protected View getNoStickerView() {
+    protected View getNoStickerView(boolean isRecents) {
         View view = LayoutInflater.from(getContext())
                 .inflate(R.layout.imoji_full_search_widget_no_result, switcher);
 
         TextView text = (TextView) view.findViewById(R.id.replacement_view_text);
+        if(isRecents){
+            text.setText(getContext().getString(R.string.imoji_search_widget_no_recent_hint));
+        }
+
         TextView searchTitle = (TextView) view.findViewById(R.id.replacement_search_label);
         Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Montserrat-Light.otf");
         text.setTypeface(typeface);
@@ -84,5 +87,15 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
         });
 
         return view;
+    }
+
+    @Override
+    public void onTextCleared() {
+
+    }
+
+    @Override
+    public void onFocusChanged(boolean hasFocus) {
+
     }
 }

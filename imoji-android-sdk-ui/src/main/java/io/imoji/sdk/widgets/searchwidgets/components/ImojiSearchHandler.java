@@ -13,6 +13,7 @@ import io.imoji.sdk.ApiTask;
 import io.imoji.sdk.ImojiSDK;
 import io.imoji.sdk.objects.Category;
 import io.imoji.sdk.objects.CategoryFetchOptions;
+import io.imoji.sdk.objects.CollectionType;
 import io.imoji.sdk.objects.Imoji;
 import io.imoji.sdk.response.ApiResponse;
 import io.imoji.sdk.response.CategoriesResponse;
@@ -74,7 +75,7 @@ public abstract class ImojiSearchHandler {
                     newResults.add(new SearchResult(c));
                 }
                 onSearchCompleted(newResults,
-                        !imojisResponse.getRelatedCategories().isEmpty() ? imojisResponse.getImojis().size() : -1);
+                        !imojisResponse.getRelatedCategories().isEmpty() ? imojisResponse.getImojis().size() : -1, false);
 
                 if (addToHistory) {
                     historyStack.push(new Pair<>(term, title));
@@ -100,7 +101,7 @@ public abstract class ImojiSearchHandler {
                 for (Category category : categoriesResponse.getCategories()) {
                     newResults.add(new SearchResult(category));
                 }
-                onSearchCompleted(newResults, -1);
+                onSearchCompleted(newResults, -1, false);
             }
         };
         lastSearchTask = task;
@@ -110,8 +111,8 @@ public abstract class ImojiSearchHandler {
                 .executeAsyncTask(task);
     }
 
-    public void retrySearch(Context context){
-        searchTerm(context,historyStack.peek().first,historyStack.peek().second,false);
+    public void retrySearch(Context context) {
+        searchTerm(context, historyStack.peek().first, historyStack.peek().second, false);
     }
 
 
@@ -132,7 +133,7 @@ public abstract class ImojiSearchHandler {
     public void autoSearch(final Context context, final String term) {
         if (autoSearchEnabled && !term.isEmpty()) {
             lastAutoSearchTerm = term;
-            if(shouldAutoSearch) {
+            if (shouldAutoSearch) {
                 shouldAutoSearch = false;
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
@@ -142,6 +143,27 @@ public abstract class ImojiSearchHandler {
                 }, 500);
             }
         }
+    }
+
+    public void searchRecents(Context context) {
+        beforeSearchStarted();
+        cancelLastTask();
+        ApiTask.WrappedAsyncTask<ImojisResponse> task = new ApiTask.WrappedAsyncTask<ImojisResponse>() {
+
+            @Override
+            protected void onPostExecute(ImojisResponse imojisResponse) {
+                List<SearchResult> newResults = new ArrayList<SearchResult>();
+                for (Imoji imoji : imojisResponse.getImojis()) {
+                    newResults.add(new SearchResult(imoji));
+                }
+                onSearchCompleted(newResults, -1, true);
+            }
+        };
+        lastSearchTask = task;
+        ImojiSDK.getInstance()
+                .createSession(context.getApplicationContext())
+                .getCollectedImojis(CollectionType.Recents)
+                .executeAsyncTask(task);
     }
 
     public Pair getFirstElement() {
@@ -158,7 +180,7 @@ public abstract class ImojiSearchHandler {
         }
     }
 
-    public abstract void onSearchCompleted(List<SearchResult> newResults, int dividerPosition);
+    public abstract void onSearchCompleted(List<SearchResult> newResults, int dividerPosition, boolean isRecents);
 
     public abstract void beforeSearchStarted();
 

@@ -45,8 +45,8 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
         this.searchHandler = new ImojiSearchHandler(autoSearchEnabled) {
 
             @Override
-            public void onSearchCompleted(List<SearchResult> newResults, int dividerPosition) {
-                repopulateAdapter(newResults, dividerPosition);
+            public void onSearchCompleted(List<SearchResult> newResults, int dividerPosition, boolean isRecents) {
+                repopulateAdapter(newResults, dividerPosition, isRecents);
             }
 
             @Override
@@ -98,19 +98,19 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
         searchHandler.searchTrending(context);
     }
 
-    private void repopulateAdapter(List<SearchResult> newResults, int dividerPosition) {
-        updateRecyclerView(newResults.size());
+    private void repopulateAdapter(List<SearchResult> newResults, int dividerPosition, boolean isRecents) {
+        updateRecyclerView(newResults.size(),isRecents);
         gridLayoutManager.scrollToPositionWithOffset(0, 0);
         resultAdapter.repopulate(newResults, dividerPosition);
     }
 
 
-    private void updateRecyclerView(int newSize) {
+    private void updateRecyclerView(int newSize,boolean isRecents) {
         if (newSize == 0) {
             if (switcher.getChildAt(1) != null) {
                 switcher.removeViewAt(1);
             }
-            getNoStickerView();
+            getNoStickerView(isRecents);
             switcher.setDisplayedChild(1);
         }
     }
@@ -121,11 +121,6 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
         if (this.widgetListener != null) {
             widgetListener.onTermSearched(term);
         }
-    }
-
-    @Override
-    public void onTextCleared() {
-
     }
 
     @Override
@@ -144,11 +139,6 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
     }
 
     @Override
-    public void onFocusChanged(boolean hasFocus) {
-
-    }
-
-    @Override
     public void onTextChanged(String term, boolean shouldTriggerAutoSearch) {
         if (shouldTriggerAutoSearch) {
             searchHandler.autoSearch(context, term);
@@ -157,6 +147,16 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
 
     public void setWidgetListener(ImojiWidgetListener widgetListener) {
         this.widgetListener = widgetListener;
+    }
+
+    @Override
+    public void onRecentsButtonTapped() {
+        searchHandler.searchRecents(context);
+    }
+
+    @Override
+    public void onCreateButtonTapped() {
+
     }
 
     @Override
@@ -199,5 +199,5 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
 
     }
 
-    protected abstract View getNoStickerView();
+    protected abstract View getNoStickerView(boolean isRecents);
 }

@@ -1,45 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_vertical">
+    android:layout_height="match_parent">
 
     <View
-        android:id="@+id/recents_bar_first_left_icon"
+        android:id="@+id/recents_bar_back_icon"
         android:layout_width="26dp"
         android:layout_height="26dp"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="14dp"
-        android:background="@drawable/imoji_back" />
+        android:background="@drawable/imoji_back"
+        android:layout_centerVertical="true"/>
 
     <View
-        android:id="@+id/recents_bar_second_left_icon"
+        android:id="@+id/recents_bar_recents_icon"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginRight="2dp"
-        android:layout_toRightOf="@+id/recents_bar_first_left_icon"
-        android:background="@drawable/imoji_android_recents_active" />
+        android:layout_toRightOf="@+id/recents_bar_back_icon"
+        android:background="@drawable/imoji_android_recents_active"
+        android:layout_centerVertical="true"/>
 
     <TextView
-        android:id="@+id/search_bar_text_box"
+        android:id="@+id/recents_bar_text"
         android:layout_width="match_parent"
         android:layout_height="26dp"
-        android:layout_toLeftOf="@+id/recents_bar_right_icon"
-        android:layout_toRightOf="@id/recents_bar_second_left_icon"
+        android:layout_toLeftOf="@+id/recents_bar_search_icon"
+        android:layout_toRightOf="@id/recents_bar_recents_icon"
         android:background="@null"
         android:singleLine="true"
-        android:textColorHint="@color/search_widget_search_bar_unfocused_text_color"
+        android:textColor="@color/search_widget_search_bar_unfocused_text_color"
         android:textSize="20sp"
-        android:text="Recents"/>
+        android:text="Recents"
+        android:layout_centerVertical="true"/>
 
     <View
-        android:id="@+id/recents_bar_right_icon"
+        android:id="@+id/recents_bar_search_icon"
         android:layout_width="26dp"
         android:layout_height="26dp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="16dp"
         android:backgroundTint="@android:color/black"
-        android:background="@drawable/imoji_android_search" />
+        android:background="@drawable/imoji_android_search"
+        android:layout_centerVertical="true"/>
 
 </RelativeLayout>

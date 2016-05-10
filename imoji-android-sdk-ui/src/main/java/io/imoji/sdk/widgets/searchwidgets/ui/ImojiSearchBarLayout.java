@@ -1,11 +1,13 @@
 package io.imoji.sdk.widgets.searchwidgets.ui;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.annotation.LayoutRes;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -21,11 +23,10 @@ import io.imoji.sdk.ui.R;
 public class ImojiSearchBarLayout extends ViewSwitcher {
 
     private View firstLeftIcon;
-    private View secondLeftIcon;
     private View rightIcon;
     private ImojiEditText textBox;
     private LinearLayout extraActionsLayout;
-    private int recentsLayout;
+    protected int recentsLayout = R.layout.imoji_recents_bar_large;
 
     private ImojiSearchBarListener imojiSearchBarListener;
     private boolean shouldTriggerAutoSearch = true;
@@ -36,7 +37,6 @@ public class ImojiSearchBarLayout extends ViewSwitcher {
 
 
         firstLeftIcon = this.findViewById(R.id.search_bar_first_left_icon);
-        secondLeftIcon = this.findViewById(R.id.search_bar_second_left_icon);
         textBox = (ImojiEditText) this.findViewById(R.id.search_bar_text_box);
         rightIcon = this.findViewById(R.id.search_bar_right_icon);
         extraActionsLayout = (LinearLayout) this.findViewById(R.id.search_bar_extra_action_container);
@@ -50,9 +50,9 @@ public class ImojiSearchBarLayout extends ViewSwitcher {
                     rightIcon.setVisibility(GONE);
                 }
 
-                if(s.length() == 0 && !textBox.hasFocus()){
+                if (s.length() == 0 && !textBox.hasFocus()) {
                     extraActionsLayout.setVisibility(VISIBLE);
-                }else if(extraActionsLayout.getVisibility() == VISIBLE){
+                } else if (extraActionsLayout.getVisibility() == VISIBLE) {
                     extraActionsLayout.setVisibility(GONE);
                 }
             }
@@ -63,7 +63,7 @@ public class ImojiSearchBarLayout extends ViewSwitcher {
 
             @Override
             public void afterTextChanged(Editable s) {
-                imojiSearchBarListener.onTextChanged(s.toString(),shouldTriggerAutoSearch);
+                imojiSearchBarListener.onTextChanged(s.toString(), shouldTriggerAutoSearch);
             }
         });
 
@@ -76,11 +76,9 @@ public class ImojiSearchBarLayout extends ViewSwitcher {
             }
         });
 
-            textBox.setOnEditorActionListener(new TextView.OnEditorActionListener()
-
-            {
-                @Override
-                public boolean onEditorAction (TextView textView,int i, KeyEvent keyEvent){
+        textBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_DONE ||
                         (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_DOWN)) {
                     if (imojiSearchBarListener != null) {
@@ -92,41 +90,40 @@ public class ImojiSearchBarLayout extends ViewSwitcher {
             }
         });
 
-            rightIcon.setOnClickListener(new
-
-            OnClickListener() {
-                @Override
-                public void onClick (View view){
-                    textBox.setText("");
-                    textBox.requestFocus();
-                    InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.showSoftInput(textBox, InputMethodManager.SHOW_IMPLICIT);
-                    imojiSearchBarListener.onTextCleared();
+        rightIcon.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                textBox.setText("");
+                textBox.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(textBox, InputMethodManager.SHOW_IMPLICIT);
+                imojiSearchBarListener.onTextCleared();
             }
         });
 
-            secondLeftIcon.setOnClickListener(new
-
-            OnClickListener() {
-                @Override
-                public void onClick (View v){
-                    textBox.requestFocus();
+        findViewById(R.id.search_bar_second_left_icon).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textBox.requestFocus();
             }
-            });
+        });
+
+        findViewById(R.id.search_bar_recent_icon).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showRecentsView();
+                imojiSearchBarListener.onRecentsButtonTapped();
+            }
+        });
 
         setupBackButton();
-
         textBox.requestFocus();
     }
 
-    public void setRecentsLayout(@LayoutRes int recentsLayout){
-        this.recentsLayout = recentsLayout;
-    }
-
     public void toggleTextFocus(boolean shouldRequest) {
-        if(shouldRequest){
+        if (shouldRequest) {
             textBox.requestFocus();
-        }else{
+        } else {
             textBox.clearFocus();
         }
     }
@@ -159,6 +156,51 @@ public class ImojiSearchBarLayout extends ViewSwitcher {
         });
     }
 
+    public void showRecentsView() {
+        if (getChildAt(1) != null) {
+            removeViewAt(1);
+        }
+
+        LayoutInflater.from(getContext()).inflate(recentsLayout, this);
+
+        ((TextView) findViewById(R.id.recents_bar_text))
+                .setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Montserrat-Light.otf"));
+
+        View backIcon = findViewById(R.id.recents_bar_back_icon);
+        if (backIcon != null) {
+            backIcon.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    removeViewAt(1);
+                    setDisplayedChild(0);
+                    imojiSearchBarListener.onBackButtonTapped();
+                }
+            });
+        }
+
+        View createIcon = findViewById(R.id.recents_bar_create_icon);
+        if (createIcon != null) {
+            createIcon.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    imojiSearchBarListener.onCreateButtonTapped();
+                }
+            });
+        }
+
+        //TODO ask about this one, why is it needed?
+        findViewById(R.id.recents_bar_search_icon).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeViewAt(1);
+                setDisplayedChild(0);
+                imojiSearchBarListener.onBackButtonTapped();
+            }
+        });
+
+        setDisplayedChild(1);
+    }
+
     public void setLeftButtonVisibility(int visibility) {
         firstLeftIcon.setVisibility(visibility);
     }
@@ -168,6 +210,10 @@ public class ImojiSearchBarLayout extends ViewSwitcher {
         textBox.setText(text);
         shouldTriggerAutoSearch = true;
         textBox.clearFocus();
+    }
+
+    public void setRecentsLayout(@LayoutRes int recentsLayout) {
+        this.recentsLayout = recentsLayout;
     }
 
     public interface ImojiSearchBarListener {
@@ -183,6 +229,10 @@ public class ImojiSearchBarLayout extends ViewSwitcher {
         void onFocusChanged(boolean hasFocus);
 
         void onTextChanged(String term, boolean shouldTriggerAutoSearch);
+
+        void onRecentsButtonTapped();
+
+        void onCreateButtonTapped();
     }
 
 }
