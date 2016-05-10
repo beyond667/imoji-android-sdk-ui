@@ -2,12 +2,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreference
         android:key="@string/pref_key_sticker_borders_enabled"
-        android:title="Display Sticker Borders"
+        android:title="@string/ui_preferences_sticker_border_title"
         android:defaultValue="true"
-        android:summaryOff="Don't display white sticker border"/>
+        android:summaryOff="@string/ui_preferences_sticker_border_summary_off"/>
     <SwitchPreference
         android:key="@string/pref_key_recents_create_enabled"
-        android:title="Include Recents and Create"
+        android:title="@string/ui_preferences_extra_buttons_title"
         android:defaultValue="true"
-        android:summaryOn="Display recents and create buttons"/>
+        android:summaryOn="@string/ui_preferences_extra_buttons_summary_on"/>
 </PreferenceScreen>

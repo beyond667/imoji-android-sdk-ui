@@ -13,4 +13,11 @@
 
     <string name="activity_title_quarter_screen">Quarter Screen</string>
     <string name="activity_title_half_screen">Half Screen</string>
+
+    <string name="ui_preferences_sticker_border_title">Display Sticker Borders</string>
+    <string name="ui_preferences_sticker_border_summary_off">Don\'t display white sticker border</string>
+
+    <string name="ui_preferences_extra_buttons_title">Include Recents and Create</string>
+    <string name="ui_preferences_extra_buttons_summary_on">Display recents and create buttons</string>
+
 </resources>

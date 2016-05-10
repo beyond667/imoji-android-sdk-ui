@@ -5,44 +5,44 @@
 
     <View
         android:id="@+id/recents_bar_back_icon"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
+        android:layout_width="@dimen/imoji_recents_bar_large_icon_side_small"
+        android:layout_height="@dimen/imoji_recents_bar_large_icon_side_small"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="14dp"
-        android:background="@drawable/imoji_back"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/imoji_recents_bar_large_back_icon_margin_left"
+        android:layout_marginRight="@dimen/imoji_recents_bar_large_back_icon_margin_right"
+        android:background="@drawable/imoji_back" />
 
     <View
         android:id="@+id/recents_bar_recents_icon"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginRight="2dp"
+        android:layout_width="@dimen/imoji_recents_bar_large_icon_side_large"
+        android:layout_height="@dimen/imoji_recents_bar_large_icon_side_large"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/imoji_recents_bar_large_recents_icon_margin_right"
         android:layout_toRightOf="@+id/recents_bar_back_icon"
-        android:background="@drawable/imoji_android_recents_active"
-        android:layout_centerVertical="true"/>
+        android:background="@drawable/imoji_android_recents_active" />
 
     <TextView
         android:id="@+id/recents_bar_text"
         android:layout_width="match_parent"
-        android:layout_height="26dp"
+        android:layout_height="@dimen/imoji_recents_bar_large_icon_side_small"
+        android:layout_centerVertical="true"
         android:layout_toLeftOf="@+id/recents_bar_search_icon"
         android:layout_toRightOf="@id/recents_bar_recents_icon"
         android:background="@null"
         android:singleLine="true"
+        android:text="@string/imoji_recents_bar_text"
         android:textColor="@color/search_widget_search_bar_unfocused_text_color"
-        android:textSize="20sp"
-        android:text="Recents"
-        android:layout_centerVertical="true"/>
+        android:textSize="@dimen/imoji_recents_bar_text" />
 
     <View
         android:id="@+id/recents_bar_search_icon"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
+        android:layout_width="@dimen/imoji_recents_bar_large_icon_side_small"
+        android:layout_height="@dimen/imoji_recents_bar_large_icon_side_small"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="16dp"
-        android:backgroundTint="@android:color/black"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/imoji_recents_bar_large_search_icon_margin_right"
         android:background="@drawable/imoji_android_search"
-        android:layout_centerVertical="true"/>
+        android:backgroundTint="@android:color/black" />
 
 </RelativeLayout>

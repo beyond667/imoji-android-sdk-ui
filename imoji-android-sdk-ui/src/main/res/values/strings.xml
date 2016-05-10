@@ -23,4 +23,5 @@
     <string name="imoji_search_widget_no_sticker_hint">No Stickers Found</string>
     <string name="imoji_search_widget_no_recent_hint">No Recents Yet!</string>
     <string name="imoji_search_widget_no_sticker_full_widget_search">Try Again</string>
+    <string name="imoji_recents_bar_text">Recents</string>
 </resources>
