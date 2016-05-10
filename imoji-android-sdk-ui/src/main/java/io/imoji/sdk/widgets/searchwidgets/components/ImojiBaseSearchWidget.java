@@ -169,6 +169,7 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
         } else {
             if (this.widgetListener != null) {
                 this.widgetListener.onStickerTapped(searchResult.getUri(uiSDKOptions.getImageFormat()));
+                searchHandler.addToRecents(context,searchResult.getImoji());
             }
         }
     }

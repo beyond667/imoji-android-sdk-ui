@@ -30,6 +30,13 @@
             android:windowSoftInputMode="adjustResize"
             android:parentActivityName=".MainActivity">
         </activity>
+
+        <activity
+            android:name=".UISettingsActivity"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:windowSoftInputMode="adjustResize"
+            android:parentActivityName=".MainActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -35,7 +35,7 @@ public class SearchResult {
         if (isCategory()) {
             thumbailImoji = category.getPreviewImoji();
         }
-        if (displayStickerBorder) {
+        if (displayStickerBorder || thumbailImoji.hasAnimationCapability()) {
             return thumbailImoji.getStandardThumbnailUri(true);
         } else {
             RenderingOptions renderingOptions = new RenderingOptions(RenderingOptions.BorderStyle.None,

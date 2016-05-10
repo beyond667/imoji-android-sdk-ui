@@ -63,7 +63,7 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
     }
 
     @Override
-    protected View getNoStickerView(boolean isRecents) {
+    protected View getNoStickerView(final boolean isRecents) {
         View view = LayoutInflater.from(getContext())
                 .inflate(R.layout.imoji_full_search_widget_no_result, switcher);
 
@@ -82,7 +82,12 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
         v.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchHandler.retrySearch(context);
+                if(isRecents){
+                    searchHandler.searchRecents(context);
+                }else{
+                    searchHandler.retrySearch(context);
+                }
+
             }
         });
 

@@ -28,11 +28,13 @@ import io.imoji.sdk.ui.utils.EditorBitmapCache;
 public class MainActivity extends AppCompatActivity {
 
     private ListView sectionsList;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.context = this;
 
         String[] labels = getResources().getStringArray(R.array.example_labels);
 
@@ -57,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
                     case 3:
                         startImojiEditorActivity();
                         break;
+                    case 4:
+                        startActivity(new Intent(context, UISettingsActivity.class));
                 }
             }
         });
@@ -88,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 params.height = side;
                 params.setMargins(0, 0, 0, 0);
                 icon.setLayoutParams(params);
+                //TODO fix this for api 12
                 icon.setBackground(getDrawable(R.drawable.imoji_menu_settings));
             }
 

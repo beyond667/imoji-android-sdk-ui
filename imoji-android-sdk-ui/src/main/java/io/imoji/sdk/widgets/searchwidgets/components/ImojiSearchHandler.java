@@ -17,6 +17,7 @@ import io.imoji.sdk.objects.CollectionType;
 import io.imoji.sdk.objects.Imoji;
 import io.imoji.sdk.response.ApiResponse;
 import io.imoji.sdk.response.CategoriesResponse;
+import io.imoji.sdk.response.GenericApiResponse;
 import io.imoji.sdk.response.ImojisResponse;
 
 /**
@@ -112,7 +113,9 @@ public abstract class ImojiSearchHandler {
     }
 
     public void retrySearch(Context context) {
-        searchTerm(context, historyStack.peek().first, historyStack.peek().second, false);
+        if(!historyStack.isEmpty()){
+            searchTerm(context, historyStack.peek().first, historyStack.peek().second, false);
+        }
     }
 
 
@@ -164,6 +167,17 @@ public abstract class ImojiSearchHandler {
                 .createSession(context.getApplicationContext())
                 .getCollectedImojis(CollectionType.Recents)
                 .executeAsyncTask(task);
+    }
+
+    public void addToRecents(Context context,Imoji imoji) {
+        ImojiSDK.getInstance()
+                .createSession(context.getApplicationContext())
+                .markImojiUsage(imoji.getIdentifier(), null).executeAsyncTask(new ApiTask.WrappedAsyncTask<GenericApiResponse>() {
+            @Override
+            protected void onPostExecute(GenericApiResponse genericApiResponse) {
+
+            }
+        });
     }
 
     public Pair getFirstElement() {
