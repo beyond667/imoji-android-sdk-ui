@@ -10,7 +10,6 @@ import android.widget.ViewSwitcher;
 
 import java.util.List;
 
-import io.imoji.sdk.objects.RenderingOptions;
 import io.imoji.sdk.ui.R;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter.ImojiSearchTapListener;
 import io.imoji.sdk.widgets.searchwidgets.ui.ImojiResultView;
@@ -32,14 +31,14 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
     private ImojiWidgetListener widgetListener;
     private GridLayoutManager gridLayoutManager;
     protected View separator;
-    private RenderingOptions.ImageFormat imageFormat = RenderingOptions.ImageFormat.WebP;
+    private final ImojiUISDKOptions uiSDKOptions;
 
 
     public ImojiBaseSearchWidget(Context context, final int spanCount, int orientation, boolean autoSearchEnabled, @ImojiResultView.ResultViewSize int resultViewSize,
-                                 RenderingOptions.ImageFormat imageFormat, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
+                                 ImojiUISDKOptions options, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
         super(context);
         inflate(getContext(), R.layout.imoji_base_widget, this);
-        this.imageFormat = imageFormat;
+        this.uiSDKOptions = options;
         this.context = context;
 
         this.searchHandler = new ImojiSearchHandler(autoSearchEnabled) {
@@ -76,7 +75,7 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
         separator = this.findViewById(R.id.sticker_separator);
         searchBarLayout.setImojiSearchListener(this);
 
-        resultAdapter = new ImojiSearchResultAdapter(context, imageLoader, resultViewSize, orientation);
+        resultAdapter = new ImojiSearchResultAdapter(context, imageLoader, resultViewSize, orientation,options);
         resultAdapter.setSearchTapListener(this);
         gridLayoutManager = new GridLayoutManager(context, spanCount, orientation, false);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -169,7 +168,7 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
             }
         } else {
             if (this.widgetListener != null) {
-                this.widgetListener.onStickerTapped(searchResult.getUri(imageFormat));
+                this.widgetListener.onStickerTapped(searchResult.getUri(uiSDKOptions.getImageFormat()));
             }
         }
     }

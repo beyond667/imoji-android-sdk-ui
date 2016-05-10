@@ -30,12 +30,18 @@ public class SearchResult {
         return category;
     }
 
-    public Uri getThumbnailUri() {
+    public Uri getThumbnailUri(boolean displayStickerBorder) {
         Imoji thumbailImoji = this.imoji;
         if (isCategory()) {
             thumbailImoji = category.getPreviewImoji();
         }
-        return thumbailImoji.getStandardThumbnailUri(true);
+        if (displayStickerBorder) {
+            return thumbailImoji.getStandardThumbnailUri(true);
+        } else {
+            RenderingOptions renderingOptions = new RenderingOptions(RenderingOptions.BorderStyle.None,
+                    RenderingOptions.ImageFormat.Png, RenderingOptions.Size.Thumbnail);
+            return thumbailImoji.urlForRenderingOption(renderingOptions);
+        }
     }
 
     public String getTitle() {

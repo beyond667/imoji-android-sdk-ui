@@ -10,10 +10,10 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
-import io.imoji.sdk.objects.RenderingOptions;
 import io.imoji.sdk.ui.R;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiBaseSearchWidget;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter;
+import io.imoji.sdk.widgets.searchwidgets.components.ImojiUISDKOptions;
 import io.imoji.sdk.widgets.searchwidgets.ui.ImojiResultView;
 
 /**
@@ -23,8 +23,8 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
 
     public final static int SPAN_COUNT = 2;
 
-    public ImojiHalfScreenWidget(Context context, RenderingOptions.ImageFormat imageFormat, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
-        super(context, SPAN_COUNT, HORIZONTAL, false, ImojiResultView.SMALL, imageFormat, imageLoader);
+    public ImojiHalfScreenWidget(Context context, ImojiUISDKOptions options, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
+        super(context, SPAN_COUNT, HORIZONTAL, false, ImojiResultView.SMALL, options, imageLoader);
 
         searchBarLayout.setLeftButtonVisibility(GONE);
         setSeparatorVisibility(VISIBLE);

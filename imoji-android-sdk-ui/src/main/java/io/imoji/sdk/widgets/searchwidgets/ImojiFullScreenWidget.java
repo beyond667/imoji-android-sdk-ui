@@ -9,10 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import io.imoji.sdk.objects.RenderingOptions;
 import io.imoji.sdk.ui.R;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiBaseSearchWidget;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter;
+import io.imoji.sdk.widgets.searchwidgets.components.ImojiUISDKOptions;
 import io.imoji.sdk.widgets.searchwidgets.ui.ImojiResultView;
 
 /**
@@ -22,8 +22,8 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
 
     private final static int SPAN_COUNT = 3;
 
-    public ImojiFullScreenWidget(Context context, RenderingOptions.ImageFormat imageFormat, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
-        super(context, SPAN_COUNT, VERTICAL, true, ImojiResultView.LARGE, imageFormat, imageLoader);
+    public ImojiFullScreenWidget(Context context, ImojiUISDKOptions options, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
+        super(context, SPAN_COUNT, VERTICAL, true, ImojiResultView.LARGE, options, imageLoader);
 
         searchBarLayout.setupCloseButton();
         searchBarLayout.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -68,7 +68,7 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
                 .inflate(R.layout.imoji_full_search_widget_no_result, switcher);
 
         TextView text = (TextView) view.findViewById(R.id.replacement_view_text);
-        if(isRecents){
+        if (isRecents) {
             text.setText(getContext().getString(R.string.imoji_search_widget_no_recent_hint));
         }
 

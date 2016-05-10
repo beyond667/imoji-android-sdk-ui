@@ -12,10 +12,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import io.imoji.sdk.objects.RenderingOptions;
 import io.imoji.sdk.ui.R;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiBaseSearchWidget;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter;
+import io.imoji.sdk.widgets.searchwidgets.components.ImojiUISDKOptions;
 import io.imoji.sdk.widgets.searchwidgets.ui.ImojiResultView;
 
 /**
@@ -25,8 +25,8 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
 
     public final static int SPAN_COUNT = 1;
 
-    public ImojiQuarterScreenWidget(Context context, RenderingOptions.ImageFormat imageFormat, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
-        super(context, SPAN_COUNT, HORIZONTAL, true, ImojiResultView.SMALL, imageFormat, imageLoader);
+    public ImojiQuarterScreenWidget(Context context, ImojiUISDKOptions options, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
+        super(context, SPAN_COUNT, HORIZONTAL, true, ImojiResultView.SMALL, options, imageLoader);
         searchBarLayout.setLeftButtonVisibility(GONE);
         setSeparatorVisibility(VISIBLE);
 
@@ -85,7 +85,7 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
                 .inflate(R.layout.imoji_quarter_search_widget_no_result, switcher);
 
         TextView textView = (TextView) view.findViewById(R.id.replacement_view_text);
-        if(isRecents){
+        if (isRecents) {
             textView.setText(getContext().getString(R.string.imoji_search_widget_no_recent_hint));
         }
         textView.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Montserrat-Regular.otf"));

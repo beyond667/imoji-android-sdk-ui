@@ -20,6 +20,7 @@ import io.imoji.sdk.widgets.searchwidgets.ImojiFullScreenWidget;
 import io.imoji.sdk.widgets.searchwidgets.ImojiHalfScreenWidget;
 import io.imoji.sdk.widgets.searchwidgets.ImojiQuarterScreenWidget;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter;
+import io.imoji.sdk.widgets.searchwidgets.components.ImojiUISDKOptions;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiWidgetListener;
 
 
@@ -47,7 +48,7 @@ public class WidgetActivity extends AppCompatActivity {
 
         ImojiSearchResultAdapter.ImojiImageLoader imageLoader = new ImojiSearchResultAdapter.ImojiImageLoader() {
             @Override
-            public void loadImage(ImageView target,Uri uri, final ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
+            public void loadImage(ImageView target, Uri uri, final ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
                 Ion.with(target)
                         .load(uri.toString())
                         .setCallback(new FutureCallback<ImageView>() {
@@ -61,17 +62,21 @@ public class WidgetActivity extends AppCompatActivity {
 
         switch (identifier) {
             case 0:
-                ImojiQuarterScreenWidget widget = new ImojiQuarterScreenWidget(this, RenderingOptions.ImageFormat.WebP, imageLoader);
+                ImojiQuarterScreenWidget widget = new ImojiQuarterScreenWidget(this, new ImojiUISDKOptions(), imageLoader);
                 setTitle(R.string.activity_title_quarter_screen);
                 container.addView(widget, params);
                 break;
             case 1:
-                ImojiHalfScreenWidget halfWidget = new ImojiHalfScreenWidget(this, RenderingOptions.ImageFormat.Png, imageLoader);
+                ImojiHalfScreenWidget halfWidget = new ImojiHalfScreenWidget(this, new ImojiUISDKOptions(), imageLoader);
                 setTitle(R.string.activity_title_half_screen);
                 container.addView(halfWidget, params);
                 break;
             case 2:
-                ImojiFullScreenWidget fullWidget = new ImojiFullScreenWidget(this, RenderingOptions.ImageFormat.WebP, imageLoader);
+                ImojiUISDKOptions options = new ImojiUISDKOptions();
+                options.setImageFormat(RenderingOptions.ImageFormat.Png);
+                options.setDisplayStickerBorder(false);
+                options.setIncludeRecentsAndCreate(true);
+                ImojiFullScreenWidget fullWidget = new ImojiFullScreenWidget(this, options, imageLoader);
                 getSupportActionBar().hide();
                 container.addView(fullWidget);
                 fullWidget.setWidgetListener(new ImojiWidgetListener() {

@@ -35,12 +35,16 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<RecyclerView.
     int resultViewSize;
     private int dividerPosition = -1;
     private int orientation;
+    private ImojiUISDKOptions options;
 
 
-    public ImojiSearchResultAdapter(Context context, ImojiImageLoader imageLoader, @ImojiResultView.ResultViewSize int resultViewSize,int orientation) {
+    public ImojiSearchResultAdapter(Context context, ImojiImageLoader imageLoader,
+                                    @ImojiResultView.ResultViewSize int resultViewSize,int orientation,
+                                    ImojiUISDKOptions uiSDKOptions) {
         results = new ArrayList<>();
         this.context = context;
         this.imageLoader = imageLoader;
+        this.options = uiSDKOptions;
 
         int[] colorArray = context.getResources().getIntArray(R.array.search_widget_placeholder_colors);
         this.placeholderRandomizer = new Random().nextInt(colorArray.length);
@@ -78,7 +82,7 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<RecyclerView.
             resultView.resetView(placeholderRandomizer, position);
 
 
-            imageLoader.loadImage(resultView.getImageView(), sr.getThumbnailUri(), new ImojiImageLoadCompleteCallback() {
+            imageLoader.loadImage(resultView.getImageView(), sr.getThumbnailUri(options.isDisplayBorderSticker()), new ImojiImageLoadCompleteCallback() {
                 @Override
                 public void updateImageView() {
                     if (sr.isCategory()) {
