@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical">
+
+    <View
+        android:id="@+id/recents_bar_first_left_icon"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="14dp"
+        android:background="@drawable/imoji_back" />
+
+    <View
+        android:id="@+id/recents_bar_second_left_icon"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginRight="2dp"
+        android:layout_toRightOf="@+id/recents_bar_first_left_icon"
+        android:background="@drawable/imoji_android_recents_active" />
+
+    <TextView
+        android:id="@+id/search_bar_text_box"
+        android:layout_width="match_parent"
+        android:layout_height="26dp"
+        android:layout_toLeftOf="@+id/recents_bar_right_icon"
+        android:layout_toRightOf="@id/recents_bar_second_left_icon"
+        android:background="@null"
+        android:singleLine="true"
+        android:textColorHint="@color/search_widget_search_bar_unfocused_text_color"
+        android:textSize="20sp"
+        android:text="Recents"/>
+
+    <View
+        android:id="@+id/recents_bar_right_icon"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:backgroundTint="@android:color/black"
+        android:background="@drawable/imoji_android_search" />
+
+</RelativeLayout>

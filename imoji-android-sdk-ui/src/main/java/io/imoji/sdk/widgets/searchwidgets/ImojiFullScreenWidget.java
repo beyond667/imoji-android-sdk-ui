@@ -64,7 +64,7 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
     }
 
     @Override
-    protected View getReplacementView() {
+    protected View getNoStickerView() {
         View view = LayoutInflater.from(getContext())
                 .inflate(R.layout.imoji_full_search_widget_no_result, switcher);
 

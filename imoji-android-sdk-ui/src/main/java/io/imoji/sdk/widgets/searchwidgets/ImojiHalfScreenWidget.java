@@ -24,7 +24,7 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
     public final static int SPAN_COUNT = 2;
 
     public ImojiHalfScreenWidget(Context context, RenderingOptions.ImageFormat imageFormat, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
-        super(context, SPAN_COUNT, HORIZONTAL,false, ImojiResultView.SMALL, imageFormat, imageLoader);
+        super(context, SPAN_COUNT, HORIZONTAL, false, ImojiResultView.SMALL, imageFormat, imageLoader);
 
         searchBarLayout.setLeftButtonVisibility(GONE);
         setSeparatorVisibility(VISIBLE);
@@ -83,7 +83,7 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
     }
 
     @Override
-    protected View getReplacementView() {
+    protected View getNoStickerView() {
         View view = LayoutInflater.from(getContext())
                 .inflate(R.layout.imoji_half_search_widget_no_result, switcher);
 

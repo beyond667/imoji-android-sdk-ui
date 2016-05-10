@@ -80,7 +80,7 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
     }
 
     @Override
-    protected View getReplacementView() {
+    protected View getNoStickerView() {
         View view = LayoutInflater.from(getContext())
                 .inflate(R.layout.imoji_quarter_search_widget_no_result, switcher);
 

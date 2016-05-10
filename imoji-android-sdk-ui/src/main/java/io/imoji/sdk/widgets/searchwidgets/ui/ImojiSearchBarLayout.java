@@ -1,6 +1,7 @@
 package io.imoji.sdk.widgets.searchwidgets.ui;
 
 import android.content.Context;
+import android.support.annotation.LayoutRes;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -8,20 +9,23 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import io.imoji.sdk.ui.R;
 
 /**
  * Created by engind on 4/21/16.
  */
-public class ImojiSearchBarLayout extends RelativeLayout {
+public class ImojiSearchBarLayout extends ViewSwitcher {
 
     private View firstLeftIcon;
     private View secondLeftIcon;
     private View rightIcon;
     private ImojiEditText textBox;
+    private LinearLayout extraActionsLayout;
+    private int recentsLayout;
 
     private ImojiSearchBarListener imojiSearchBarListener;
     private boolean shouldTriggerAutoSearch = true;
@@ -30,10 +34,12 @@ public class ImojiSearchBarLayout extends RelativeLayout {
         super(context, attrs);
         inflate(getContext(), R.layout.imoji_search_bar, this);
 
+
         firstLeftIcon = this.findViewById(R.id.search_bar_first_left_icon);
         secondLeftIcon = this.findViewById(R.id.search_bar_second_left_icon);
         textBox = (ImojiEditText) this.findViewById(R.id.search_bar_text_box);
         rightIcon = this.findViewById(R.id.search_bar_right_icon);
+        extraActionsLayout = (LinearLayout) this.findViewById(R.id.search_bar_extra_action_container);
 
         textBox.addTextChangedListener(new TextWatcher() {
             @Override
@@ -42,6 +48,12 @@ public class ImojiSearchBarLayout extends RelativeLayout {
                     rightIcon.setVisibility(VISIBLE);
                 } else if (before > 0 && s.length() == 0) {
                     rightIcon.setVisibility(GONE);
+                }
+
+                if(s.length() == 0 && !textBox.hasFocus()){
+                    extraActionsLayout.setVisibility(VISIBLE);
+                }else if(extraActionsLayout.getVisibility() == VISIBLE){
+                    extraActionsLayout.setVisibility(GONE);
                 }
             }
 
@@ -105,6 +117,10 @@ public class ImojiSearchBarLayout extends RelativeLayout {
         setupBackButton();
 
         textBox.requestFocus();
+    }
+
+    public void setRecentsLayout(@LayoutRes int recentsLayout){
+        this.recentsLayout = recentsLayout;
     }
 
     public void toggleTextFocus(boolean shouldRequest) {

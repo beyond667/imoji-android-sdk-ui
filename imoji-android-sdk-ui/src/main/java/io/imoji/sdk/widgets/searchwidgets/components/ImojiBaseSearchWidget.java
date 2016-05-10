@@ -20,7 +20,7 @@ import io.imoji.sdk.widgets.searchwidgets.ui.ImojiSearchBarLayout.ImojiSearchBar
 /**
  * Created by engind on 4/22/16.
  */
-public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBarListener, ImojiSearchTapListener {
+public abstract class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBarListener, ImojiSearchTapListener {
 
     protected ViewSwitcher switcher;
     protected RecyclerView recyclerView;
@@ -110,7 +110,7 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
             if (switcher.getChildAt(1) != null) {
                 switcher.removeViewAt(1);
             }
-            getReplacementView();
+            getNoStickerView();
             switcher.setDisplayedChild(1);
         }
     }
@@ -199,7 +199,5 @@ public class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBa
 
     }
 
-    protected View getReplacementView() {
-        return null;
-    }
+    protected abstract View getNoStickerView();
 }
