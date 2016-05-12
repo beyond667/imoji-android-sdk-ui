@@ -16,21 +16,14 @@
         android:layout_marginTop="@dimen/main_activity_logo_margin_top"
         android:background="@drawable/imoji_menu_logo" />
 
-    <View
-        android:id="@+id/main_activity_separator"
-        android:layout_width="@dimen/main_activity_logo_width"
-        android:layout_height="@dimen/main_activity_separator_height"
-        android:layout_below="@id/main_activity_logo"
-        android:layout_centerHorizontal="true"
-        android:background="@color/main_activity_separator" />
-
     <ListView
         android:id="@+id/main_activity_list"
         android:layout_width="@dimen/main_activity_logo_width"
         android:layout_height="match_parent"
-        android:layout_below="@id/main_activity_separator"
+        android:layout_below="@id/main_activity_logo"
         android:clipToPadding="false"
         android:layout_centerHorizontal="true"
-        android:paddingTop="@dimen/main_activity_list_padding_top" />
+        android:paddingTop="@dimen/main_activity_list_padding_top"
+        android:background="@drawable/main_activity_separator"/>
 
 </RelativeLayout>

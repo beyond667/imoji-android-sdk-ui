@@ -31,6 +31,7 @@
     <dimen name="imoji_search_bar_first_left_icon_right_marg">4dp</dimen>
     <dimen name="imoji_search_bar_second_left_icon_right_marg">8dp</dimen>
     <dimen name="imoji_search_bar_right_icon_right_marg">14dp</dimen>
+    <dimen name="imoji_search_bar_separator_height">0.5dp</dimen>
     <dimen name="imoji_search_bar_text">20sp</dimen>
 
     <dimen name="imoji_search_result_row_height">86dp</dimen>

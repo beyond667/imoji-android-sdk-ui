@@ -27,7 +27,7 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
         super(context, SPAN_COUNT, HORIZONTAL, false, ImojiResultView.SMALL, options, imageLoader);
 
         searchBarLayout.setLeftButtonVisibility(GONE);
-        setSeparatorVisibility(VISIBLE);
+        setBackgroundDrawable(getResources().getDrawable(R.drawable.base_widget_separator));
 
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
 

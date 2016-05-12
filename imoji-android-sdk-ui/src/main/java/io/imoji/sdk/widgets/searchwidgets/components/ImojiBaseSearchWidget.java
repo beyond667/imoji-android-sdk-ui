@@ -37,7 +37,6 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
     private ImojiWidgetListener widgetListener;
     private GridLayoutManager gridLayoutManager;
     private ImojiUISDKOptions options;
-    protected View separator;
 
 
     public ImojiBaseSearchWidget(Context context, final int spanCount, int orientation, boolean autoSearchEnabled, @ImojiResultView.ResultViewSize int resultViewSize,
@@ -78,7 +77,6 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
         switcher = (ViewSwitcher) this.findViewById(R.id.widget_switcher);
         recyclerView = (RecyclerView) this.findViewById(R.id.widget_recycler);
         searchBarLayout = (ImojiSearchBarLayout) this.findViewById(R.id.widget_search);
-        separator = this.findViewById(R.id.sticker_separator);
         searchBarLayout.setImojiSearchListener(this);
         searchBarLayout.setExtraButtonsEnabled(options.isIncludeRecentsAndCreate());
 
@@ -206,11 +204,6 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
         intent.putExtra(ImojiEditorActivity.RETURN_IMMEDIATELY_BUNDLE_ARG_KEY, false);
         intent.putExtra(ImojiEditorActivity.TAG_IMOJI_BUNDLE_ARG_KEY, true);
         activity.startActivityForResult(intent, ImojiEditorActivity.START_EDITOR_REQUEST_CODE);
-    }
-
-
-    protected void setSeparatorVisibility(int visibility) {
-        separator.setVisibility(visibility);
     }
 
     protected void onHistoryCreated() {

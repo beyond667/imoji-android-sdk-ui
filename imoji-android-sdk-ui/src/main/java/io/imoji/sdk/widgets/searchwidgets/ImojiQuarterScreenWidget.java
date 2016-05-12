@@ -28,11 +28,10 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
     public ImojiQuarterScreenWidget(Context context, ImojiUISDKOptions options, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
         super(context, SPAN_COUNT, HORIZONTAL, true, ImojiResultView.SMALL, options, imageLoader);
         searchBarLayout.setLeftButtonVisibility(GONE);
-        setSeparatorVisibility(VISIBLE);
+        setBackgroundDrawable(getResources().getDrawable(R.drawable.base_widget_separator));
 
         LinearLayout container = (LinearLayout) this.findViewById(R.id.widget_container);
         container.removeAllViews();
-        container.addView(separator);
         container.addView(switcher);
         container.addView(searchBarLayout);
 
