@@ -265,8 +265,9 @@ widget.setWidgetListener(new ImojiWidgetListener() {
                     }
 
                     @Override
-                    public void onStickerTapped(Uri uri) {
-                        //When a sticker gets tapped, uri from Imoji API with widget's imageFormat
+                    public void onStickerTapped(Imoji imoji) {
+                        //Get tapped sticker's ImojiSDK Imoji object, from which you can create URL's for different
+                        //sizes, image formats and styles
                     }
 
                     @Override
