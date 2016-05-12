@@ -1,6 +1,10 @@
 package io.imoji.sdk.widgets.searchwidgets.components;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
@@ -10,7 +14,9 @@ import android.widget.ViewSwitcher;
 
 import java.util.List;
 
+import io.imoji.sdk.ui.ImojiEditorActivity;
 import io.imoji.sdk.ui.R;
+import io.imoji.sdk.ui.utils.EditorBitmapCache;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter.ImojiSearchTapListener;
 import io.imoji.sdk.widgets.searchwidgets.ui.ImojiResultView;
 import io.imoji.sdk.widgets.searchwidgets.ui.ImojiSearchBarLayout;
@@ -30,6 +36,7 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
 
     private ImojiWidgetListener widgetListener;
     private GridLayoutManager gridLayoutManager;
+    private ImojiUISDKOptions options;
     protected View separator;
 
 
@@ -38,6 +45,7 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
         super(context);
         inflate(getContext(), R.layout.imoji_base_widget, this);
         this.context = context;
+        this.options = options;
 
         this.searchHandler = new ImojiSearchHandler(autoSearchEnabled) {
 
@@ -157,7 +165,7 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
 
     @Override
     public void onCreateButtonTapped() {
-
+        startImojiEditorActivity(options.getParentActivity());
     }
 
     @Override
@@ -188,6 +196,18 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
             searchBarLayout.setText("");
         }
     }
+
+    private void startImojiEditorActivity(Activity activity) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.imoji_noresults_graphic_large, options);
+        EditorBitmapCache.getInstance().put(EditorBitmapCache.Keys.INPUT_BITMAP, bitmap);
+        Intent intent = new Intent(activity, io.imoji.sdk.ui.ImojiEditorActivity.class);
+        intent.putExtra(ImojiEditorActivity.RETURN_IMMEDIATELY_BUNDLE_ARG_KEY, false);
+        intent.putExtra(ImojiEditorActivity.TAG_IMOJI_BUNDLE_ARG_KEY, true);
+        activity.startActivityForResult(intent, ImojiEditorActivity.START_EDITOR_REQUEST_CODE);
+    }
+
 
     protected void setSeparatorVisibility(int visibility) {
         separator.setVisibility(visibility);

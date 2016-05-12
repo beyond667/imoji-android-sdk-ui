@@ -1,5 +1,7 @@
 package io.imoji.sdk.widgets.searchwidgets.components;
 
+import android.app.Activity;
+
 import io.imoji.sdk.objects.RenderingOptions;
 
 /**
@@ -10,6 +12,7 @@ public class ImojiUISDKOptions {
     private RenderingOptions.ImageFormat imageFormat = RenderingOptions.ImageFormat.WebP;
     private boolean includeRecentsAndCreate = true;
     private boolean displayBorderSticker = true;
+    private Activity parentActivity;
 
     public RenderingOptions.ImageFormat getImageFormat() {
         return imageFormat;
@@ -33,5 +36,13 @@ public class ImojiUISDKOptions {
 
     public void setDisplayStickerBorder(boolean displayStickerBorder) {
         this.displayBorderSticker = displayStickerBorder;
+    }
+
+    public Activity getParentActivity() {
+        return parentActivity;
+    }
+
+    public void setParentActivity(Activity parentActivity) {
+        this.parentActivity = parentActivity;
     }
 }

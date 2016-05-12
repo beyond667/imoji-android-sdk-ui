@@ -117,6 +117,16 @@ public class ImojiSearchBarLayout extends ViewSwitcher {
             }
         });
 
+        View createIcon = findViewById(R.id.search_bar_create_icon);
+        if (createIcon != null) {
+            createIcon.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    imojiSearchBarListener.onCreateButtonTapped();
+                }
+            });
+        }
+
         setupBackButton();
         textBox.requestFocus();
     }
