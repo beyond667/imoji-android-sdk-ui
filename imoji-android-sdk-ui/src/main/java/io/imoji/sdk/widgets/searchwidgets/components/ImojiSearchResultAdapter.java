@@ -82,7 +82,7 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<RecyclerView.
             resultView.resetView(placeholderRandomizer, position);
 
 
-            imageLoader.loadImage(resultView.getImageView(), sr.getThumbnailUri(options.isDisplayBorderSticker()), new ImojiImageLoadCompleteCallback() {
+            imageLoader.loadImage(resultView.getImageView(), sr.getThumbnailUri(options), new ImojiImageLoadCompleteCallback() {
                 @Override
                 public void updateImageView() {
                     if (sr.isCategory()) {

@@ -30,16 +30,17 @@ public class SearchResult {
         return category;
     }
 
-    public Uri getThumbnailUri(boolean displayStickerBorder) {
+    public Uri getThumbnailUri(ImojiUISDKOptions options) {
         Imoji thumbailImoji = this.imoji;
         if (isCategory()) {
             thumbailImoji = category.getPreviewImoji();
         }
-        if (displayStickerBorder || thumbailImoji.hasAnimationCapability()) {
+        if (thumbailImoji.hasAnimationCapability()) {
             return thumbailImoji.getStandardThumbnailUri(true);
         } else {
-            RenderingOptions renderingOptions = new RenderingOptions(RenderingOptions.BorderStyle.None,
-                    RenderingOptions.ImageFormat.Png, RenderingOptions.Size.Thumbnail);
+            RenderingOptions renderingOptions = new RenderingOptions(
+                    options.isDisplayStickerBorders() ? RenderingOptions.BorderStyle.Sticker : RenderingOptions.BorderStyle.None,
+                    options.getImageFormat(), RenderingOptions.Size.Thumbnail);
             return thumbailImoji.urlForRenderingOption(renderingOptions);
         }
     }
@@ -54,12 +55,5 @@ public class SearchResult {
 
     public boolean isCategory() {
         return category != null && imoji == null;
-    }
-
-    public Uri getUri(RenderingOptions.ImageFormat imageFormat) {
-        return getImoji().urlForRenderingOption(new RenderingOptions(
-                RenderingOptions.BorderStyle.Sticker,
-                imageFormat,
-                RenderingOptions.Size.Thumbnail));
     }
 }

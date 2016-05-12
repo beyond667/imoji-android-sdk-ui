@@ -11,7 +11,7 @@ public class ImojiUISDKOptions {
 
     private RenderingOptions.ImageFormat imageFormat = RenderingOptions.ImageFormat.WebP;
     private boolean includeRecentsAndCreate = true;
-    private boolean displayBorderSticker = true;
+    private boolean displayStickerBorders = true;
     private Activity parentActivity;
 
     public RenderingOptions.ImageFormat getImageFormat() {
@@ -30,12 +30,12 @@ public class ImojiUISDKOptions {
         this.includeRecentsAndCreate = includeRecentsAndCreate;
     }
 
-    public boolean isDisplayBorderSticker() {
-        return displayBorderSticker;
+    public boolean isDisplayStickerBorders() {
+        return displayStickerBorders;
     }
 
-    public void setDisplayStickerBorder(boolean displayStickerBorder) {
-        this.displayBorderSticker = displayStickerBorder;
+    public void setDisplayStickerBorders(boolean displayStickerBorders) {
+        this.displayStickerBorders = displayStickerBorders;
     }
 
     public Activity getParentActivity() {

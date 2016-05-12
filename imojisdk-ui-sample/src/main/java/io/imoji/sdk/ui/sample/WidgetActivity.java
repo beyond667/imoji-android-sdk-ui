@@ -77,7 +77,7 @@ public class WidgetActivity extends AppCompatActivity {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         ImojiUISDKOptions options = new ImojiUISDKOptions();
         options.setImageFormat(RenderingOptions.ImageFormat.Png);
-        options.setDisplayStickerBorder(preferences.getBoolean(getString(R.string.pref_key_sticker_borders_enabled), true));
+        options.setDisplayStickerBorders(preferences.getBoolean(getString(R.string.pref_key_sticker_borders_enabled), true));
         options.setIncludeRecentsAndCreate(preferences.getBoolean(getString(R.string.pref_key_recents_create_enabled), true));
         options.setParentActivity(this);
 
