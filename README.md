@@ -132,8 +132,7 @@ Imoji Android SDK UI offers three search views you can use in your apps; quarter
 ```java
  ImojiQuarterScreenWidget widget = new ImojiQuarterScreenWidget(this, new ImojiUISDKOptions(), new ImojiSearchResultAdapter.ImojiImageLoader() {
         @Override
-        public void loadImage(ImageView target, Drawable placeholder, @AnimRes int animationId, Uri uri,
-                                          final ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
+        public void loadImage(ImageView target, Uri uri, ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
                         
         }
  });
@@ -246,8 +245,6 @@ ImojiHalfScreenWidget halfWidget = new ImojiHalfScreenWidget(this,
                 }
         });
 ```
-
-##Create Button Integration
 
 ##Imoji Widget Listener
 Once you created a search widget you can set an Imoji Widget Listener on it to listen for events.
