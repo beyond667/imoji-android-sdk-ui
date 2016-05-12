@@ -17,6 +17,7 @@ import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
 import io.imoji.sdk.objects.Category;
+import io.imoji.sdk.objects.Imoji;
 import io.imoji.sdk.objects.RenderingOptions;
 import io.imoji.sdk.widgets.searchwidgets.ImojiFullScreenWidget;
 import io.imoji.sdk.widgets.searchwidgets.ImojiHalfScreenWidget;
@@ -99,9 +100,8 @@ public class WidgetActivity extends AppCompatActivity {
 
                     }
 
-
                     @Override
-                    public void onStickerTapped(Uri uri) {
+                    public void onStickerTapped(Imoji imoji) {
 
                     }
 

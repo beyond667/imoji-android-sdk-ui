@@ -78,6 +78,13 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(searchBarLayout.getWindowToken(), 0);
         }
+
+        if(hasFocus){
+            searchBarLayout.setLeftButtonVisibility(VISIBLE);
+        }
+
+
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

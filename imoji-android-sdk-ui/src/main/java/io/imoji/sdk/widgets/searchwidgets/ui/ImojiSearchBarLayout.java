@@ -194,13 +194,12 @@ public class ImojiSearchBarLayout extends ViewSwitcher {
             });
         }
 
-        //TODO ask about this one, why is it needed?
         findViewById(R.id.recents_bar_search_icon).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 removeViewAt(1);
                 setDisplayedChild(0);
-                imojiSearchBarListener.onBackButtonTapped();
+                toggleTextFocus(true);
             }
         });
 

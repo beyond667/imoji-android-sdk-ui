@@ -31,14 +31,12 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
     private ImojiWidgetListener widgetListener;
     private GridLayoutManager gridLayoutManager;
     protected View separator;
-    private final ImojiUISDKOptions uiSDKOptions;
 
 
     public ImojiBaseSearchWidget(Context context, final int spanCount, int orientation, boolean autoSearchEnabled, @ImojiResultView.ResultViewSize int resultViewSize,
                                  ImojiUISDKOptions options, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
         super(context);
         inflate(getContext(), R.layout.imoji_base_widget, this);
-        this.uiSDKOptions = options;
         this.context = context;
 
         this.searchHandler = new ImojiSearchHandler(autoSearchEnabled) {
@@ -126,7 +124,9 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
 
     @Override
     public void onBackButtonTapped() {
-        searchHandler.searchPrevious(context);
+//        searchHandler.searchPrevious(context);
+        searchHandler.clearHistory();
+        searchHandler.searchTrending(context);
         if (this.widgetListener != null) {
             widgetListener.onBackButtonTapped();
         }
@@ -170,7 +170,7 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
             }
         } else {
             if (this.widgetListener != null) {
-                this.widgetListener.onStickerTapped(searchResult.getUri(uiSDKOptions.getImageFormat()));
+                this.widgetListener.onStickerTapped(searchResult.getImoji());
                 searchHandler.addToRecents(context,searchResult.getImoji());
             }
         }

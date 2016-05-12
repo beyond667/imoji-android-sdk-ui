@@ -56,6 +56,12 @@ public abstract class ImojiSearchHandler {
                 onHistoryChanged();
                 return popped;
             }
+
+            @Override
+            public void clear() {
+                super.clear();
+                onHistoryChanged();
+            }
         };
     }
 
@@ -119,19 +125,19 @@ public abstract class ImojiSearchHandler {
     }
 
 
-    public void searchPrevious(Context context) {
-        try {
-            historyStack.pop();
-        } catch (EmptyStackException e) {
-            searchTrending(context);
-        }
-        if (!historyStack.isEmpty()) {
-            Pair<String, String> pair = historyStack.peek();
-            searchTerm(context, pair.first, pair.second, false);
-        } else {
-            searchTrending(context);
-        }
-    }
+//    public void searchPrevious(Context context) {
+//        try {
+//            historyStack.pop();
+//        } catch (EmptyStackException e) {
+//            searchTrending(context);
+//        }
+//        if (!historyStack.isEmpty()) {
+//            Pair<String, String> pair = historyStack.peek();
+//            searchTerm(context, pair.first, pair.second, false);
+//        } else {
+//            searchTrending(context);
+//        }
+//    }
 
     public void autoSearch(final Context context, final String term) {
         if (autoSearchEnabled && !term.isEmpty()) {
@@ -192,6 +198,10 @@ public abstract class ImojiSearchHandler {
         if (lastSearchTask != null) {
             lastSearchTask.cancel(true);
         }
+    }
+
+    public void clearHistory(){
+        historyStack.clear();
     }
 
     public abstract void onSearchCompleted(List<SearchResult> newResults, int dividerPosition, boolean isRecents);

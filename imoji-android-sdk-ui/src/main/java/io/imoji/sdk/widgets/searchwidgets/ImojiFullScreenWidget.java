@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import io.imoji.sdk.ui.R;
@@ -51,18 +52,6 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
     }
 
     @Override
-    protected void onHistoryCreated() {
-        super.onHistoryCreated();
-        searchBarLayout.setupBackButton();
-    }
-
-    @Override
-    protected void onHistoryDestroyed() {
-        super.onHistoryDestroyed();
-        searchBarLayout.setupCloseButton();
-    }
-
-    @Override
     protected View getNoStickerView(final boolean isRecents) {
         View view = LayoutInflater.from(getContext())
                 .inflate(R.layout.imoji_full_search_widget_no_result, switcher);
@@ -101,6 +90,10 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
 
     @Override
     public void onFocusChanged(boolean hasFocus) {
-
+        if(hasFocus){
+            searchBarLayout.setupBackButton();
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,0);
+        }
     }
 }
