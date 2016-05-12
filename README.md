@@ -130,7 +130,7 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 Imoji Android SDK UI offers three search views you can use in your apps; quarter, half and full screen widgets. Search widgets handles searching for imojis and categories. You can create one with
 ```java
- ImojiQuarterScreenWidget widget = new ImojiQuarterScreenWidget(this, RenderingOptions.ImageFormat.WebP, new ImojiSearchResultAdapter.ImojiImageLoader() {
+ ImojiQuarterScreenWidget widget = new ImojiQuarterScreenWidget(this, new ImojiUISDKOptions(), new ImojiSearchResultAdapter.ImojiImageLoader() {
         @Override
         public void loadImage(ImageView target, Drawable placeholder, @AnimRes int animationId, Uri uri,
                                           final ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
@@ -138,26 +138,50 @@ Imoji Android SDK UI offers three search views you can use in your apps; quarter
         }
  });
 ```
-You'll need to pass the context, image format for stickers to be found and a new ImojiImageLoader.
+You'll need to pass the context, a new ImojiUISDKOptions object and a new ImojiImageLoader object.
+
+##ImojiUISDKOptions
+ImojiUISDKOptions is an optional configuration object for your ImojiSDK integration. If you don't want to change default configurations you can just pass ```new ImojiUISDKOptions()``` as the second parameter of your widget constructor. You can change values inside the object with simple setters.
+
+```java
+options.setImageFormat(RenderingOptions.ImageFormat.Png);
+//use options.getImageFormat() to get the value
+```
+Supported configurations
+
+1.**Image Format:** Optional. Default Webp. Image format for assets displayed in the widget.
+
+2.**Include Recents and Create:** Optional. Default True. Enables Recents and Create buttons in widget's searchbar.
+
+3.**Display Sticker Borders:** Optional. Default True. Displays borders around assets displayed in the widget.
+
+4.**Parent Activity:** Optional. Required if you want to use Create button. Default null. Pass parent activity of the widget. You'll also need to override ```onActivityResult``` method of the same activity to get newly created sticker.
+
+```java
+@Override
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (ImojiEditorActivity.START_EDITOR_REQUEST_CODE == requestCode && resultCode == Activity.RESULT_OK) {
+        //get bitmap with EditorBitmapCache.getInstance().get(EditorBitmapCache.Keys.OUTLINED_BITMAP)
+    }
+}
+```
 
 ## ImojiImageLoader
-ImojiImageLoader is a simple interface with a single ```loadImage``` method that lets you use your choice of image library to load all assets in the widget. First parameter ```target``` is the ImageView in which your assets should be loaded. It also supports Gifs. Second parameter ```placeholder``` is a simple Drawable to be used as a placeholder. Third parameter ```animationId``` is the resource id for loading animation. Final parameter ```callback``` is a callback that handles ui changes once image is loaded. As soon as you are done with loading the image, you should call ```callback.updateImageView();```
+ImojiImageLoader is a simple interface with a single ```loadImage``` method that lets you use your choice of image library to load all assets in the widget. First parameter ```target``` is the ImageView in which your assets should be loaded. It also supports Gifs. Second parameter ```uri``` is the resource identifier for the asset to be loaded. Final parameter ```callback``` is a callback that handles ui changes once image is loaded. As soon as you are done with loading the image, you should call ```callback.updateImageView();```
 
-It is recommended to use an image loading library with Gif support.
+**It is recommended to use an image loading library with Gif support.**
 
 ###Glide Example
 ```java
  ImojiFullScreenWidget fullWidget = new ImojiFullScreenWidget(this, 
-                RenderingOptions.ImageFormat.WebP, 
+                new ImojiUISDKOptions(), 
                 new ImojiSearchResultAdapter.ImojiImageLoader() {
         @Override
-        public void loadImage(ImageView target, Drawable placeholder, 
-                                @AnimRes int animationId, Uri uri,
+        public void loadImage(ImageView target, Uri uri,
                                 final ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
                 Glide.with(context)
                         .load(uri)
-                        .placeholder(placeholder)
-                        .crossFade(animationId,300)
                         .listener(new RequestListener<Uri, GlideDrawable>() {
                                 @Override
                                  public boolean onException(Exception e, 
@@ -181,16 +205,13 @@ It is recommended to use an image loading library with Gif support.
 ###Ion Example
 ```java
 ImojiQuarterScreenWidget widget = new ImojiQuarterScreenWidget(this, 
-                RenderingOptions.ImageFormat.WebP, 
+                new ImojiUISDKOptions(), 
                 new ImojiSearchResultAdapter.ImojiImageLoader() {
 
         @Override
-        public void loadImage(ImageView target, Drawable placeholder, 
-                                @AnimRes int animationId, Uri uri,
+        public void loadImage(ImageView target, Uri uri,
                                 final ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
                 Ion.with(target)
-                        .placeholder(placeholder)
-                        .animateIn(animationId)
                         .load(uri.toString())
                         .setCallback(new FutureCallback<ImageView>() {
                                 @Override
@@ -208,12 +229,9 @@ ImojiHalfScreenWidget halfWidget = new ImojiHalfScreenWidget(this,
         RenderingOptions.ImageFormat.Png, 
         new ImojiSearchResultAdapter.ImojiImageLoader() {
                 @Override
-                public void loadImage(ImageView target, Drawable placeholder, 
-                                        @AnimRes int animationId, Uri uri,
+                public void loadImage(ImageView target, Uri uri,
                                         final ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
                 Picasso.with(context)
-                        .load(uri)
-                        .placeholder(placeholder)
                         .into(target, new Callback() {
                                 @Override
                                 public void onSuccess() {
@@ -228,6 +246,8 @@ ImojiHalfScreenWidget halfWidget = new ImojiHalfScreenWidget(this,
                 }
         });
 ```
+
+##Create Button Integration
 
 ##Imoji Widget Listener
 Once you created a search widget you can set an Imoji Widget Listener on it to listen for events.
