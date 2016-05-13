@@ -14,6 +14,7 @@ import io.imoji.sdk.ui.utils.EditorBitmapCache;
 
 public class ImojiEditorActivity extends AppCompatActivity {
 
+    public static final String IMOJI_CREATION_FINISHED_BROADCAST_ACTION = "IMOJI_CREATION_FINISHED_BROADCAST_ACTION";
     public static final int START_EDITOR_REQUEST_CODE = 1001;
     private final static int PICK_IMAGE_REQUEST_CODE = 1002;
     public static final String IMOJI_MODEL_BUNDLE_ARG_KEY = "IMOJI_MODEL_BUNDLE_ARG_KEY";

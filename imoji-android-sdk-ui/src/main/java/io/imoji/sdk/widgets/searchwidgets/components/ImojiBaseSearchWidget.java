@@ -1,8 +1,10 @@
 package io.imoji.sdk.widgets.searchwidgets.components;
 
-import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
@@ -34,6 +36,8 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
     private ImojiWidgetListener widgetListener;
     private GridLayoutManager gridLayoutManager;
     private ImojiUISDKOptions options;
+
+    private BroadcastReceiver imojiCreatedReceiver;
 
     public ImojiBaseSearchWidget(Context context, final int spanCount, int orientation, boolean autoSearchEnabled, @ImojiResultView.ResultViewSize int resultViewSize,
                                  ImojiUISDKOptions options, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
@@ -85,6 +89,15 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
         recyclerView.setAdapter(resultAdapter);
 
         searchHandler.searchTrending(context);
+
+        imojiCreatedReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                searchHandler.searchRecents(context);
+                searchBarLayout.showRecentsView();
+                LocalBroadcastManager.getInstance(context).unregisterReceiver(this);
+            }
+        };
     }
 
     private void repopulateAdapter(List<SearchResult> newResults, int dividerPosition, boolean isRecents) {
@@ -147,7 +160,7 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
 
     @Override
     public void onCreateButtonTapped() {
-        startImojiEditorActivity(options.getParentActivity());
+        startImojiEditorActivity(context);
     }
 
     @Override
@@ -179,10 +192,12 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
         }
     }
 
-    private void startImojiEditorActivity(Activity activity) {
-        Intent intent = new Intent(activity, io.imoji.sdk.ui.ImojiEditorActivity.class);
+    private void startImojiEditorActivity(Context context) {
+        Intent intent = new Intent(context, io.imoji.sdk.ui.ImojiEditorActivity.class);
         intent.putExtra(ImojiEditorActivity.RETURN_IMMEDIATELY_BUNDLE_ARG_KEY, false);
         intent.putExtra(ImojiEditorActivity.TAG_IMOJI_BUNDLE_ARG_KEY, true);
+        LocalBroadcastManager.getInstance(context).registerReceiver(imojiCreatedReceiver,
+                new IntentFilter(ImojiEditorActivity.IMOJI_CREATION_FINISHED_BROADCAST_ACTION));
         context.startActivity(intent);
     }
 
