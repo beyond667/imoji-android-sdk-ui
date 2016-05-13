@@ -154,18 +154,6 @@ Supported configurations
 
 3.**Display Sticker Borders:** Optional. Default True. Displays borders around assets displayed in the widget.
 
-4.**Parent Activity:** Optional. Required if you want to use Create button. Default null. Pass parent activity of the widget. You'll also need to override ```onActivityResult``` method of the same activity to get newly created sticker.
-
-```java
-@Override
-protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-    if (ImojiEditorActivity.START_EDITOR_REQUEST_CODE == requestCode && resultCode == Activity.RESULT_OK) {
-        //get bitmap with EditorBitmapCache.getInstance().get(EditorBitmapCache.Keys.OUTLINED_BITMAP)
-    }
-}
-```
-
 ## ImojiImageLoader
 ImojiImageLoader is a simple interface with a single ```loadImage``` method that lets you use your choice of image library to load all assets in the widget. First parameter ```target``` is the ImageView in which your assets should be loaded. It also supports Gifs. Second parameter ```uri``` is the resource identifier for the asset to be loaded. Final parameter ```callback``` is a callback that handles ui changes once image is loaded. As soon as you are done with loading the image, you should call ```callback.updateImageView();```
 
@@ -246,7 +234,7 @@ ImojiHalfScreenWidget halfWidget = new ImojiHalfScreenWidget(this,
         });
 ```
 
-##Imoji Widget Listener
+##Imoji Widget Listener (Optional)
 Once you created a search widget you can set an Imoji Widget Listener on it to listen for events.
 ```java
 widget.setWidgetListener(new ImojiWidgetListener() {
@@ -276,5 +264,4 @@ widget.setWidgetListener(new ImojiWidgetListener() {
                     }
                 });
 ```
-
 
