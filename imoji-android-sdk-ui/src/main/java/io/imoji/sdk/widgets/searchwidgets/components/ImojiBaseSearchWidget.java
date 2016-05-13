@@ -68,6 +68,7 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
         recyclerView = (RecyclerView) this.findViewById(R.id.widget_recycler);
         searchBarLayout = (ImojiSearchBarLayout) this.findViewById(R.id.widget_search);
         searchBarLayout.setImojiSearchListener(this);
+        searchBarLayout.setActionButtonsVisibility(options.isIncludeRecentsAndCreate());
 
         resultAdapter = new ImojiSearchResultAdapter(context, imageLoader, resultViewSize, orientation, options);
         resultAdapter.setSearchTapListener(this);

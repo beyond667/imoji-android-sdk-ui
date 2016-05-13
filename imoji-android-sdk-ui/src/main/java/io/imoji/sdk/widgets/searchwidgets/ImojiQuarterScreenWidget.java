@@ -60,6 +60,7 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
         });
 
         searchBarLayout.setRecentsLayout(R.layout.imoji_recents_bar_small);
+        searchBarLayout.toggleTextFocus(true);
     }
 
     @Override

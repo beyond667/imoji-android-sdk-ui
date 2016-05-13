@@ -61,25 +61,7 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
         if (isRecents) {
             text.setText(getContext().getString(R.string.imoji_search_widget_no_recent_hint));
         }
-
-        TextView searchTitle = (TextView) view.findViewById(R.id.replacement_search_label);
-        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Montserrat-Light.otf");
-        text.setTypeface(typeface);
-        searchTitle.setTypeface(typeface);
-
-        View v = findViewById(R.id.replacement_search_container);
-
-        v.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isRecents) {
-                    searchHandler.searchRecents(context);
-                } else {
-                    searchHandler.retrySearch(context);
-                }
-
-            }
-        });
+        text.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Montserrat-Light.otf"));
 
         return view;
     }
@@ -103,6 +85,9 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
             setBarState(true);
+        } else if (!hasFocus) {
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(searchBarLayout.getWindowToken(), 0);
         }
     }
 

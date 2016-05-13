@@ -39,6 +39,7 @@ public class ImojiEditorActivity extends AppCompatActivity {
             if (inputBitmap == null) {
                 pickImageFromGallery();
             } else {
+                EditorBitmapCache.getInstance().remove(EditorBitmapCache.Keys.INPUT_BITMAP);
                 createFragment(inputBitmap);
             }
         } else {

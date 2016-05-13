@@ -112,27 +112,6 @@ public abstract class ImojiSearchHandler {
                 .executeAsyncTask(task);
     }
 
-    public void retrySearch(Context context) {
-        if(!historyStack.isEmpty()){
-            searchTerm(context, historyStack.peek().first, historyStack.peek().second, false);
-        }
-    }
-
-
-//    public void searchPrevious(Context context) {
-//        try {
-//            historyStack.pop();
-//        } catch (EmptyStackException e) {
-//            searchTrending(context);
-//        }
-//        if (!historyStack.isEmpty()) {
-//            Pair<String, String> pair = historyStack.peek();
-//            searchTerm(context, pair.first, pair.second, false);
-//        } else {
-//            searchTrending(context);
-//        }
-//    }
-
     public void autoSearch(final Context context, final String term) {
         if (autoSearchEnabled && !term.isEmpty()) {
             lastAutoSearchTerm = term;
