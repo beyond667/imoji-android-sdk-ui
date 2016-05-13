@@ -35,7 +35,7 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
 
     private ImojiWidgetListener widgetListener;
     private GridLayoutManager gridLayoutManager;
-    private ImojiUISDKOptions options;
+    protected ImojiUISDKOptions options;
 
     private BroadcastReceiver imojiCreatedReceiver;
 
@@ -120,19 +120,12 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
     @Override
     public void onTextSubmit(String term) {
         searchHandler.searchTerm(context, term, null, true);
-        if (this.widgetListener != null) {
-            widgetListener.onTermSearched(term);
-        }
     }
 
     @Override
     public void onBackButtonTapped() {
-//        searchHandler.searchPrevious(context);
         searchHandler.clearHistory();
         searchHandler.searchTrending(context);
-        if (this.widgetListener != null) {
-            widgetListener.onBackButtonTapped();
-        }
     }
 
     @Override
@@ -168,9 +161,6 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
         if (searchResult.isCategory()) {
             searchHandler.searchTerm(context, searchResult.getCategory().getIdentifier(),
                     searchResult.getCategory().getTitle(), true);
-            if (this.widgetListener != null) {
-                this.widgetListener.onCategoryTapped(searchResult.getCategory());
-            }
         } else {
             if (this.widgetListener != null) {
                 this.widgetListener.onStickerTapped(searchResult.getImoji());

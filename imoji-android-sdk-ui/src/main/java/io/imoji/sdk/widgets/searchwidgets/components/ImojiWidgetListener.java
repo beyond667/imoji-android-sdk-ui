@@ -1,6 +1,5 @@
 package io.imoji.sdk.widgets.searchwidgets.components;
 
-import io.imoji.sdk.objects.Category;
 import io.imoji.sdk.objects.Imoji;
 
 /**
@@ -8,13 +7,7 @@ import io.imoji.sdk.objects.Imoji;
  */
 public interface ImojiWidgetListener {
 
-    void onBackButtonTapped();
-
     void onCloseButtonTapped();
 
-    void onCategoryTapped(Category category);
-
     void onStickerTapped(Imoji imoji);
-
-    void onTermSearched(String term);
 }

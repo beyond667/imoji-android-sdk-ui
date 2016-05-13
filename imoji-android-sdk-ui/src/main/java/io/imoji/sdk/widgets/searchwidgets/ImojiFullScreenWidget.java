@@ -114,6 +114,6 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
 
     private void setBarState(boolean active) {
         searchBarLayout.setupBackCloseButton(!active, true);
-        searchBarLayout.setActionButtonsVisibility(!active);
+        searchBarLayout.setActionButtonsVisibility(options.isIncludeRecentsAndCreate() && !active);
     }
 }

@@ -107,6 +107,6 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
 
     private void setBarState(boolean active) {
         searchBarLayout.setupBackCloseButton(false, active);
-        searchBarLayout.setActionButtonsVisibility(!active);
+        searchBarLayout.setActionButtonsVisibility(options.isIncludeRecentsAndCreate() && !active);
     }
 }

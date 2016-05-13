@@ -89,7 +89,7 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
     }
 
     private void setBarState(boolean active) {
-        searchBarLayout.setActionButtonsVisibility(!active);
+        searchBarLayout.setActionButtonsVisibility(options.isIncludeRecentsAndCreate() && !active);
     }
 
     @Override

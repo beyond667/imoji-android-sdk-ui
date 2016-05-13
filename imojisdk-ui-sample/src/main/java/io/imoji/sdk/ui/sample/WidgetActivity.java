@@ -16,7 +16,6 @@ import android.widget.RelativeLayout;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
-import io.imoji.sdk.objects.Category;
 import io.imoji.sdk.objects.Imoji;
 import io.imoji.sdk.objects.RenderingOptions;
 import io.imoji.sdk.widgets.searchwidgets.ImojiFullScreenWidget;
@@ -90,26 +89,12 @@ public class WidgetActivity extends AppCompatActivity {
                 container.addView(widget);
                 widget.setWidgetListener(new ImojiWidgetListener() {
                     @Override
-                    public void onBackButtonTapped() {
-                    }
-
-                    @Override
                     public void onCloseButtonTapped() {
                         NavUtils.navigateUpFromSameTask(WidgetActivity.this);
                     }
 
                     @Override
-                    public void onCategoryTapped(Category category) {
-
-                    }
-
-                    @Override
                     public void onStickerTapped(Imoji imoji) {
-
-                    }
-
-                    @Override
-                    public void onTermSearched(String term) {
 
                     }
                 });
