@@ -16,6 +16,7 @@ import io.imoji.sdk.ui.R;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiBaseSearchWidget;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiUISDKOptions;
+import io.imoji.sdk.widgets.searchwidgets.components.SearchResult;
 import io.imoji.sdk.widgets.searchwidgets.ui.ImojiResultView;
 
 /**
@@ -27,7 +28,6 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
 
     public ImojiQuarterScreenWidget(Context context, ImojiUISDKOptions options, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
         super(context, SPAN_COUNT, HORIZONTAL, true, ImojiResultView.SMALL, options, imageLoader);
-        searchBarLayout.setLeftButtonVisibility(GONE);
         setBackgroundDrawable(getResources().getDrawable(R.drawable.base_widget_separator));
 
         LinearLayout container = (LinearLayout) this.findViewById(R.id.widget_container);
@@ -67,6 +67,7 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
         if (hasFocus) {
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.showSoftInput(searchBarLayout.getFocusedChild(), InputMethodManager.SHOW_IMPLICIT);
+            setBarState(true);
         }
     }
 
@@ -74,8 +75,21 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
     public void onTextCleared() {
         Pair pair = searchHandler.getFirstElement();
         if (pair != null && pair.second != null) {
-            searchHandler.searchTrending(context);
+            onBackButtonTapped();
+            setBarState(false);
         }
+    }
+
+    @Override
+    public void onTap(SearchResult searchResult) {
+        super.onTap(searchResult);
+        if(searchResult.isCategory()){
+            setBarState(true);
+        }
+    }
+
+    private void setBarState(boolean active) {
+        searchBarLayout.setActionButtonsVisibility(!active);
     }
 
     @Override

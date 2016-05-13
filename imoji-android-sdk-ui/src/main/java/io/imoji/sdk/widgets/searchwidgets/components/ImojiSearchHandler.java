@@ -39,9 +39,6 @@ public abstract class ImojiSearchHandler {
 
             @Override
             public Pair<String, String> push(Pair<String, String> object) {
-                if (size() == 0) {
-                    onFirstHistoryItemAdded();
-                }
                 Pair<String, String> pair = super.push(object);
                 onHistoryChanged();
                 return pair;
@@ -50,9 +47,6 @@ public abstract class ImojiSearchHandler {
             @Override
             public synchronized Pair<String, String> pop() {
                 Pair<String, String> popped = super.pop();
-                if (size() == 0) {
-                    onLastHistoryItemRemoved();
-                }
                 onHistoryChanged();
                 return popped;
             }
@@ -207,10 +201,6 @@ public abstract class ImojiSearchHandler {
     public abstract void onSearchCompleted(List<SearchResult> newResults, int dividerPosition, boolean isRecents);
 
     public abstract void beforeSearchStarted();
-
-    public abstract void onFirstHistoryItemAdded();
-
-    public abstract void onLastHistoryItemRemoved();
 
     public abstract void onHistoryChanged();
 }

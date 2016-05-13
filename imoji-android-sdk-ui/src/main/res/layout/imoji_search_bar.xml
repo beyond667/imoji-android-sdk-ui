@@ -9,22 +9,23 @@
         android:focusableInTouchMode="true">
 
         <View
-            android:id="@+id/search_bar_back_cancel_icon"
+            android:id="@+id/search_bar_back_close_view"
             android:layout_width="@dimen/imoji_search_bar_icon_side"
             android:layout_height="@dimen/imoji_search_bar_icon_side"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="@dimen/imoji_search_bar_first_left_icon_left_marg"
             android:layout_marginRight="@dimen/imoji_search_bar_first_left_icon_right_marg"
             android:background="@drawable/imoji_back"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:visibility="gone"/>
 
         <View
-            android:id="@+id/search_bar_search_icon"
+            android:id="@+id/search_bar_search_view"
             android:layout_width="@dimen/imoji_search_bar_icon_side"
             android:layout_height="@dimen/imoji_search_bar_icon_side"
             android:layout_marginLeft="@dimen/imoji_search_bar_first_left_icon_left_marg"
             android:layout_marginRight="@dimen/imoji_search_bar_second_left_icon_right_marg"
-            android:layout_toRightOf="@id/search_bar_back_cancel_icon"
+            android:layout_toRightOf="@id/search_bar_back_close_view"
             android:background="@drawable/imoji_search"
             android:layout_centerVertical="true"/>
 
@@ -32,8 +33,8 @@
             android:id="@+id/search_bar_text_box"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/imoji_search_bar_icon_side"
-            android:layout_toLeftOf="@+id/search_bar_right_icon"
-            android:layout_toRightOf="@id/search_bar_search_icon"
+            android:layout_toLeftOf="@+id/search_bar_clear_view"
+            android:layout_toRightOf="@id/search_bar_search_view"
             android:background="@null"
             android:hint="@string/imoji_search_widget_search_box_hint"
             android:imeOptions="actionDone"
@@ -47,7 +48,7 @@
             android:layout_centerVertical="true"/>
 
         <View
-            android:id="@+id/search_bar_clear_icon"
+            android:id="@+id/search_bar_clear_view"
             android:layout_width="@dimen/imoji_search_bar_icon_side"
             android:layout_height="@dimen/imoji_search_bar_icon_side"
             android:layout_alignParentRight="true"
@@ -57,7 +58,7 @@
             android:layout_centerVertical="true"/>
 
         <LinearLayout
-            android:id="@+id/search_bar_extra_action_container"
+            android:id="@+id/search_bar_action_container"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
             android:layout_alignParentRight="true"

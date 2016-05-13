@@ -22,39 +22,32 @@ import io.imoji.sdk.ui.R;
  */
 public class ImojiSearchBarLayout extends ViewSwitcher {
 
-    private View backCancelIcon;
-    private View clearIcon;
+    private View backCloseView;
+    private View clearView;
     private ImojiEditText textBox;
-    private LinearLayout extraActionsLayout;
+    private LinearLayout actionsLayout;
     protected int recentsLayout = R.layout.imoji_recents_bar_large;
 
     private ImojiSearchBarListener imojiSearchBarListener;
     private boolean shouldTriggerAutoSearch = true;
-    private boolean extraButtonsEnabled = true;
 
     public ImojiSearchBarLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         inflate(getContext(), R.layout.imoji_search_bar, this);
 
 
-        backCancelIcon = this.findViewById(R.id.search_bar_back_cancel_icon);
+        backCloseView = this.findViewById(R.id.search_bar_back_close_view);
         textBox = (ImojiEditText) this.findViewById(R.id.search_bar_text_box);
-        clearIcon = this.findViewById(R.id.search_bar_clear_icon);
-        extraActionsLayout = (LinearLayout) this.findViewById(R.id.search_bar_extra_action_container);
+        clearView = this.findViewById(R.id.search_bar_clear_view);
+        actionsLayout = (LinearLayout) this.findViewById(R.id.search_bar_action_container);
 
         textBox.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (start == 0 && s.length() > 0) {
-                    clearIcon.setVisibility(VISIBLE);
+                    clearView.setVisibility(VISIBLE);
                 } else if (before > 0 && s.length() == 0) {
-                    clearIcon.setVisibility(GONE);
-                }
-
-                if (extraButtonsEnabled && s.length() == 0 && !textBox.hasFocus()) {
-                    extraActionsLayout.setVisibility(VISIBLE);
-                } else if (extraActionsLayout.getVisibility() == VISIBLE) {
-                    extraActionsLayout.setVisibility(GONE);
+                    clearView.setVisibility(GONE);
                 }
             }
 
@@ -91,7 +84,7 @@ public class ImojiSearchBarLayout extends ViewSwitcher {
             }
         });
 
-        clearIcon.setOnClickListener(new OnClickListener() {
+        clearView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 textBox.setText("");
@@ -102,7 +95,7 @@ public class ImojiSearchBarLayout extends ViewSwitcher {
             }
         });
 
-        findViewById(R.id.search_bar_search_icon).setOnClickListener(new OnClickListener() {
+        findViewById(R.id.search_bar_search_view).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 textBox.requestFocus();
@@ -126,14 +119,11 @@ public class ImojiSearchBarLayout extends ViewSwitcher {
                 }
             });
         }
-
-        setupBackButton();
         textBox.requestFocus();
     }
 
-    public void setExtraButtonsEnabled(boolean extraButtonsEnabled){
-        this.extraButtonsEnabled = extraButtonsEnabled;
-        extraActionsLayout.setVisibility(extraButtonsEnabled ? VISIBLE : GONE);
+    public void setImojiSearchListener(ImojiSearchBarListener searchListener) {
+        this.imojiSearchBarListener = searchListener;
     }
 
     public void toggleTextFocus(boolean shouldRequest) {
@@ -144,32 +134,36 @@ public class ImojiSearchBarLayout extends ViewSwitcher {
         }
     }
 
-    public void setImojiSearchListener(ImojiSearchBarListener searchListener) {
-        this.imojiSearchBarListener = searchListener;
+    public void setActionButtonsVisibility(boolean visible) {
+        actionsLayout.setVisibility(visible ? VISIBLE : GONE);
     }
 
-    public void setupCloseButton() {
-        backCancelIcon.setBackgroundResource(R.drawable.imoji_close);
-        backCancelIcon.setOnClickListener(new OnClickListener() {
+    public void setupBackCloseButton(final boolean isClose, boolean isVisible) {
+        backCloseView.setBackgroundResource(isClose ? R.drawable.imoji_close : R.drawable.imoji_back);
+        backCloseView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (imojiSearchBarListener != null) {
-                    imojiSearchBarListener.onCloseButtonTapped();
+                    if(isClose){
+                        imojiSearchBarListener.onCloseButtonTapped();
+                    }else{
+                        imojiSearchBarListener.onBackButtonTapped();
+                    }
                 }
             }
         });
+        backCloseView.setVisibility(isVisible ? VISIBLE : GONE);
     }
 
-    public void setupBackButton() {
-        backCancelIcon.setBackgroundResource(R.drawable.imoji_back);
-        backCancelIcon.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (imojiSearchBarListener != null) {
-                    imojiSearchBarListener.onBackButtonTapped();
-                }
-            }
-        });
+    public void setText(String text) {
+        shouldTriggerAutoSearch = false;
+        textBox.setText(text);
+        shouldTriggerAutoSearch = true;
+        textBox.clearFocus();
+    }
+
+    public void setRecentsLayout(@LayoutRes int recentsLayout) {
+        this.recentsLayout = recentsLayout;
     }
 
     public void showRecentsView() {
@@ -214,21 +208,6 @@ public class ImojiSearchBarLayout extends ViewSwitcher {
         });
 
         setDisplayedChild(1);
-    }
-
-    public void setLeftButtonVisibility(int visibility) {
-        backCancelIcon.setVisibility(visibility);
-    }
-
-    public void setText(String text) {
-        shouldTriggerAutoSearch = false;
-        textBox.setText(text);
-        shouldTriggerAutoSearch = true;
-        textBox.clearFocus();
-    }
-
-    public void setRecentsLayout(@LayoutRes int recentsLayout) {
-        this.recentsLayout = recentsLayout;
     }
 
     public interface ImojiSearchBarListener {

@@ -14,6 +14,7 @@ import io.imoji.sdk.ui.R;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiBaseSearchWidget;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiUISDKOptions;
+import io.imoji.sdk.widgets.searchwidgets.components.SearchResult;
 import io.imoji.sdk.widgets.searchwidgets.ui.ImojiResultView;
 
 /**
@@ -25,8 +26,6 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
 
     public ImojiHalfScreenWidget(Context context, ImojiUISDKOptions options, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
         super(context, SPAN_COUNT, HORIZONTAL, false, ImojiResultView.SMALL, options, imageLoader);
-
-        searchBarLayout.setLeftButtonVisibility(GONE);
         setBackgroundDrawable(getResources().getDrawable(R.drawable.base_widget_separator));
 
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
@@ -56,18 +55,6 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
     }
 
     @Override
-    protected void onHistoryCreated() {
-        super.onHistoryCreated();
-        searchBarLayout.setLeftButtonVisibility(VISIBLE);
-    }
-
-    @Override
-    protected void onHistoryDestroyed() {
-        super.onHistoryDestroyed();
-        searchBarLayout.setLeftButtonVisibility(GONE);
-    }
-
-    @Override
     public void onTextCleared() {
 
     }
@@ -77,13 +64,9 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
         if (!hasFocus) {
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(searchBarLayout.getWindowToken(), 0);
+        }else{
+            setBarState(true);
         }
-
-        if(hasFocus){
-            searchBarLayout.setLeftButtonVisibility(VISIBLE);
-        }
-
-
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -91,6 +74,20 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
                 switcher.setVisibility(hasFocus ? GONE : VISIBLE);
             }
         }, 100);
+    }
+
+    @Override
+    public void onBackButtonTapped() {
+        super.onBackButtonTapped();
+        setBarState(false);
+    }
+
+    @Override
+    public void onTap(SearchResult searchResult) {
+        super.onTap(searchResult);
+        if(searchResult.isCategory()){
+            setBarState(true);
+        }
     }
 
     @Override
@@ -106,5 +103,10 @@ public class ImojiHalfScreenWidget extends ImojiBaseSearchWidget {
         textView.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Montserrat-Regular.otf"));
 
         return view;
+    }
+
+    private void setBarState(boolean active) {
+        searchBarLayout.setupBackCloseButton(false, active);
+        searchBarLayout.setActionButtonsVisibility(!active);
     }
 }

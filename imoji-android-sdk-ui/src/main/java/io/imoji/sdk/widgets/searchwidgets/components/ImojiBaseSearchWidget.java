@@ -59,16 +59,6 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
             }
 
             @Override
-            public void onFirstHistoryItemAdded() {
-                onHistoryCreated();
-            }
-
-            @Override
-            public void onLastHistoryItemRemoved() {
-                onHistoryDestroyed();
-            }
-
-            @Override
             public void onHistoryChanged() {
                 updateText();
             }
@@ -78,7 +68,6 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
         recyclerView = (RecyclerView) this.findViewById(R.id.widget_recycler);
         searchBarLayout = (ImojiSearchBarLayout) this.findViewById(R.id.widget_search);
         searchBarLayout.setImojiSearchListener(this);
-        searchBarLayout.setExtraButtonsEnabled(options.isIncludeRecentsAndCreate());
 
         resultAdapter = new ImojiSearchResultAdapter(context, imageLoader, resultViewSize, orientation,options);
         resultAdapter.setSearchTapListener(this);
@@ -204,14 +193,6 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
         intent.putExtra(ImojiEditorActivity.RETURN_IMMEDIATELY_BUNDLE_ARG_KEY, false);
         intent.putExtra(ImojiEditorActivity.TAG_IMOJI_BUNDLE_ARG_KEY, true);
         activity.startActivityForResult(intent, ImojiEditorActivity.START_EDITOR_REQUEST_CODE);
-    }
-
-    protected void onHistoryCreated() {
-
-    }
-
-    protected void onHistoryDestroyed() {
-
     }
 
     protected abstract View getNoStickerView(boolean isRecents);

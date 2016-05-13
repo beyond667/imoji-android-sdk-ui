@@ -14,6 +14,7 @@ import io.imoji.sdk.ui.R;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiBaseSearchWidget;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiUISDKOptions;
+import io.imoji.sdk.widgets.searchwidgets.components.SearchResult;
 import io.imoji.sdk.widgets.searchwidgets.ui.ImojiResultView;
 
 /**
@@ -26,7 +27,6 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
     public ImojiFullScreenWidget(Context context, ImojiUISDKOptions options, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
         super(context, SPAN_COUNT, VERTICAL, true, ImojiResultView.LARGE, options, imageLoader);
 
-        searchBarLayout.setupCloseButton();
         searchBarLayout.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 (int) getResources().getDimension(R.dimen.imoji_search_bar_height_full_widget)));
 
@@ -49,6 +49,7 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
         });
 
         searchBarLayout.toggleTextFocus(false);
+        searchBarLayout.setupBackCloseButton(true, true);
     }
 
     @Override
@@ -71,9 +72,9 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
         v.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isRecents){
+                if (isRecents) {
                     searchHandler.searchRecents(context);
-                }else{
+                } else {
                     searchHandler.retrySearch(context);
                 }
 
@@ -89,11 +90,30 @@ public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
     }
 
     @Override
-    public void onFocusChanged(boolean hasFocus) {
-        if(hasFocus){
-            searchBarLayout.setupBackButton();
-            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,0);
+    public void onTap(SearchResult searchResult) {
+        super.onTap(searchResult);
+        if (searchResult.isCategory()) {
+            setBarState(true);
         }
+    }
+
+    @Override
+    public void onFocusChanged(boolean hasFocus) {
+        if (hasFocus) {
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+            setBarState(true);
+        }
+    }
+
+    @Override
+    public void onBackButtonTapped() {
+        super.onBackButtonTapped();
+        setBarState(false);
+    }
+
+    private void setBarState(boolean active) {
+        searchBarLayout.setupBackCloseButton(!active, true);
+        searchBarLayout.setActionButtonsVisibility(!active);
     }
 }
