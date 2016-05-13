@@ -67,8 +67,19 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
     public void onFocusChanged(boolean hasFocus) {
         if (hasFocus) {
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(searchBarLayout.getFocusedChild(), InputMethodManager.SHOW_IMPLICIT);
+            imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+        }
+    }
+
+    @Override
+    public void onTextChanged(String term, boolean shouldTriggerAutoSearch) {
+        super.onTextChanged(term, shouldTriggerAutoSearch);
+
+        //small hack to hide action buttons when first letter is typed instead of on focus change
+        if (term.length() > 0) {
             setBarState(true);
+        } else {
+            setBarState(false);
         }
     }
 
@@ -84,7 +95,7 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
     @Override
     public void onTap(SearchResult searchResult) {
         super.onTap(searchResult);
-        if(searchResult.isCategory()){
+        if (searchResult.isCategory()) {
             setBarState(true);
         }
     }
