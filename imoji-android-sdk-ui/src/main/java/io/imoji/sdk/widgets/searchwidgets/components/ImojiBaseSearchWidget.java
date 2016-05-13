@@ -3,8 +3,6 @@ package io.imoji.sdk.widgets.searchwidgets.components;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
@@ -16,7 +14,6 @@ import java.util.List;
 
 import io.imoji.sdk.ui.ImojiEditorActivity;
 import io.imoji.sdk.ui.R;
-import io.imoji.sdk.ui.utils.EditorBitmapCache;
 import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter.ImojiSearchTapListener;
 import io.imoji.sdk.widgets.searchwidgets.ui.ImojiResultView;
 import io.imoji.sdk.widgets.searchwidgets.ui.ImojiSearchBarLayout;
@@ -37,7 +34,6 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
     private ImojiWidgetListener widgetListener;
     private GridLayoutManager gridLayoutManager;
     private ImojiUISDKOptions options;
-
 
     public ImojiBaseSearchWidget(Context context, final int spanCount, int orientation, boolean autoSearchEnabled, @ImojiResultView.ResultViewSize int resultViewSize,
                                  ImojiUISDKOptions options, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
@@ -69,7 +65,7 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
         searchBarLayout = (ImojiSearchBarLayout) this.findViewById(R.id.widget_search);
         searchBarLayout.setImojiSearchListener(this);
 
-        resultAdapter = new ImojiSearchResultAdapter(context, imageLoader, resultViewSize, orientation,options);
+        resultAdapter = new ImojiSearchResultAdapter(context, imageLoader, resultViewSize, orientation, options);
         resultAdapter.setSearchTapListener(this);
         gridLayoutManager = new GridLayoutManager(context, spanCount, orientation, false);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -89,17 +85,16 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
         recyclerView.setAdapter(resultAdapter);
 
         searchHandler.searchTrending(context);
-
     }
 
     private void repopulateAdapter(List<SearchResult> newResults, int dividerPosition, boolean isRecents) {
-        updateRecyclerView(newResults.size(),isRecents);
+        updateRecyclerView(newResults.size(), isRecents);
         gridLayoutManager.scrollToPositionWithOffset(0, 0);
         resultAdapter.repopulate(newResults, dividerPosition);
     }
 
 
-    private void updateRecyclerView(int newSize,boolean isRecents) {
+    private void updateRecyclerView(int newSize, boolean isRecents) {
         if (newSize == 0) {
             if (switcher.getChildAt(1) != null) {
                 switcher.removeViewAt(1);
@@ -166,7 +161,7 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
         } else {
             if (this.widgetListener != null) {
                 this.widgetListener.onStickerTapped(searchResult.getImoji());
-                searchHandler.addToRecents(context,searchResult.getImoji());
+                searchHandler.addToRecents(context, searchResult.getImoji());
             }
         }
     }
@@ -185,14 +180,10 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
     }
 
     private void startImojiEditorActivity(Activity activity) {
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.imoji_noresults_graphic_large, options);
-        EditorBitmapCache.getInstance().put(EditorBitmapCache.Keys.INPUT_BITMAP, bitmap);
         Intent intent = new Intent(activity, io.imoji.sdk.ui.ImojiEditorActivity.class);
         intent.putExtra(ImojiEditorActivity.RETURN_IMMEDIATELY_BUNDLE_ARG_KEY, false);
         intent.putExtra(ImojiEditorActivity.TAG_IMOJI_BUNDLE_ARG_KEY, true);
-        activity.startActivityForResult(intent, ImojiEditorActivity.START_EDITOR_REQUEST_CODE);
+        context.startActivity(intent);
     }
 
     protected abstract View getNoStickerView(boolean isRecents);

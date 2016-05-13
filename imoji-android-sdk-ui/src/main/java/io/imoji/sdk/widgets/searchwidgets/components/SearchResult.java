@@ -31,17 +31,18 @@ public class SearchResult {
     }
 
     public Uri getThumbnailUri(ImojiUISDKOptions options) {
-        Imoji thumbailImoji = this.imoji;
+        Imoji thumbnailImoji = this.imoji;
         if (isCategory()) {
-            thumbailImoji = category.getPreviewImoji();
+            thumbnailImoji = category.getPreviewImoji();
         }
-        if (thumbailImoji.hasAnimationCapability()) {
-            return thumbailImoji.getStandardThumbnailUri(true);
+        if (thumbnailImoji.hasAnimationCapability()) {
+            return thumbnailImoji.getStandardThumbnailUri(true);
         } else {
             RenderingOptions renderingOptions = new RenderingOptions(
                     options.isDisplayStickerBorders() ? RenderingOptions.BorderStyle.Sticker : RenderingOptions.BorderStyle.None,
                     options.getImageFormat(), RenderingOptions.Size.Thumbnail);
-            return thumbailImoji.urlForRenderingOption(renderingOptions);
+
+            return thumbnailImoji.urlForRenderingOption(renderingOptions);
         }
     }
 
