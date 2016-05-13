@@ -234,33 +234,19 @@ ImojiHalfScreenWidget halfWidget = new ImojiHalfScreenWidget(this,
         });
 ```
 
-##Imoji Widget Listener (Optional)
+##Imoji Widget Listener
 Once you created a search widget you can set an Imoji Widget Listener on it to listen for events.
 ```java
-widget.setWidgetListener(new ImojiWidgetListener() {
-                    @Override
-                    public void onBackButtonTapped() {
-                    }
-
+ widget.setWidgetListener(new ImojiWidgetListener() {
                     @Override
                     public void onCloseButtonTapped() {
- 
-                    }
-
-                    @Override
-                    public void onCategoryTapped(Category category) {
-                        //When a category gets tapped, Imoji SDK Category object returned
+                        //Define custom behavior for Full Screen Widget Close Button
                     }
 
                     @Override
                     public void onStickerTapped(Imoji imoji) {
                         //Get tapped sticker's ImojiSDK Imoji object, from which you can create URL's for different
                         //sizes, image formats and styles
-                    }
-
-                    @Override
-                    public void onTermSearched(String term) {
-                        //When a term is searched from the search box
                     }
                 });
 ```
