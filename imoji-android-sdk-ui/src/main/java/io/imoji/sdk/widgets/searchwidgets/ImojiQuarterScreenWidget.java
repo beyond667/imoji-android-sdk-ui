@@ -67,7 +67,7 @@ public class ImojiQuarterScreenWidget extends ImojiBaseSearchWidget {
     public void onFocusChanged(boolean hasFocus) {
         if (hasFocus) {
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+            imm.showSoftInput(searchBarLayout, 0);
         }
     }
 
