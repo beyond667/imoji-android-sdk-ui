@@ -1,5 +1,8 @@
 * Updates
 
+## 2.0.6
+* Updated to use version 2.1.5 of imoji-android-sdk 
+
 ## 2.0.5
 * Fixes a crash on construction of ImojiCreateService
 
