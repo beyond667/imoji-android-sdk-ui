@@ -29,7 +29,7 @@
             android:background="@drawable/imoji_search"
             android:layout_centerVertical="true"/>
 
-        <io.imoji.sdk.widgets.searchwidgets.ui.ImojiEditText
+        <io.imoji.sdk.grid.ui.ImojiEditText
             android:id="@+id/search_bar_text_box"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/imoji_search_bar_icon_side"

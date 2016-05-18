@@ -22,8 +22,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import io.imoji.sdk.objects.Imoji;
-import io.imoji.sdk.ui.ImojiEditorActivity;
-import io.imoji.sdk.ui.utils.EditorBitmapCache;
+import io.imoji.sdk.editor.ImojiEditorActivity;
+import io.imoji.sdk.editor.util.EditorBitmapCache;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -150,19 +150,4 @@ public class MainActivity extends AppCompatActivity {
             showCreatedImoji(EditorBitmapCache.getInstance().get(EditorBitmapCache.Keys.OUTLINED_BITMAP));
         }
     }
-
-//    public class ImojiCreateReceiver extends BroadcastReceiver {
-//
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            boolean status = intent.getBooleanExtra(ImojiIntents.Create.STATUS_BUNDLE_ARG_KEY, false);
-//            if (status) { //success?
-//                Imoji imoji = intent.getParcelableExtra(ImojiIntents.Create.IMOJI_MODEL_BUNDLE_ARG_KEY);
-//                String token = intent.getStringExtra(ImojiIntents.Create.CREATE_TOKEN_BUNDLE_ARG_KEY);
-//                Toast.makeText(MainActivity.this, "got imoji: " + imoji.getIdentifier(), Toast.LENGTH_LONG).show();
-//            } else {
-//                Toast.makeText(MainActivity.this, "imoji creation failed", Toast.LENGTH_LONG).show();
-//            }
-//        }
-//    }
 }

@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="io.imoji.sdk.ui.ImojiEditorActivity"
+            android:name="io.imoji.sdk.editor.ImojiEditorActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustNothing" />
 

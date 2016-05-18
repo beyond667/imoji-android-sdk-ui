@@ -18,13 +18,13 @@ import com.koushikdutta.ion.Ion;
 
 import io.imoji.sdk.objects.Imoji;
 import io.imoji.sdk.objects.RenderingOptions;
-import io.imoji.sdk.widgets.searchwidgets.ImojiFullScreenWidget;
-import io.imoji.sdk.widgets.searchwidgets.ImojiHalfScreenWidget;
-import io.imoji.sdk.widgets.searchwidgets.ImojiQuarterScreenWidget;
-import io.imoji.sdk.widgets.searchwidgets.components.ImojiBaseSearchWidget;
-import io.imoji.sdk.widgets.searchwidgets.components.ImojiSearchResultAdapter;
-import io.imoji.sdk.widgets.searchwidgets.components.ImojiUISDKOptions;
-import io.imoji.sdk.widgets.searchwidgets.components.ImojiWidgetListener;
+import io.imoji.sdk.grid.ImojiFullScreenWidget;
+import io.imoji.sdk.grid.ImojiHalfScreenWidget;
+import io.imoji.sdk.grid.ImojiQuarterScreenWidget;
+import io.imoji.sdk.grid.components.ImojiBaseSearchWidget;
+import io.imoji.sdk.grid.components.ImojiSearchResultAdapter;
+import io.imoji.sdk.grid.components.ImojiUISDKOptions;
+import io.imoji.sdk.grid.components.ImojiWidgetListener;
 
 
 public class WidgetActivity extends AppCompatActivity {
