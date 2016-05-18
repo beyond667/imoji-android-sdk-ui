@@ -1,27 +1,30 @@
 package io.imoji.sdk.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 
-import io.imoji.sdk.ui.R;
+import java.io.IOException;
 
 import io.imoji.sdk.ui.utils.EditorBitmapCache;
 
 public class ImojiEditorActivity extends AppCompatActivity {
 
+    public static final String IMOJI_CREATION_FINISHED_BROADCAST_ACTION = "IMOJI_CREATION_FINISHED_BROADCAST_ACTION";
     public static final int START_EDITOR_REQUEST_CODE = 1001;
+    private final static int PICK_IMAGE_REQUEST_CODE = 1002;
     public static final String IMOJI_MODEL_BUNDLE_ARG_KEY = "IMOJI_MODEL_BUNDLE_ARG_KEY";
     public static final String CREATE_TOKEN_BUNDLE_ARG_KEY = "CREATE_TOKEN_BUNDLE_ARG_KEY";
-
-
     public static final String TAG_IMOJI_BUNDLE_ARG_KEY = "TAG_IMOJI_BUNDLE_ARG_KEY";
     public static final String RETURN_IMMEDIATELY_BUNDLE_ARG_KEY = "RETURN_IMMEDIATELY_BUNDLE_ARG_KEY";
 
-
-    private static final String LOG_TAG = ImojiEditorActivity.class.getSimpleName();
     private ImojiEditorFragment mImojiEditorFragment;
+    private boolean tagImojis = true;
+    private boolean returnImmediately = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,54 +32,54 @@ public class ImojiEditorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_imoji_editor);
 
         if (savedInstanceState == null) {
-            boolean tagImojis = getIntent().getBooleanExtra(TAG_IMOJI_BUNDLE_ARG_KEY, true);
-            Bitmap inputBitmap = EditorBitmapCache.getInstance().get(EditorBitmapCache.Keys.INPUT_BITMAP);
-            boolean returnImmediately = getIntent().getBooleanExtra(RETURN_IMMEDIATELY_BUNDLE_ARG_KEY, false);
-            if (inputBitmap == null) { //no need to continue
+            tagImojis = getIntent().getBooleanExtra(TAG_IMOJI_BUNDLE_ARG_KEY, true);
+            returnImmediately = getIntent().getBooleanExtra(RETURN_IMMEDIATELY_BUNDLE_ARG_KEY, false);
 
-                setResult(Activity.RESULT_CANCELED, null);
-                finish();
-                return;
+            Bitmap inputBitmap = EditorBitmapCache.getInstance().get(EditorBitmapCache.Keys.INPUT_BITMAP);
+            if (inputBitmap == null) {
+                pickImageFromGallery();
+            } else {
+                EditorBitmapCache.getInstance().remove(EditorBitmapCache.Keys.INPUT_BITMAP);
+                createFragment(inputBitmap);
             }
-            mImojiEditorFragment = ImojiEditorFragment.newInstance(tagImojis, returnImmediately);
-            mImojiEditorFragment.setEditorBitmap(inputBitmap);
-            getSupportFragmentManager().beginTransaction().add(R.id.container, mImojiEditorFragment, ImojiEditorFragment.FRAGMENT_TAG).commit();
         } else {
             mImojiEditorFragment = (ImojiEditorFragment) getSupportFragmentManager().findFragmentByTag(ImojiEditorFragment.FRAGMENT_TAG);
         }
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-//        if (Build.VERSION.SDK_INT >= 19) {
-//            View decorView = getWindow().getDecorView();
-//            int uiOptions = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
-//            decorView.setSystemUiVisibility(uiOptions);
-//
-//        }else if (Build.VERSION.SDK_INT >= 16) {
-//            View decorView = getWindow().getDecorView();
-//// Hide the status bar.
-//            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-//            decorView.setSystemUiVisibility(uiOptions);
-//        }
-
+    private void pickImageFromGallery() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.imoji_editor_activity_image_picker_title)), PICK_IMAGE_REQUEST_CODE);
     }
 
+    private void createFragment(Bitmap inputBitmap) {
+        mImojiEditorFragment = ImojiEditorFragment.newInstance(tagImojis, returnImmediately);
+        mImojiEditorFragment.setEditorBitmap(inputBitmap);
+        getSupportFragmentManager().beginTransaction().add(R.id.container, mImojiEditorFragment, ImojiEditorFragment.FRAGMENT_TAG).commit();
+    }
+
+
     @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-
+        if (requestCode == PICK_IMAGE_REQUEST_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri uri = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                createFragment(bitmap);
+            } catch (IOException e) {
+                finishActivity();
+            }
+        } else {
+            finishActivity();
         }
     }
 
-    ImojiEditorFragment getImojiEditorFragment() {
-        return mImojiEditorFragment;
+    private void finishActivity() {
+        setResult(Activity.RESULT_CANCELED, null);
+        finish();
     }
-
-
 }

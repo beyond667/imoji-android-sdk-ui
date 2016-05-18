@@ -8,8 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-
-import io.imoji.sdk.ui.utils.EditorBitmapCache;
+import android.support.v4.content.LocalBroadcastManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +18,7 @@ import io.imoji.sdk.ImojiSDK;
 import io.imoji.sdk.Session;
 import io.imoji.sdk.objects.Imoji;
 import io.imoji.sdk.response.CreateImojiResponse;
+import io.imoji.sdk.ui.utils.EditorBitmapCache;
 
 /**
  * Created by sajjadtabib on 10/19/15.
@@ -137,6 +137,7 @@ public class CreateTaskFragment extends Fragment implements OutlineAsyncTask.Out
         Intent intent = new Intent();
         intent.putExtra(ImojiEditorActivity.IMOJI_MODEL_BUNDLE_ARG_KEY, result);
         a.setResult(Activity.RESULT_OK, intent);
+        LocalBroadcastManager.getInstance(a).sendBroadcast(new Intent(ImojiEditorActivity.IMOJI_CREATION_FINISHED_BROADCAST_ACTION));
         a.finish();
     }
 }

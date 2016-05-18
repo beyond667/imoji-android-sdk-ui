@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:key="@string/pref_key_sticker_borders_enabled"
+        android:title="@string/ui_preferences_sticker_border_title"
+        android:defaultValue="true"
+        android:summaryOff="@string/ui_preferences_sticker_border_summary_off"/>
+    <SwitchPreference
+        android:key="@string/pref_key_recents_create_enabled"
+        android:title="@string/ui_preferences_extra_buttons_title"
+        android:defaultValue="true"
+        android:summaryOn="@string/ui_preferences_extra_buttons_summary_on"/>
+</PreferenceScreen>

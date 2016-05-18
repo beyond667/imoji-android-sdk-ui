@@ -125,3 +125,129 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     }
 }
 ```
+
+# Imoji Search Widgets
+
+Imoji Android SDK UI offers three search views you can use in your apps; quarter, half and full screen widgets. Search widgets handles searching for imojis and categories. You can create one with
+```java
+ ImojiQuarterScreenWidget widget = new ImojiQuarterScreenWidget(this, new ImojiUISDKOptions(), new ImojiSearchResultAdapter.ImojiImageLoader() {
+        @Override
+        public void loadImage(ImageView target, Uri uri, ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
+                        
+        }
+ });
+```
+You'll need to pass the context, a new ImojiUISDKOptions object and a new ImojiImageLoader object.
+
+##ImojiUISDKOptions
+ImojiUISDKOptions is an optional configuration object for your ImojiSDK integration. If you don't want to change default configurations you can just pass ```new ImojiUISDKOptions()``` as the second parameter of your widget constructor. You can change values inside the object with simple setters.
+
+```java
+options.setImageFormat(RenderingOptions.ImageFormat.Png);
+//use options.getImageFormat() to get the value
+```
+Supported configurations
+
+1.**Image Format:** Optional. Default Webp. Image format for assets displayed in the widget.
+
+2.**Include Recents and Create:** Optional. Default True. Enables Recents and Create buttons in widget's searchbar.
+
+3.**Display Sticker Borders:** Optional. Default True. Displays borders around assets displayed in the widget.
+
+## ImojiImageLoader
+ImojiImageLoader is a simple interface with a single ```loadImage``` method that lets you use your choice of image library to load all assets in the widget. First parameter ```target``` is the ImageView in which your assets should be loaded. It also supports Gifs. Second parameter ```uri``` is the resource identifier for the asset to be loaded. Final parameter ```callback``` is a callback that handles ui changes once image is loaded. As soon as you are done with loading the image, you should call ```callback.updateImageView();```
+
+**It is recommended to use an image loading library with Gif support.**
+
+###Glide Example
+```java
+ ImojiFullScreenWidget fullWidget = new ImojiFullScreenWidget(this, 
+                new ImojiUISDKOptions(), 
+                new ImojiSearchResultAdapter.ImojiImageLoader() {
+        @Override
+        public void loadImage(ImageView target, Uri uri,
+                                final ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
+                Glide.with(context)
+                        .load(uri)
+                        .listener(new RequestListener<Uri, GlideDrawable>() {
+                                @Override
+                                 public boolean onException(Exception e, 
+                                                Uri model, Target<GlideDrawable> target, 
+                                                boolean isFirstResource) {
+                                        return false;
+                                }
+
+                                @Override
+                                public boolean onResourceReady(GlideDrawable resource, 
+                                                Uri model, Target<GlideDrawable> target, 
+                                                boolean isFromMemoryCache, boolean isFirstResource) {
+                                        callback.updateImageView();
+                                        return false;
+                                }})
+                        .into(target);
+                    }
+                });
+```
+
+###Ion Example
+```java
+ImojiQuarterScreenWidget widget = new ImojiQuarterScreenWidget(this, 
+                new ImojiUISDKOptions(), 
+                new ImojiSearchResultAdapter.ImojiImageLoader() {
+
+        @Override
+        public void loadImage(ImageView target, Uri uri,
+                                final ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
+                Ion.with(target)
+                        .load(uri.toString())
+                        .setCallback(new FutureCallback<ImageView>() {
+                                @Override
+                                public void onCompleted(Exception e, ImageView result) {
+                                        callback.updateImageView();
+                                }
+                        });
+        }
+});
+```
+
+###Picasso Example
+```java
+ImojiHalfScreenWidget halfWidget = new ImojiHalfScreenWidget(this, 
+        RenderingOptions.ImageFormat.Png, 
+        new ImojiSearchResultAdapter.ImojiImageLoader() {
+                @Override
+                public void loadImage(ImageView target, Uri uri,
+                                        final ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
+                Picasso.with(context)
+                        .into(target, new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                        callback.updateImageView();
+                                }
+
+                                @Override
+                                public void onError() {
+
+                                }
+                        });
+                }
+        });
+```
+
+##Imoji Widget Listener
+Once you created a search widget you can set an Imoji Widget Listener on it to listen for events.
+```java
+ widget.setWidgetListener(new ImojiWidgetListener() {
+                    @Override
+                    public void onCloseButtonTapped() {
+                        //Define custom behavior for Full Screen Widget Close Button
+                    }
+
+                    @Override
+                    public void onStickerTapped(Imoji imoji) {
+                        //Get tapped sticker's ImojiSDK Imoji object, from which you can create URL's for different
+                        //sizes, image formats and styles
+                    }
+                });
+```
+

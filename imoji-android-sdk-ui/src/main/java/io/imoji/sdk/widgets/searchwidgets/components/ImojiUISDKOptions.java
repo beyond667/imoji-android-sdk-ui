@@ -1,0 +1,38 @@
+package io.imoji.sdk.widgets.searchwidgets.components;
+
+import io.imoji.sdk.objects.RenderingOptions;
+
+/**
+ * Created by engind on 5/10/16.
+ * A simple configuration POJO for developers pass their preferences
+ */
+public class ImojiUISDKOptions {
+
+    private RenderingOptions.ImageFormat imageFormat = RenderingOptions.ImageFormat.WebP;
+    private boolean includeRecentsAndCreate = true;
+    private boolean displayStickerBorders = true;
+
+    public RenderingOptions.ImageFormat getImageFormat() {
+        return imageFormat;
+    }
+
+    public void setImageFormat(RenderingOptions.ImageFormat imageFormat) {
+        this.imageFormat = imageFormat;
+    }
+
+    public boolean isIncludeRecentsAndCreate() {
+        return includeRecentsAndCreate;
+    }
+
+    public void setIncludeRecentsAndCreate(boolean includeRecentsAndCreate) {
+        this.includeRecentsAndCreate = includeRecentsAndCreate;
+    }
+
+    public boolean isDisplayStickerBorders() {
+        return displayStickerBorders;
+    }
+
+    public void setDisplayStickerBorders(boolean displayStickerBorders) {
+        this.displayStickerBorders = displayStickerBorders;
+    }
+}
