@@ -28,7 +28,7 @@ import io.imoji.sdk.objects.Imoji;
 /**
  * Created by engind on 4/27/16.
  */
-public interface ImojiWidgetListener {
+public interface WidgetListener {
 
     void onCloseButtonTapped();
 

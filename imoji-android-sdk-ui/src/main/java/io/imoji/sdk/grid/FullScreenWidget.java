@@ -34,21 +34,21 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import io.imoji.sdk.ui.R;
-import io.imoji.sdk.grid.components.ImojiBaseSearchWidget;
-import io.imoji.sdk.grid.components.ImojiSearchResultAdapter;
-import io.imoji.sdk.grid.components.ImojiUISDKOptions;
+import io.imoji.sdk.grid.components.BaseSearchWidget;
+import io.imoji.sdk.grid.components.SearchResultAdapter;
+import io.imoji.sdk.grid.components.WidgetDisplayOptions;
 import io.imoji.sdk.grid.components.SearchResult;
-import io.imoji.sdk.grid.ui.ImojiResultView;
+import io.imoji.sdk.grid.ui.ResultView;
 
 /**
  * Created by engind on 4/24/16.
  */
-public class ImojiFullScreenWidget extends ImojiBaseSearchWidget {
+public class FullScreenWidget extends BaseSearchWidget {
 
     private final static int SPAN_COUNT = 3;
 
-    public ImojiFullScreenWidget(Context context, ImojiUISDKOptions options, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
-        super(context, SPAN_COUNT, VERTICAL, true, ImojiResultView.LARGE, options, imageLoader);
+    public FullScreenWidget(Context context, WidgetDisplayOptions options, SearchResultAdapter.ImojiImageLoader imageLoader) {
+        super(context, SPAN_COUNT, VERTICAL, true, ResultView.LARGE, options, imageLoader);
 
         searchBarLayout.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 (int) getResources().getDimension(R.dimen.imoji_search_bar_height_full_widget)));

@@ -46,7 +46,7 @@ import io.imoji.sdk.response.ImojisResponse;
 /**
  * Created by engind on 5/6/16.
  */
-public abstract class ImojiSearchHandler {
+public abstract class SearchHandler {
 
     private final boolean autoSearchEnabled;
 
@@ -56,7 +56,7 @@ public abstract class ImojiSearchHandler {
     private boolean shouldAutoSearch = true;
 
 
-    public ImojiSearchHandler(boolean autoSearchEnabled) {
+    public SearchHandler(boolean autoSearchEnabled) {
         this.autoSearchEnabled = autoSearchEnabled;
         historyStack = new Stack<Pair<String, String>>() {
 

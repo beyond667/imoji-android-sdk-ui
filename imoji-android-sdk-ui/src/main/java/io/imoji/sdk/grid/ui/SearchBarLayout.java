@@ -43,7 +43,7 @@ import io.imoji.sdk.ui.R;
 /**
  * Created by engind on 4/21/16.
  */
-public class ImojiSearchBarLayout extends ViewSwitcher {
+public class SearchBarLayout extends ViewSwitcher {
 
     private View backCloseView;
     private View clearView;
@@ -54,7 +54,7 @@ public class ImojiSearchBarLayout extends ViewSwitcher {
     private ImojiSearchBarListener imojiSearchBarListener;
     private boolean shouldTriggerAutoSearch = true;
 
-    public ImojiSearchBarLayout(Context context, AttributeSet attrs) {
+    public SearchBarLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         inflate(getContext(), R.layout.imoji_search_bar, this);
 

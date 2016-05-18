@@ -29,7 +29,7 @@ import io.imoji.sdk.objects.RenderingOptions;
  * Created by engind on 5/10/16.
  * A simple configuration POJO for developers pass their preferences
  */
-public class ImojiUISDKOptions {
+public class WidgetDisplayOptions {
 
     private RenderingOptions.ImageFormat imageFormat = RenderingOptions.ImageFormat.WebP;
     private boolean includeRecentsAndCreate = true;

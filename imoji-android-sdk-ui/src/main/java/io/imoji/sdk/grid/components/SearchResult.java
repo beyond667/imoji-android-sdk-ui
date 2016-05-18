@@ -53,7 +53,7 @@ public class SearchResult {
         return category;
     }
 
-    public Uri getThumbnailUri(ImojiUISDKOptions options) {
+    public Uri getThumbnailUri(WidgetDisplayOptions options) {
         Imoji thumbnailImoji = this.imoji;
         if (isCategory()) {
             thumbnailImoji = category.getPreviewImoji();

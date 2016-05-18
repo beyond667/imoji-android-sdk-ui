@@ -53,13 +53,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import io.imoji.sdk.ui.R;
-import io.imoji.sdk.grid.components.ImojiSearchResultAdapter;
+import io.imoji.sdk.grid.components.SearchResultAdapter;
 import io.imoji.sdk.grid.components.SearchResult;
 
 /**
  * Created by engind on 5/2/16.
  */
-public class ImojiResultView extends RelativeLayout {
+public class ResultView extends RelativeLayout {
 
 
     @IntDef({LARGE, SMALL})
@@ -82,10 +82,10 @@ public class ImojiResultView extends RelativeLayout {
     @ResultViewSize
     int viewSize;
 
-    private ImojiSearchResultAdapter.ImojiSearchTapListener listener;
+    private SearchResultAdapter.ImojiSearchTapListener listener;
     private SearchResult searchResult;
 
-    public ImojiResultView(Context context, @ResultViewSize int viewSize) {
+    public ResultView(Context context, @ResultViewSize int viewSize) {
         super(context);
         this.context = context;
 
@@ -161,7 +161,7 @@ public class ImojiResultView extends RelativeLayout {
 
     }
 
-    public void setListener(ImojiSearchResultAdapter.ImojiSearchTapListener tapListener, SearchResult searchResult) {
+    public void setListener(SearchResultAdapter.ImojiSearchTapListener tapListener, SearchResult searchResult) {
         listener = tapListener;
         this.searchResult = searchResult;
     }

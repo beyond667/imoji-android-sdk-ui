@@ -41,20 +41,20 @@ import com.koushikdutta.ion.Ion;
 
 import io.imoji.sdk.objects.Imoji;
 import io.imoji.sdk.objects.RenderingOptions;
-import io.imoji.sdk.grid.ImojiFullScreenWidget;
-import io.imoji.sdk.grid.ImojiHalfScreenWidget;
-import io.imoji.sdk.grid.ImojiQuarterScreenWidget;
-import io.imoji.sdk.grid.components.ImojiBaseSearchWidget;
-import io.imoji.sdk.grid.components.ImojiSearchResultAdapter;
-import io.imoji.sdk.grid.components.ImojiUISDKOptions;
-import io.imoji.sdk.grid.components.ImojiWidgetListener;
+import io.imoji.sdk.grid.FullScreenWidget;
+import io.imoji.sdk.grid.HalfScreenWidget;
+import io.imoji.sdk.grid.QuarterScreenWidget;
+import io.imoji.sdk.grid.components.BaseSearchWidget;
+import io.imoji.sdk.grid.components.SearchResultAdapter;
+import io.imoji.sdk.grid.components.WidgetDisplayOptions;
+import io.imoji.sdk.grid.components.WidgetListener;
 
 
 public class WidgetActivity extends AppCompatActivity {
 
     public static final String WIDGET_IDENTIFIER = "widget_identifier";
 
-    private ImojiBaseSearchWidget widget;
+    private BaseSearchWidget widget;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +74,9 @@ public class WidgetActivity extends AppCompatActivity {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 
-        ImojiSearchResultAdapter.ImojiImageLoader imageLoader = new ImojiSearchResultAdapter.ImojiImageLoader() {
+        SearchResultAdapter.ImojiImageLoader imageLoader = new SearchResultAdapter.ImojiImageLoader() {
             @Override
-            public void loadImage(ImageView target, Uri uri, final ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
+            public void loadImage(ImageView target, Uri uri, final SearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
                 Ion.with(target)
                         .load(uri.toString())
                         .setCallback(new FutureCallback<ImageView>() {
@@ -90,27 +90,27 @@ public class WidgetActivity extends AppCompatActivity {
 
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        ImojiUISDKOptions options = new ImojiUISDKOptions();
+        WidgetDisplayOptions options = new WidgetDisplayOptions();
         options.setImageFormat(RenderingOptions.ImageFormat.Png);
         options.setDisplayStickerBorders(preferences.getBoolean(getString(R.string.pref_key_sticker_borders_enabled), true));
         options.setIncludeRecentsAndCreate(preferences.getBoolean(getString(R.string.pref_key_recents_create_enabled), true));
 
         switch (identifier) {
             case 0:
-                widget = new ImojiQuarterScreenWidget(this, options, imageLoader);
+                widget = new QuarterScreenWidget(this, options, imageLoader);
                 setTitle(R.string.activity_title_quarter_screen);
                 container.addView(widget, params);
                 break;
             case 1:
-                widget = new ImojiHalfScreenWidget(this, options, imageLoader);
+                widget = new HalfScreenWidget(this, options, imageLoader);
                 setTitle(R.string.activity_title_half_screen);
                 container.addView(widget, params);
                 break;
             case 2:
-                widget = new ImojiFullScreenWidget(this, options, imageLoader);
+                widget = new FullScreenWidget(this, options, imageLoader);
                 getSupportActionBar().hide();
                 container.addView(widget);
-                widget.setWidgetListener(new ImojiWidgetListener() {
+                widget.setWidgetListener(new WidgetListener() {
                     @Override
                     public void onCloseButtonTapped() {
                         NavUtils.navigateUpFromSameTask(WidgetActivity.this);

@@ -38,12 +38,12 @@ import java.util.List;
 import java.util.Random;
 
 import io.imoji.sdk.ui.R;
-import io.imoji.sdk.grid.ui.ImojiResultView;
+import io.imoji.sdk.grid.ui.ResultView;
 
 /**
  * Created by engind on 4/22/16.
  */
-public class ImojiSearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public final static int DIVIDER_VIEW_TYPE = 2343234;
 
@@ -54,16 +54,16 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<RecyclerView.
 
     private int placeholderRandomizer;
     private
-    @ImojiResultView.ResultViewSize
+    @ResultView.ResultViewSize
     int resultViewSize;
     private int dividerPosition = -1;
     private int orientation;
-    private ImojiUISDKOptions options;
+    private WidgetDisplayOptions options;
 
 
-    public ImojiSearchResultAdapter(Context context, ImojiImageLoader imageLoader,
-                                    @ImojiResultView.ResultViewSize int resultViewSize,int orientation,
-                                    ImojiUISDKOptions uiSDKOptions) {
+    public SearchResultAdapter(Context context, ImojiImageLoader imageLoader,
+                               @ResultView.ResultViewSize int resultViewSize, int orientation,
+                               WidgetDisplayOptions uiSDKOptions) {
         results = new ArrayList<>();
         this.context = context;
         this.imageLoader = imageLoader;
@@ -92,7 +92,7 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<RecyclerView.
         if (viewType == DIVIDER_VIEW_TYPE) {
             return new DividerHolder(new View(context));
         }
-        return new ResultHolder(new ImojiResultView(context, resultViewSize));
+        return new ResultHolder(new ResultView(context, resultViewSize));
     }
 
 
@@ -100,7 +100,7 @@ public class ImojiSearchResultAdapter extends RecyclerView.Adapter<RecyclerView.
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (position != dividerPosition) {
             final SearchResult sr = results.get(position);
-            final ImojiResultView resultView = (ImojiResultView) holder.itemView;
+            final ResultView resultView = (ResultView) holder.itemView;
             resultView.setListener(tapListener, results.get(holder.getAdapterPosition()));
             resultView.resetView(placeholderRandomizer, position);
 

@@ -39,37 +39,37 @@ import java.util.List;
 
 import io.imoji.sdk.editor.ImojiEditorActivity;
 import io.imoji.sdk.ui.R;
-import io.imoji.sdk.grid.components.ImojiSearchResultAdapter.ImojiSearchTapListener;
-import io.imoji.sdk.grid.ui.ImojiResultView;
-import io.imoji.sdk.grid.ui.ImojiSearchBarLayout;
-import io.imoji.sdk.grid.ui.ImojiSearchBarLayout.ImojiSearchBarListener;
+import io.imoji.sdk.grid.components.SearchResultAdapter.ImojiSearchTapListener;
+import io.imoji.sdk.grid.ui.ResultView;
+import io.imoji.sdk.grid.ui.SearchBarLayout;
+import io.imoji.sdk.grid.ui.SearchBarLayout.ImojiSearchBarListener;
 
 /**
  * Created by engind on 4/22/16.
  */
-public abstract class ImojiBaseSearchWidget extends LinearLayout implements ImojiSearchBarListener, ImojiSearchTapListener {
+public abstract class BaseSearchWidget extends LinearLayout implements ImojiSearchBarListener, ImojiSearchTapListener {
 
     protected ViewSwitcher switcher;
     protected RecyclerView recyclerView;
-    protected ImojiSearchBarLayout searchBarLayout;
-    protected ImojiSearchResultAdapter resultAdapter;
-    protected ImojiSearchHandler searchHandler;
+    protected SearchBarLayout searchBarLayout;
+    protected SearchResultAdapter resultAdapter;
+    protected SearchHandler searchHandler;
     protected Context context;
 
-    private ImojiWidgetListener widgetListener;
+    private WidgetListener widgetListener;
     private GridLayoutManager gridLayoutManager;
-    protected ImojiUISDKOptions options;
+    protected WidgetDisplayOptions options;
 
     private BroadcastReceiver imojiCreatedReceiver;
 
-    public ImojiBaseSearchWidget(Context context, final int spanCount, int orientation, boolean autoSearchEnabled, @ImojiResultView.ResultViewSize int resultViewSize,
-                                 ImojiUISDKOptions options, ImojiSearchResultAdapter.ImojiImageLoader imageLoader) {
+    public BaseSearchWidget(Context context, final int spanCount, int orientation, boolean autoSearchEnabled, @ResultView.ResultViewSize int resultViewSize,
+                            WidgetDisplayOptions options, SearchResultAdapter.ImojiImageLoader imageLoader) {
         super(context);
         inflate(getContext(), R.layout.imoji_base_widget, this);
         this.context = context;
         this.options = options;
 
-        this.searchHandler = new ImojiSearchHandler(autoSearchEnabled) {
+        this.searchHandler = new SearchHandler(autoSearchEnabled) {
 
             @Override
             public void onSearchCompleted(List<SearchResult> newResults, int dividerPosition, boolean isRecents) {
@@ -89,18 +89,18 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
 
         switcher = (ViewSwitcher) this.findViewById(R.id.widget_switcher);
         recyclerView = (RecyclerView) this.findViewById(R.id.widget_recycler);
-        searchBarLayout = (ImojiSearchBarLayout) this.findViewById(R.id.widget_search);
+        searchBarLayout = (SearchBarLayout) this.findViewById(R.id.widget_search);
         searchBarLayout.setImojiSearchListener(this);
         searchBarLayout.setActionButtonsVisibility(options.isIncludeRecentsAndCreate());
 
-        resultAdapter = new ImojiSearchResultAdapter(context, imageLoader, resultViewSize, orientation, options);
+        resultAdapter = new SearchResultAdapter(context, imageLoader, resultViewSize, orientation, options);
         resultAdapter.setSearchTapListener(this);
         gridLayoutManager = new GridLayoutManager(context, spanCount, orientation, false);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
                 switch (resultAdapter.getItemViewType(position)) {
-                    case ImojiSearchResultAdapter.DIVIDER_VIEW_TYPE:
+                    case SearchResultAdapter.DIVIDER_VIEW_TYPE:
                         return spanCount;
                     default:
                         return 1;
@@ -166,7 +166,7 @@ public abstract class ImojiBaseSearchWidget extends LinearLayout implements Imoj
         }
     }
 
-    public void setWidgetListener(ImojiWidgetListener widgetListener) {
+    public void setWidgetListener(WidgetListener widgetListener) {
         this.widgetListener = widgetListener;
     }
 
