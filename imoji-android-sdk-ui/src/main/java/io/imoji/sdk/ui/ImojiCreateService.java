@@ -27,13 +27,18 @@ public class ImojiCreateService extends IntentService {
     public static final String TAGS_BUNDLE_ARG_KEY = "TAGS_BUNDLE_ARG_KEY";
     private static final String LOG_TAG = ImojiCreateService.class.getSimpleName();
 
-    private final Session imojiSession;
+    private Session imojiSession;
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      */
     public ImojiCreateService() {
         super(ImojiCreateService.class.getSimpleName());
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
         this.imojiSession = ImojiSDK.getInstance().createSession(this);
     }
 
