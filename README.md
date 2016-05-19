@@ -40,21 +40,19 @@ public class MyApplication extends Application {
 ### Imoji Grid Widgets
 
 Imoji Android SDK UI offers three search views you can use in your apps; quarter, half and full screen widgets. Search widgets handle searching for imojis and categories. You can create one with
+
 ```java
 QuarterScreenWidget quarterScreenWidget =
         new QuarterScreenWidget(
                 this,
-                new WidgetDisplayOptions()
-                        .setDisplayStickerBorders(true)
-                        .setImageFormat(RenderingOptions.ImageFormat.Png),
+                new WidgetDisplayOptions(),
                 new SearchResultAdapter.ImojiImageLoader() {
                     @Override
                     public void loadImage(ImageView target, Uri uri, SearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
-
+                        // call your image loading libraries here
                     }
                 });
 ```
-You'll need to pass the context, a new WidgetDisplayOptions object and a new ImojiImageLoader object.
 
 ## WidgetDisplayOptions
 
