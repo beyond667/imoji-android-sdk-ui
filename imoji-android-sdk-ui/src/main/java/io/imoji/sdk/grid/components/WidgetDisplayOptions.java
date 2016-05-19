@@ -39,23 +39,26 @@ public class WidgetDisplayOptions {
         return imageFormat;
     }
 
-    public void setImageFormat(RenderingOptions.ImageFormat imageFormat) {
+    public WidgetDisplayOptions setImageFormat(RenderingOptions.ImageFormat imageFormat) {
         this.imageFormat = imageFormat;
+        return this;
     }
 
     public boolean isIncludeRecentsAndCreate() {
         return includeRecentsAndCreate;
     }
 
-    public void setIncludeRecentsAndCreate(boolean includeRecentsAndCreate) {
+    public WidgetDisplayOptions setIncludeRecentsAndCreate(boolean includeRecentsAndCreate) {
         this.includeRecentsAndCreate = includeRecentsAndCreate;
+        return this;
     }
 
     public boolean isDisplayStickerBorders() {
         return displayStickerBorders;
     }
 
-    public void setDisplayStickerBorders(boolean displayStickerBorders) {
+    public WidgetDisplayOptions setDisplayStickerBorders(boolean displayStickerBorders) {
         this.displayStickerBorders = displayStickerBorders;
+        return this;
     }
 }
