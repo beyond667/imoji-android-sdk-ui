@@ -73,21 +73,27 @@ Supported configurations
 3. **Display Sticker Borders:** Optional. Default True. Displays borders around assets displayed in the widget.
 
 
-## ImojiImageLoader
+## Loading Images
 
-ImojiImageLoader is a simple interface with a single **loadImage** method that lets you use your choice of image library to load all assets in the widget. First parameter **target** is the ImageView in which your assets should be loaded. It also supports Gifs. Second parameter **uri** is the resource identifier for the asset to be loaded. Final parameter **callback** is a callback that handles ui changes once image is loaded. As soon as you are done with loading the image, you should call **callback.updateImageView();**
+Upon creating a search widget, you will need to supply an instance of SearchResultAdapter.ImageLoader to load the sticker using your preferred imaging library. 
+It supplies a single **loadImage** method that lets you use your choice of image library to load all assets in the widget. 
+
+* The first parameter **target** is the ImageView in which your assets should be loaded. It also supports GIF's. 
+* The second parameter **uri** is the resource identifier for the asset to be loaded. 
+* The final parameter **callback** is a callback that handles UI changes once image is loaded. As soon as you are done with loading the image, you should call **callback.updateImageView();**
 
 **It is recommended to use an image loading library with Gif support.**
 
 #### Glide Example
+
 ```java
  FullScreenWidget fullWidget = new FullScreenWidget(
                 this, 
                 new WidgetDisplayOptions(), 
-                new ImojiSearchResultAdapter.ImojiImageLoader() {
+                new SearchResultAdapter.ImageLoader() {
         @Override
         public void loadImage(ImageView target, Uri uri,
-                                final ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
+                                final SearchResultAdapter.ImageLoaderCallback callback) {
                 Glide.with(context)
                         .load(uri)
                         .listener(new RequestListener<Uri, GlideDrawable>() {
@@ -111,15 +117,15 @@ ImojiImageLoader is a simple interface with a single **loadImage** method that l
 ```
 
 #### Ion Example
+
 ```java
 QuarterScreenWidget widget = new QuarterScreenWidget(
                 this, 
                 new WidgetDisplayOptions(), 
-                new ImojiSearchResultAdapter.ImojiImageLoader() {
-
+                new SearchResultAdapter.ImageLoader() {
         @Override
         public void loadImage(ImageView target, Uri uri,
-                                final ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
+                                final SearchResultAdapter.ImageLoaderCallback callback) {
                 Ion.with(target)
                         .load(uri.toString())
                         .setCallback(new FutureCallback<ImageView>() {
@@ -133,13 +139,15 @@ QuarterScreenWidget widget = new QuarterScreenWidget(
 ```
 
 #### Picasso Example
+
 ```java
-HalfScreenWidget halfWidget = new HalfScreenWidget(this, 
-        RenderingOptions.ImageFormat.Png, 
-        new ImojiSearchResultAdapter.ImojiImageLoader() {
-                @Override
-                public void loadImage(ImageView target, Uri uri,
-                                        final ImojiSearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
+HalfScreenWidget halfWidget = new HalfScreenWidget(
+                this, 
+                new WidgetDisplayOptions(), 
+                new SearchResultAdapter.ImageLoader() {
+        @Override
+        public void loadImage(ImageView target, Uri uri,
+                                final SearchResultAdapter.ImageLoaderCallback callback) {
                 Picasso.with(context)
                         .into(target, new Callback() {
                                 @Override
@@ -157,7 +165,9 @@ HalfScreenWidget halfWidget = new HalfScreenWidget(this,
 ```
 
 ### Imoji Widget Listener
+
 Once you created a search widget you can set an Imoji Widget Listener on it to listen for events.
+
 ```java
  widget.setWidgetListener(new WidgetListener() {
                     @Override
@@ -172,8 +182,6 @@ Once you created a search widget you can set an Imoji Widget Listener on it to l
                     }
                 });
 ```
-
-
 
 ### Sticker Creator
 
