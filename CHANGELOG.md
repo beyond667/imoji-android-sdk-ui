@@ -1,5 +1,8 @@
 * Updates
 
+## 2.1.2
+* Use RenderingOptions instead of imageFormat and displayStickerBorders
+
 ## 2.1.1
 * Refactored some more classes
   * SearchResultAdapter.ImojiImageLoader -> SearchResultAdapter.ImageLoader
