@@ -27,6 +27,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,7 +40,7 @@ import java.util.List;
 
 import io.imoji.sdk.editor.ImojiEditorActivity;
 import io.imoji.sdk.ui.R;
-import io.imoji.sdk.grid.components.SearchResultAdapter.ImojiSearchTapListener;
+import io.imoji.sdk.grid.components.SearchResultAdapter.TapListener;
 import io.imoji.sdk.grid.ui.ResultView;
 import io.imoji.sdk.grid.ui.SearchBarLayout;
 import io.imoji.sdk.grid.ui.SearchBarLayout.ImojiSearchBarListener;
@@ -47,7 +48,7 @@ import io.imoji.sdk.grid.ui.SearchBarLayout.ImojiSearchBarListener;
 /**
  * Created by engind on 4/22/16.
  */
-public abstract class BaseSearchWidget extends LinearLayout implements ImojiSearchBarListener, ImojiSearchTapListener {
+public abstract class BaseSearchWidget extends LinearLayout implements ImojiSearchBarListener, TapListener {
 
     protected ViewSwitcher switcher;
     protected RecyclerView recyclerView;
@@ -63,7 +64,7 @@ public abstract class BaseSearchWidget extends LinearLayout implements ImojiSear
     private BroadcastReceiver imojiCreatedReceiver;
 
     public BaseSearchWidget(Context context, final int spanCount, int orientation, boolean autoSearchEnabled, @ResultView.ResultViewSize int resultViewSize,
-                            WidgetDisplayOptions options, SearchResultAdapter.ImojiImageLoader imageLoader) {
+                            WidgetDisplayOptions options, SearchResultAdapter.ImageLoader imageLoader) {
         super(context);
         inflate(getContext(), R.layout.imoji_base_widget, this);
         this.context = context;
@@ -181,7 +182,7 @@ public abstract class BaseSearchWidget extends LinearLayout implements ImojiSear
     }
 
     @Override
-    public void onTap(SearchResult searchResult) {
+    public void onTap(@NonNull SearchResult searchResult) {
         if (searchResult.isCategory()) {
             searchHandler.searchTerm(context, searchResult.getCategory().getIdentifier(),
                     searchResult.getCategory().getTitle(), true);

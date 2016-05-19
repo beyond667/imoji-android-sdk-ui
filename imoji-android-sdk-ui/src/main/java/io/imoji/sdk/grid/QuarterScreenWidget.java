@@ -26,6 +26,7 @@ package io.imoji.sdk.grid;
 import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -49,7 +50,7 @@ public class QuarterScreenWidget extends BaseSearchWidget {
 
     public final static int SPAN_COUNT = 1;
 
-    public QuarterScreenWidget(Context context, WidgetDisplayOptions options, SearchResultAdapter.ImojiImageLoader imageLoader) {
+    public QuarterScreenWidget(Context context, WidgetDisplayOptions options, SearchResultAdapter.ImageLoader imageLoader) {
         super(context, SPAN_COUNT, HORIZONTAL, true, ResultView.SMALL, options, imageLoader);
         setBackgroundDrawable(getResources().getDrawable(R.drawable.base_widget_separator));
 
@@ -116,7 +117,7 @@ public class QuarterScreenWidget extends BaseSearchWidget {
     }
 
     @Override
-    public void onTap(SearchResult searchResult) {
+    public void onTap(@NonNull SearchResult searchResult) {
         super.onTap(searchResult);
         if (searchResult.isCategory()) {
             setBarState(true);

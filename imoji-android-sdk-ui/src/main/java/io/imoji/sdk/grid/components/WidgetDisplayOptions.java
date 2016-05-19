@@ -23,6 +23,8 @@
 
 package io.imoji.sdk.grid.components;
 
+import android.support.annotation.NonNull;
+
 import io.imoji.sdk.objects.RenderingOptions;
 
 /**
@@ -39,7 +41,7 @@ public class WidgetDisplayOptions {
         return imageFormat;
     }
 
-    public WidgetDisplayOptions setImageFormat(RenderingOptions.ImageFormat imageFormat) {
+    public WidgetDisplayOptions setImageFormat(@NonNull RenderingOptions.ImageFormat imageFormat) {
         this.imageFormat = imageFormat;
         return this;
     }

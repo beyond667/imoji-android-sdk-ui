@@ -24,10 +24,19 @@
 package io.imoji.sdk.ui.sample;
 
 import android.app.Application;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.widget.ImageView;
 
 import java.util.UUID;
 
 import io.imoji.sdk.ImojiSDK;
+import io.imoji.sdk.grid.FullScreenWidget;
+import io.imoji.sdk.grid.HalfScreenWidget;
+import io.imoji.sdk.grid.QuarterScreenWidget;
+import io.imoji.sdk.grid.components.SearchResultAdapter;
+import io.imoji.sdk.grid.components.WidgetDisplayOptions;
+import io.imoji.sdk.objects.RenderingOptions;
 
 /**
  * Created by sajjadtabib on 9/23/15.
@@ -40,5 +49,41 @@ public class MyApplication extends Application {
                 UUID.fromString("748cddd4-460d-420a-bd42-fcba7f6c031b"),
                 "U2FsdGVkX1/yhkvIVfvMcPCALxJ1VHzTt8FPZdp1vj7GIb+fsdzOjyafu9MZRveo7ebjx1+SKdLUvz8aM6woAw=="
         );
+
+        new QuarterScreenWidget(
+                getApplicationContext(),
+                new WidgetDisplayOptions()
+                        .setDisplayStickerBorders(true)
+                        .setImageFormat(RenderingOptions.ImageFormat.Png),
+                new SearchResultAdapter.ImageLoader() {
+                    @Override
+                    public void loadImage(@NonNull ImageView target, @NonNull Uri uri, @NonNull SearchResultAdapter.ImageLoaderCallback callback) {
+
+                    }
+                });
+
+        new HalfScreenWidget(
+                getApplicationContext(),
+                new WidgetDisplayOptions()
+                        .setDisplayStickerBorders(true)
+                        .setImageFormat(RenderingOptions.ImageFormat.Png),
+                new SearchResultAdapter.ImageLoader() {
+                    @Override
+                    public void loadImage(@NonNull ImageView target, @NonNull Uri uri, @NonNull SearchResultAdapter.ImageLoaderCallback callback) {
+
+                    }
+                });
+
+        new FullScreenWidget(
+                getApplicationContext(),
+                new WidgetDisplayOptions()
+                        .setDisplayStickerBorders(true)
+                        .setImageFormat(RenderingOptions.ImageFormat.Png),
+                new SearchResultAdapter.ImageLoader() {
+                    @Override
+                    public void loadImage(@NonNull ImageView target, @NonNull Uri uri, @NonNull SearchResultAdapter.ImageLoaderCallback callback) {
+
+                    }
+                });
     }
 }

@@ -82,7 +82,7 @@ public class ResultView extends RelativeLayout {
     @ResultViewSize
     int viewSize;
 
-    private SearchResultAdapter.ImojiSearchTapListener listener;
+    private SearchResultAdapter.TapListener listener;
     private SearchResult searchResult;
 
     public ResultView(Context context, @ResultViewSize int viewSize) {
@@ -161,7 +161,7 @@ public class ResultView extends RelativeLayout {
 
     }
 
-    public void setListener(SearchResultAdapter.ImojiSearchTapListener tapListener, SearchResult searchResult) {
+    public void setListener(SearchResultAdapter.TapListener tapListener, SearchResult searchResult) {
         listener = tapListener;
         this.searchResult = searchResult;
     }

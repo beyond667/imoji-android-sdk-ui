@@ -28,6 +28,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -74,9 +75,9 @@ public class WidgetActivity extends AppCompatActivity {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 
-        SearchResultAdapter.ImojiImageLoader imageLoader = new SearchResultAdapter.ImojiImageLoader() {
+        SearchResultAdapter.ImageLoader imageLoader = new SearchResultAdapter.ImageLoader() {
             @Override
-            public void loadImage(ImageView target, Uri uri, final SearchResultAdapter.ImojiImageLoadCompleteCallback callback) {
+            public void loadImage(@NonNull ImageView target, @NonNull Uri uri, @NonNull final SearchResultAdapter.ImageLoaderCallback callback) {
                 Ion.with(target)
                         .load(uri.toString())
                         .setCallback(new FutureCallback<ImageView>() {

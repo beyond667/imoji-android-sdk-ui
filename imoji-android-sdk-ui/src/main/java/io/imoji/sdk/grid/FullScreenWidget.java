@@ -26,6 +26,7 @@ package io.imoji.sdk.grid;
 import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +48,7 @@ public class FullScreenWidget extends BaseSearchWidget {
 
     private final static int SPAN_COUNT = 3;
 
-    public FullScreenWidget(Context context, WidgetDisplayOptions options, SearchResultAdapter.ImojiImageLoader imageLoader) {
+    public FullScreenWidget(Context context, WidgetDisplayOptions options, SearchResultAdapter.ImageLoader imageLoader) {
         super(context, SPAN_COUNT, VERTICAL, true, ResultView.LARGE, options, imageLoader);
 
         searchBarLayout.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -95,7 +96,7 @@ public class FullScreenWidget extends BaseSearchWidget {
     }
 
     @Override
-    public void onTap(SearchResult searchResult) {
+    public void onTap(@NonNull SearchResult searchResult) {
         super.onTap(searchResult);
         if (searchResult.isCategory()) {
             setBarState(true);

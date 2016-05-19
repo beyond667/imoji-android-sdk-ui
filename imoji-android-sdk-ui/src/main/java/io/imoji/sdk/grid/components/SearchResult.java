@@ -35,6 +35,7 @@ import io.imoji.sdk.objects.RenderingOptions;
 public class SearchResult {
 
     private Imoji imoji;
+
     private Category category;
 
     public SearchResult(Imoji imoji) {

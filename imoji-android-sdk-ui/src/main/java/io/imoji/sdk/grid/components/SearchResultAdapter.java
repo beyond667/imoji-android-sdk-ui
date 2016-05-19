@@ -25,6 +25,7 @@ package io.imoji.sdk.grid.components;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -49,8 +50,8 @@ public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private List<SearchResult> results;
     private Context context;
-    private ImojiSearchTapListener tapListener;
-    private ImojiImageLoader imageLoader;
+    private TapListener tapListener;
+    private ImageLoader imageLoader;
 
     private int placeholderRandomizer;
     private
@@ -61,9 +62,9 @@ public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private WidgetDisplayOptions options;
 
 
-    public SearchResultAdapter(Context context, ImojiImageLoader imageLoader,
+    public SearchResultAdapter(@NonNull Context context, @NonNull ImageLoader imageLoader,
                                @ResultView.ResultViewSize int resultViewSize, int orientation,
-                               WidgetDisplayOptions uiSDKOptions) {
+                               @NonNull WidgetDisplayOptions uiSDKOptions) {
         results = new ArrayList<>();
         this.context = context;
         this.imageLoader = imageLoader;
@@ -92,9 +93,9 @@ public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (viewType == DIVIDER_VIEW_TYPE) {
             return new DividerHolder(new View(context));
         }
+
         return new ResultHolder(new ResultView(context, resultViewSize));
     }
-
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
@@ -104,8 +105,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             resultView.setListener(tapListener, results.get(holder.getAdapterPosition()));
             resultView.resetView(placeholderRandomizer, position);
 
-
-            imageLoader.loadImage(resultView.getImageView(), sr.getThumbnailUri(options), new ImojiImageLoadCompleteCallback() {
+            imageLoader.loadImage(resultView.getImageView(), sr.getThumbnailUri(options), new ImageLoaderCallback() {
                 @Override
                 public void updateImageView() {
                     if (sr.isCategory()) {
@@ -128,9 +128,9 @@ public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (position == dividerPosition) {
             return DIVIDER_VIEW_TYPE;
         }
+
         return super.getItemViewType(position);
     }
-
 
     public class ResultHolder extends RecyclerView.ViewHolder{
 
@@ -162,7 +162,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    public void setSearchTapListener(ImojiSearchTapListener tapListener) {
+    public void setSearchTapListener(@NonNull TapListener tapListener) {
         this.tapListener = tapListener;
     }
 
@@ -170,18 +170,21 @@ public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return dividerPosition;
     }
 
-    public interface ImojiSearchTapListener {
-        void onTap(SearchResult searchResult);
+    public interface TapListener {
+
+        void onTap(@NonNull SearchResult searchResult);
+
     }
 
+    public interface ImageLoader {
 
-    public interface ImojiImageLoader {
-
-        void loadImage(ImageView target, Uri uri, ImojiImageLoadCompleteCallback callback);
+        void loadImage(@NonNull ImageView target,
+                       @NonNull Uri uri,
+                       @NonNull ImageLoaderCallback callback);
     }
 
-    public abstract class ImojiImageLoadCompleteCallback {
+    public interface ImageLoaderCallback {
 
-        public abstract void updateImageView();
+        void updateImageView();
     }
 }

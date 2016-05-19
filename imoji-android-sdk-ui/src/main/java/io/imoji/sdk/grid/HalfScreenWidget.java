@@ -27,6 +27,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +48,7 @@ public class HalfScreenWidget extends BaseSearchWidget {
 
     public final static int SPAN_COUNT = 2;
 
-    public HalfScreenWidget(Context context, WidgetDisplayOptions options, SearchResultAdapter.ImojiImageLoader imageLoader) {
+    public HalfScreenWidget(Context context, WidgetDisplayOptions options, SearchResultAdapter.ImageLoader imageLoader) {
         super(context, SPAN_COUNT, HORIZONTAL, false, ResultView.SMALL, options, imageLoader);
         setBackgroundDrawable(getResources().getDrawable(R.drawable.base_widget_separator));
 
@@ -108,7 +109,7 @@ public class HalfScreenWidget extends BaseSearchWidget {
     }
 
     @Override
-    public void onTap(SearchResult searchResult) {
+    public void onTap(@NonNull SearchResult searchResult) {
         super.onTap(searchResult);
         if(searchResult.isCategory()){
             setBarState(true);
