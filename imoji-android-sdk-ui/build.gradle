@@ -96,6 +96,13 @@ uploadArchives {
                     organizationUrl 'https://imoji.io'
                 }
                 developer {
+                    name 'Engin Dogusoy'
+                    email 'engin.dogusoy@gmail.com'
+                    url 'https://github.com/engd'
+                    organization 'Builds, Inc'
+                    organizationUrl 'https://imoji.io'
+                }
+                developer {
                     name 'Nima Khoshini'
                     email 'nima@imojiapp.com'
                     url 'https://github.com/nkhoshini'
