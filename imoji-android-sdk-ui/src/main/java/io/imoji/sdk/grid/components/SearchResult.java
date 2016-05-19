@@ -62,11 +62,7 @@ public class SearchResult {
         if (thumbnailImoji.hasAnimationCapability()) {
             return thumbnailImoji.getStandardThumbnailUri(true);
         } else {
-            RenderingOptions renderingOptions = new RenderingOptions(
-                    options.isDisplayStickerBorders() ? RenderingOptions.BorderStyle.Sticker : RenderingOptions.BorderStyle.None,
-                    options.getImageFormat(), RenderingOptions.Size.Thumbnail);
-
-            return thumbnailImoji.urlForRenderingOption(renderingOptions);
+            return thumbnailImoji.urlForRenderingOption(options.getRenderingOptions());
         }
     }
 

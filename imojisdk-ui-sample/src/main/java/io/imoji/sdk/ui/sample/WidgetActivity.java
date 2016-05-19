@@ -91,9 +91,12 @@ public class WidgetActivity extends AppCompatActivity {
 
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        WidgetDisplayOptions options = new WidgetDisplayOptions();
-        options.setImageFormat(RenderingOptions.ImageFormat.Png);
-        options.setDisplayStickerBorders(preferences.getBoolean(getString(R.string.pref_key_sticker_borders_enabled), true));
+        RenderingOptions renderingOptions = new RenderingOptions(
+                preferences.getBoolean(getString(R.string.pref_key_sticker_borders_enabled), true) ? RenderingOptions.BorderStyle.Sticker : RenderingOptions.BorderStyle.None,
+                RenderingOptions.ImageFormat.Png,
+                RenderingOptions.Size.Thumbnail
+        );
+        WidgetDisplayOptions options = new WidgetDisplayOptions(renderingOptions);
         options.setIncludeRecentsAndCreate(preferences.getBoolean(getString(R.string.pref_key_recents_create_enabled), true));
 
         switch (identifier) {

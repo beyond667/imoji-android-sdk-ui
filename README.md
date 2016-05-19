@@ -59,19 +59,11 @@ You'll need to pass the context, a new WidgetDisplayOptions object and a new Imo
 ## WidgetDisplayOptions
 
 WidgetDisplayOptions is an optional configuration object for your ImojiSDK integration. If you don't want to change default configurations you can just pass ```new WidgetDisplayOptions()``` as the second parameter of your widget constructor. You can change values inside the object with simple setters.
+Supported configurations:
 
-```java
-options.setImageFormat(RenderingOptions.ImageFormat.Png);
-//use options.getImageFormat() to get the value
-```
-Supported configurations
-
-1. **Image Format:** Optional. Default Webp. Image format for assets displayed in the widget.
+1. **RenderingOptions:** Optional. Default thumbnail WebP images with borders. Use this to configure the default image flavor for your search widget. 
 
 2. **Include Recents and Create:** Optional. Default True. Enables Recents and Create buttons in widget's searchbar.
-
-3. **Display Sticker Borders:** Optional. Default True. Displays borders around assets displayed in the widget.
-
 
 ## Loading Images
 

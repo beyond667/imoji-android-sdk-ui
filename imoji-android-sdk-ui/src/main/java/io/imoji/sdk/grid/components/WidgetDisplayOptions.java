@@ -33,17 +33,18 @@ import io.imoji.sdk.objects.RenderingOptions;
  */
 public class WidgetDisplayOptions {
 
-    private RenderingOptions.ImageFormat imageFormat = RenderingOptions.ImageFormat.WebP;
-    private boolean includeRecentsAndCreate = true;
-    private boolean displayStickerBorders = true;
+    private boolean includeRecentsAndCreate = false;
 
-    public RenderingOptions.ImageFormat getImageFormat() {
-        return imageFormat;
+    @NonNull
+    private RenderingOptions renderingOptions;
+
+
+    public WidgetDisplayOptions() {
+        this(RenderingOptions.borderedWebThumbnail());
     }
 
-    public WidgetDisplayOptions setImageFormat(@NonNull RenderingOptions.ImageFormat imageFormat) {
-        this.imageFormat = imageFormat;
-        return this;
+    public WidgetDisplayOptions(@NonNull RenderingOptions renderingOptions) {
+        this.renderingOptions = renderingOptions;
     }
 
     public boolean isIncludeRecentsAndCreate() {
@@ -55,12 +56,20 @@ public class WidgetDisplayOptions {
         return this;
     }
 
-    public boolean isDisplayStickerBorders() {
-        return displayStickerBorders;
+    /**
+     * @return Gets the RenderingOptions used for displaying content in the Search Widgets
+     */
+    @NonNull
+    public RenderingOptions getRenderingOptions() {
+        return renderingOptions;
     }
 
-    public WidgetDisplayOptions setDisplayStickerBorders(boolean displayStickerBorders) {
-        this.displayStickerBorders = displayStickerBorders;
-        return this;
+    /**
+     * Sets the RenderingOptions to use for displaying content in the Search Widgets
+     *
+     * @param renderingOptions The Rendering options to use.
+     */
+    public void setRenderingOptions(@NonNull RenderingOptions renderingOptions) {
+        this.renderingOptions = renderingOptions;
     }
 }
