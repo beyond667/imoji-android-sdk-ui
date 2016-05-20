@@ -36,23 +36,22 @@ import java.util.concurrent.TimeUnit;
 import io.imoji.sdk.ApiTask;
 import io.imoji.sdk.ImojiSDK;
 import io.imoji.sdk.Session;
+import io.imoji.sdk.editor.util.EditorBitmapCache;
 import io.imoji.sdk.objects.Imoji;
 import io.imoji.sdk.response.CreateImojiResponse;
-import io.imoji.sdk.editor.util.EditorBitmapCache;
 
 /**
  * Created by sajjadtabib on 10/21/15.
  */
 public class ImojiCreateService extends IntentService {
 
-    private static final String IMOJI_CREATE_INTERNAL_INTENT_ACTION = "IMOJI_CREATE_INTERNAL_INTENT_ACTION";
+    public static final String IMOJI_CREATE_INTERNAL_INTENT_ACTION = "IMOJI_CREATE_INTERNAL_INTENT_ACTION";
 
     public static final String STATUS_BUNDLE_ARG_KEY = "STATUS_BUNDLE_ARG_KEY";
     public static final String IMOJI_MODEL_BUNDLE_ARG_KEY = "IMOJI_MODEL_BUNDLE_ARG_KEY";
 
     public static final String CREATE_TOKEN_BUNDLE_ARG_KEY = "CREATE_TOKEN_BUNDLE_ARG_KEY";
     public static final String TAGS_BUNDLE_ARG_KEY = "TAGS_BUNDLE_ARG_KEY";
-    private static final String LOG_TAG = ImojiCreateService.class.getSimpleName();
 
     private Session imojiSession;
 
