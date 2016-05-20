@@ -47,11 +47,9 @@ public class ImojiCreateService extends IntentService {
 
     private static final String IMOJI_CREATE_INTERNAL_INTENT_ACTION = "IMOJI_CREATE_INTERNAL_INTENT_ACTION";
 
-    // Intent Extra Argument Key - Type: Boolean - true for success
-    private static final String STATUS_BUNDLE_ARG_KEY = "STATUS_BUNDLE_ARG_KEY";
+    public static final String STATUS_BUNDLE_ARG_KEY = "STATUS_BUNDLE_ARG_KEY";
+    public static final String IMOJI_MODEL_BUNDLE_ARG_KEY = "IMOJI_MODEL_BUNDLE_ARG_KEY";
 
-    // Intent Extra Argument Key - Type: Imoji, retrieve as a parcelable
-    private static final String IMOJI_MODEL_BUNDLE_ARG_KEY = "IMOJI_MODEL_BUNDLE_ARG_KEY";
     public static final String CREATE_TOKEN_BUNDLE_ARG_KEY = "CREATE_TOKEN_BUNDLE_ARG_KEY";
     public static final String TAGS_BUNDLE_ARG_KEY = "TAGS_BUNDLE_ARG_KEY";
     private static final String LOG_TAG = ImojiCreateService.class.getSimpleName();
