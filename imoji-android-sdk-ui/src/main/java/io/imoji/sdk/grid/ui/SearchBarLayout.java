@@ -175,6 +175,10 @@ public class SearchBarLayout extends ViewSwitcher {
                 }
             }
         });
+        setBackCloseButtonVisibility(isVisible);
+    }
+
+    public void setBackCloseButtonVisibility(boolean isVisible){
         backCloseView.setVisibility(isVisible ? VISIBLE : GONE);
     }
 
