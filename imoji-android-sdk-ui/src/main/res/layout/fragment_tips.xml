@@ -4,7 +4,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#A0303030"
-                tools:context="io.imoji.sdk.ui.TipsFragment">
+                tools:context="io.imoji.sdk.editor.fragment.TipsFragment">
 
     <android.support.v4.view.ViewPager
         tools:layout="@layout/fragment_hint_page"
@@ -20,7 +20,7 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
-        <io.imoji.sdk.ui.view.DotDotView
+        <io.imoji.sdk.editor.ui.DotDotView
             android:layout_marginTop="@dimen/imoji_tips_element_margin"
             android:id="@+id/imoji_dot_dot_view"
             android:layout_width="match_parent"

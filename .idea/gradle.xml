@@ -11,7 +11,14 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/imoji-android-sdk-ui" />
-            <option value="$PROJECT_DIR$/imojisdk-ui-sample" />
+            <option value="$PROJECT_DIR$/imoji-kit" />
+          </set>
+        </option>
+        <option name="myModules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/imoji-android-sdk-ui" />
+            <option value="$PROJECT_DIR$/imoji-kit" />
           </set>
         </option>
       </GradleProjectSettings>

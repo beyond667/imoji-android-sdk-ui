@@ -1,5 +1,20 @@
 * Updates
 
+## 2.1.2
+* Use RenderingOptions instead of imageFormat and displayStickerBorders
+
+## 2.1.1
+* Refactored some more classes
+  * SearchResultAdapter.ImojiImageLoader -> SearchResultAdapter.ImageLoader
+  * SearchResultAdapter.ImojiImageLoaderCallback -> SearchResultAdapter.ImageLoaderCallback
+* Updated contributer list
+
+## 2.1.0
+* Big additions to the Android UI SDK! We now offer new Search Widgets that allow users to plugin full Imoji Grids with search capabilities into their apps. 
+* Refactoring packages for consistency
+  * ImojiCreateService and ImojiEditorActivity moved from io.imoji.sdk.ui => io.imoji.sdk.editor
+  * Move search widgets to the grid package* Refactored 
+
 ## 2.0.6
 * Updated to use version 2.1.5 of imoji-android-sdk 
 

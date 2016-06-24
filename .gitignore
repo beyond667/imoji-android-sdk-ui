@@ -9,3 +9,6 @@ imojigraphics/obj
 /captures
 imojisdk-ui-sample/.idea/workspace.xml
 imojisdk-ui-sample/.idea/copyright/profiles_settings.xml
+.idea/inspectionProfiles
+encodings.xml
+imojisdk-ui-sample-release.apk

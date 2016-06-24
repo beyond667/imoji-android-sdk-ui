@@ -6,14 +6,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?android:windowBackground"
-    tools:context="io.imoji.sdk.ui.TagImojiFragment">
+    tools:context="io.imoji.sdk.editor.fragment.TagImojiFragment">
 
-    <io.imoji.sdk.ui.view.CheckeredView
-        app:imoji__firstCheckerColor="?colorPrimary"
-        app:imoji__secondCheckerColor="?colorPrimaryDark"
-        app:imoji__checkerSize="12dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
     <View
         android:id="@+id/imoji_toolbar_scrim"
         android:layout_width="match_parent"
@@ -118,7 +112,7 @@
         android:layout_marginRight="25dp"
         android:isScrollContainer="false">
 
-        <io.imoji.sdk.ui.widgets.AutoFitGridLayout
+        <io.imoji.sdk.editor.AutoFitGridLayout
             android:id="@+id/gl_tagbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -126,7 +120,7 @@
             android:animateLayoutChanges="true"
             app:columnCount="16"
             app:columnOrderPreserved="false"
-            app:orientation="horizontal"></io.imoji.sdk.ui.widgets.AutoFitGridLayout>
+            app:orientation="horizontal"></io.imoji.sdk.editor.AutoFitGridLayout>
     </ScrollView>
 
     <ProgressBar

@@ -11,7 +11,7 @@ android {
         minSdkVersion 12
         targetSdkVersion 23
         versionCode 1
-        versionName "2.0.6"
+        versionName "2.1.2"
     }
     buildTypes {
         release {
@@ -32,7 +32,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.4.0'
     compile 'com.android.support:gridlayout-v7:23.4.0'
     compile 'com.felipecsl:gifimageview:2.0.0'
-    compile 'com.android.support:design:23.0.1'
+    compile 'com.android.support:design:23.4.0'
 }
 
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
@@ -92,6 +92,13 @@ uploadArchives {
                     name 'Sajjad Tabib'
                     email 'sajjad@imojiapp.com'
                     url 'https://github.com/stabib'
+                    organization 'Builds, Inc'
+                    organizationUrl 'https://imoji.io'
+                }
+                developer {
+                    name 'Engin Dogusoy'
+                    email 'engin.dogusoy@gmail.com'
+                    url 'https://github.com/engd'
                     organization 'Builds, Inc'
                     organizationUrl 'https://imoji.io'
                 }
