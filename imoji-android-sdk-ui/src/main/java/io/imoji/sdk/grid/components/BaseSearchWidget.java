@@ -39,11 +39,11 @@ import android.widget.ViewSwitcher;
 import java.util.List;
 
 import io.imoji.sdk.editor.ImojiEditorActivity;
-import io.imoji.sdk.ui.R;
 import io.imoji.sdk.grid.components.SearchResultAdapter.TapListener;
 import io.imoji.sdk.grid.ui.ResultView;
 import io.imoji.sdk.grid.ui.SearchBarLayout;
 import io.imoji.sdk.grid.ui.SearchBarLayout.ImojiSearchBarListener;
+import io.imoji.sdk.ui.R;
 
 /**
  * Created by engind on 4/22/16.
@@ -207,13 +207,20 @@ public abstract class BaseSearchWidget extends LinearLayout implements ImojiSear
         }
     }
 
-    private void startImojiEditorActivity(Context context) {
+    public void startImojiEditorActivity(Context context, String contentUri) {
         Intent intent = new Intent(context, ImojiEditorActivity.class);
         intent.putExtra(ImojiEditorActivity.RETURN_IMMEDIATELY_BUNDLE_ARG_KEY, false);
         intent.putExtra(ImojiEditorActivity.TAG_IMOJI_BUNDLE_ARG_KEY, true);
+        if (contentUri != null) {
+            intent.putExtra(ImojiEditorActivity.IMOJI_EDITOR_IMAGE_CONTENT_URI, contentUri);
+        }
         LocalBroadcastManager.getInstance(context).registerReceiver(imojiCreatedReceiver,
                 new IntentFilter(ImojiEditorActivity.IMOJI_CREATION_FINISHED_BROADCAST_ACTION));
         context.startActivity(intent);
+    }
+
+    public void startImojiEditorActivity(Context context) {
+        startImojiEditorActivity(context, null);
     }
 
     protected abstract View getNoStickerView(boolean isRecents);

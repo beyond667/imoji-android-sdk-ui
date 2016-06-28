@@ -125,4 +125,8 @@ public class FullScreenWidget extends BaseSearchWidget {
         searchBarLayout.setupBackCloseButton(!active, true);
         searchBarLayout.setActionButtonsVisibility(options.isIncludeRecentsAndCreate() && !active);
     }
+
+    public void setBackButtonVisibility(boolean isVisible){
+        searchBarLayout.setBackCloseButtonVisibility(isVisible);
+    }
 }

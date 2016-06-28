@@ -47,6 +47,7 @@ public class ImojiEditorActivity extends AppCompatActivity {
     public static final String CREATE_TOKEN_BUNDLE_ARG_KEY = "CREATE_TOKEN_BUNDLE_ARG_KEY";
     public static final String TAG_IMOJI_BUNDLE_ARG_KEY = "TAG_IMOJI_BUNDLE_ARG_KEY";
     public static final String RETURN_IMMEDIATELY_BUNDLE_ARG_KEY = "RETURN_IMMEDIATELY_BUNDLE_ARG_KEY";
+    public static final String IMOJI_EDITOR_IMAGE_CONTENT_URI = "IMOJI_EDITOR_IMAGE_CONTENT_URI";
 
     private ImojiEditorFragment mImojiEditorFragment;
     private boolean tagImojis = true;
@@ -62,9 +63,18 @@ public class ImojiEditorActivity extends AppCompatActivity {
             returnImmediately = getIntent().getBooleanExtra(RETURN_IMMEDIATELY_BUNDLE_ARG_KEY, false);
 
             Bitmap inputBitmap = EditorBitmapCache.getInstance().get(EditorBitmapCache.Keys.INPUT_BITMAP);
-            if (inputBitmap == null) {
+            if(getIntent().hasExtra(IMOJI_EDITOR_IMAGE_CONTENT_URI)){
+                Uri uri = Uri.parse(getIntent().getStringExtra(IMOJI_EDITOR_IMAGE_CONTENT_URI));
+                Bitmap bitmap = null;
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                    createFragment(bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if (inputBitmap == null) {
                 pickImageFromGallery();
-            } else {
+            }else {
                 EditorBitmapCache.getInstance().remove(EditorBitmapCache.Keys.INPUT_BITMAP);
                 createFragment(inputBitmap);
             }
