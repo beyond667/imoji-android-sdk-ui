@@ -1,4 +1,4 @@
-* Updates
+# Updates
 
 ## 2.1.3
 * Made it possible to add any image to the editor through content uris @endg
