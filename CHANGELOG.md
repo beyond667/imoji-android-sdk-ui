@@ -1,5 +1,8 @@
 # Updates
 
+## 2.1.4
+* Updated to use version 2.1.7 of imoji-android-sdk 
+
 ## 2.1.3
 * Made it possible to add any image to the editor through content uris @endg
 
