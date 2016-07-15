@@ -1,5 +1,8 @@
 # Updates
 
+## 2.1.5
+* Issue #5 fixed (thanks @goodengineer)! - Addressed a crash running the sample app on numerous phones
+
 ## 2.1.4
 * Updated to use version 2.1.7 of imoji-android-sdk 
 
