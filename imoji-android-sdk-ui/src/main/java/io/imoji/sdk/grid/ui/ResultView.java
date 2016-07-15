@@ -105,8 +105,8 @@ public class ResultView extends RelativeLayout {
         container = new RelativeLayout(context);
         addView(container, new LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
 
-        final Animator pressedAnimator = AnimatorInflater.loadAnimator(context, R.animator.search_result_pressed);
-        final Animator releasedAnimator = AnimatorInflater.loadAnimator(context, R.animator.search_result_released);
+        final Animation pressedAnimation = AnimationUtils.loadAnimation(context, R.anim.search_result_pressed);
+        final Animation releasedAnimation = AnimationUtils.loadAnimation(context, R.anim.search_result_released);
         imageView = new GifImageView(context) {
 
             @Override
@@ -114,25 +114,19 @@ public class ResultView extends RelativeLayout {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         if (searchResult != null && !searchResult.isCategory()) {
-                            pressedAnimator.start();
+                            imageView.startAnimation(pressedAnimation);
                         }
                         break;
                     case MotionEvent.ACTION_CANCEL:
                     case MotionEvent.ACTION_UP:
                         if (searchResult != null && !searchResult.isCategory()) {
-                            if (pressedAnimator.isRunning()) {
-                                pressedAnimator.cancel();
-                            }
-                            releasedAnimator.start();
+                            imageView.startAnimation(releasedAnimation);
                         }
                         break;
                 }
                 return super.onTouchEvent(event);
             }
         };
-        releasedAnimator.setTarget(imageView);
-        pressedAnimator.setTarget(imageView);
-
 
         RelativeLayout.LayoutParams imageParams = new LayoutParams(resultWidth, resultWidth);
         imageParams.addRule(RelativeLayout.CENTER_IN_PARENT);
