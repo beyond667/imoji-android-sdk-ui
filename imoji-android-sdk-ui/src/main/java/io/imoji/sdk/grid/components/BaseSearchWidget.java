@@ -223,5 +223,15 @@ public abstract class BaseSearchWidget extends LinearLayout implements ImojiSear
         startImojiEditorActivity(context, null);
     }
 
+    public void setCollectionVisibility(boolean visible){
+        searchBarLayout.setVisibility(visible ? GONE : VISIBLE);
+        if(visible){
+            searchHandler.searchUserCollection(getContext());
+        }else{
+            searchHandler.searchTrending(getContext());
+        }
+    }
+
     protected abstract View getNoStickerView(boolean isRecents);
+
 }
