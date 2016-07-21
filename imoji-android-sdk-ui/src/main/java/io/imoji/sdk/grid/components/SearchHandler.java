@@ -151,6 +151,14 @@ public abstract class SearchHandler {
     }
 
     public void searchRecents(Context context) {
+        searchCollections(context, CollectionType.Recents);
+    }
+
+    public void searchUserCollection(Context context) {
+        searchCollections(context, null);
+    }
+
+    private void searchCollections(Context context, CollectionType collectionType) {
         beforeSearchStarted();
         cancelLastTask();
         ApiTask.WrappedAsyncTask<ImojisResponse> task = new ApiTask.WrappedAsyncTask<ImojisResponse>() {
@@ -167,11 +175,11 @@ public abstract class SearchHandler {
         lastSearchTask = task;
         ImojiSDK.getInstance()
                 .createSession(context.getApplicationContext())
-                .getCollectedImojis(CollectionType.Recents)
+                .getCollectedImojis(collectionType)
                 .executeAsyncTask(task);
     }
 
-    public void addToRecents(Context context,Imoji imoji) {
+    public void addToRecents(Context context, Imoji imoji) {
         ImojiSDK.getInstance()
                 .createSession(context.getApplicationContext())
                 .markImojiUsage(imoji.getIdentifier(), null).executeAsyncTask(new ApiTask.WrappedAsyncTask<GenericApiResponse>() {
@@ -196,7 +204,7 @@ public abstract class SearchHandler {
         }
     }
 
-    public void clearHistory(){
+    public void clearHistory() {
         historyStack.clear();
     }
 
