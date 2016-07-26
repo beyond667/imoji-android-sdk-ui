@@ -1,5 +1,8 @@
 # Updates
 
+## 2.1.6
+* Added collection mode to all widgets (thanks @engd)!
+
 ## 2.1.5
 * Issue #5 fixed (thanks @goodengineer)! - Addressed a crash running the sample app on numerous phones
 
